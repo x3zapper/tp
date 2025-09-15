@@ -1,5 +1,9 @@
 [![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
 
+# CustomerRelationBook
+
+> Provides a structured system to store and categorize business contacts, saving time and improving efficiency in client communication and vendor coordination.
+
 ![Ui](docs/images/Ui.png)
 
 * This is **a sample project for Software Engineering (SE) students**.<br>
