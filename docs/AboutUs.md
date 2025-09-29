@@ -21,14 +21,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Tew Zheng Hong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/tyuzuwu.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/tyuzuwu)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
+* Role: Code Quality
 * Responsibilities: UI
 
 ### Johnny Doe
