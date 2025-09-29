@@ -17,7 +17,6 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/rah-rah-mitra)]
-[[portfolio](team/rah-rah-mitra.md)]
 
 * Role: Project Developer
 * Responsibilities: 'Dev'
