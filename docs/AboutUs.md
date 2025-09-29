@@ -21,6 +21,17 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Project Developer
 * Responsibilities: 'Dev'
 
+### WhyXLook
+
+<img src="images/whyxlook.png" width="200px">
+
+[[homepage](NONE)]
+[[github](https://github.com/WhyXLook)]
+[[portfolio](NONE)]
+
+* Role: Communications Manager
+* Responsibilities: 'Dev'
+
 ### Jane Doe
 
 <img src="images/johndoe.png" width="200px">
