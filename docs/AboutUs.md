@@ -11,6 +11,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Rahul Mitra
+
+<img src="images/rah-rah-mitra.png" width="200px">
+
+[[homepage](http://www.comp.nus.edu.sg/~damithch)]
+[[github](https://github.com/rah-rah-mitra)]
+
+* Role: Project Developer
+* Responsibilities: 'Dev'
+
 ### WhyXLook
 
 <img src="images/whyxlook.png" width="200px">
@@ -20,6 +30,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](NONE)]
 
 * Role: Communications Manager
+* Responsibilities: 'Dev'
 
 ### Jane Doe
 
