@@ -274,13 +274,14 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
+* IT startup founders or small business owners who handle client and vendor communication personally
+* has a need to manage and categorize different types of contacts (potential clients, contracted clients, vendors)
+* lacks experience in systematic contact management but wants to organize business relationships effectively
+* prefer desktop apps over other types for data security and offline access
+* can type fast and prefers typing to mouse interactions for efficiency
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: helps small business owners organize and categorize their client and vendor contacts more systematically than a typical mouse/GUI driven app, enabling better relationship management without the complexity of enterprise CRM systems
 
 
 ### User stories
@@ -290,13 +291,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
 | `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
+| `* * *`  | user                                       | add a new person             | store contact details for future reference                             |
 | `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
 | `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-
-*{More to be added}*
+| `* * *`  | user                                       | view all my contacts         | see an overview of all stored contacts                                 |
+| `* * *`  | user                                       | filter contacts by tags      | focus on specific groups like clients or vendors                       |
+| `* * *`  | user                                       | exit the application         | close the app when I'm done using it                                   |
+| `* * *`  | user                                       | have my data automatically saved | not lose my contact information when the app closes                    |
+| `* * *`  | user                                       | use consistent commands      | interact with the app reliably and predictably                        |
+| `* *`    | startup founder                            | add custom tags to contacts  | categorize them by type for better organization                        |
+| `* *`    | tech business owner                        | mark contacts as favorites   | quickly access my most important clients or vendors                   |
+| `*`      | normal user                                | sort my contacts             | locate a person easily without scrolling through the full list        |
+| `*`      | small business owner                       | backup my contact information | restore my data in case I lose the current information                |
 
 ### Use cases
 
@@ -337,8 +343,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
+* **CLI**: Command Line Interface - a text-based user interface used to interact with the application
+* **Client**: A person or organization that purchases goods or services from the business
+* **Contact**: A person whose information is stored in the address book, which can be a client, vendor, or other business relationship
+* **CRB**: Customer Relations Book - the name of this application for managing business contacts
+* **Filter**: A feature that displays only contacts matching specified tag criteria
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Potential Client**: A contact who may become a client in the future but has not yet made a purchase
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Tag**: A label used to categorize contacts (e.g., "client", "vendor", "VIP")
+* **Vendor**: A person or organization that supplies goods or services to the business
 
 --------------------------------------------------------------------------------------------------------------------
 
