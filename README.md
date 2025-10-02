@@ -1,19 +1,23 @@
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
+[![Java CI](https://github.com/AY2526S1-CS2103-F13-3/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103-F13-3/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/gh/AY2526S1-CS2103-F13-3/tp/graph/badge.svg?token=533YS6DJVH)](https://codecov.io/gh/AY2526S1-CS2103-F13-3/tp)
 
 # CustomerRelationBook
 
-> Provides a structured system to store and categorize business contacts, saving time and improving efficiency in client communication and vendor coordination.
+## Introduction
+
+CustomerRelationBook is a contact management system tailored towards typing-focused users. It provides a structured system to store, categorize and search business contacts, saving time and improving efficiency in client and vendor communications.
 
 ![Ui](docs/images/Ui.png)
 
-* This is **a sample project for Software Engineering (SE) students**.<br>
-  Example usages:
-  * as a starting point of a course project (as opposed to writing everything from scratch)
-  * as a case study
-* The project simulates an ongoing software project for a desktop application (called _AddressBook_) used for managing contact details.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
-  * It comes with a **reasonable level of user and developer documentation**.
-* It is named `AddressBook Level 3` (`AB3` for short) because it was initially created as a part of a series of `AddressBook` projects (`Level 1`, `Level 2`, `Level 3` ...).
-* For the detailed documentation of this project, see the **[Address Book Product Website](https://se-education.org/addressbook-level3)**.
-* This project is a **part of the se-education.org** initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
+## Note
+
+* This is a learning project for software engineering students that is based on the `AddressBook` project.
+* Specifically, our team starts from the `Level 3` variant of the `AddressBook` codebase (referred to as `AB3`).
+* For more information on our variant of the `AB3` project, please refer to our [CustomerRelationBook Website](https://ay2526s1-cs2103-f13-3.github.io/tp).
+
+
+## Acknowledgement
+
+  This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org)
+* For the detailed documentation of the `AddressBook-Level3` project, see the [Address Book Product Website](https://se-education.org/addressbook-level3).
+* This project is a part of the se-education.org initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
