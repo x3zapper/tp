@@ -449,8 +449,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+4.  Backup (save to existing local storage file) and restore (read from existing local storage file with correct data format) operations must complete within 5 seconds for a large (1000) contact list size.
+5.  Application startup time should not exceed 10 seconds on a machine with standard business laptop specifications (16GB ram, SSD storage, quad-core CPU)
+    In this case, application startup is from running it in bash to having the main UI window appear --> i.e. we do not wait until the all the contacts are shown
+6.  Memory usage should not exceed 300MB for normal usage (i.e. Each field should not be > 30 characters, less than 30 contacts) on the maximum dataset size
+7.  CRUD operations on **each** contact must be completed within 200ms under normal (0-30) dataset size
+8.  Search and filtering operations across a large (1000) contact list size must return results within 300ms
+9.  No external connectivity should be required, all features must be available offline
 
 ### Glossary
 
