@@ -11,51 +11,41 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Rahul Mitra
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/rah-rah-mitra.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/rah-rah-mitra)]
+
+* Role: Project Developer
+* Responsibilities: 'Dev'
+
+### WhyXLook
+
+<img src="images/whyxlook.png" width="200px">
+
+[[homepage](NONE)]
+[[github](https://github.com/WhyXLook)]
+[[portfolio](NONE)]
+
+* Role: Communications Manager
+* Responsibilities: 'Dev'
+
+### Tew Zheng Hong
+
+<img src="images/tyuzuwu.png" width="200px">
+
+[[github](http://github.com/tyuzuwu)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
+* Role: Code Quality
 * Responsibilities: UI
 
-### Johnny Doe
+### x3zapper
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/x3zapper.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/x3zapper)]
 
-* Role: Developer
-* Responsibilities: Data
-
-### Jean Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
-
-### James Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: UI
+* Role: Integration
+* Responsibilities: `Commands`
