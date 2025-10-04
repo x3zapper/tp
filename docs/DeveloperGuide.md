@@ -308,7 +308,118 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use Case: UC01 - Add a New Contact**
+
+**MSS**
+
+1. User chooses to add a new contact.
+2. User enters contact details (e.g., name, phone, email, address).
+3. AddressBook parses the contact details.
+4. AddressBook validates each field details.
+5. AddressBook checks for duplicates.
+6. AddressBook saves the new contact and confirms successful addition.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. User enters invalid data for any field.
+
+    * 3a1. AddressBook displays appropriate error message for the fields.
+    * 3a2. User re-enters the corrected data.
+    * Steps 3a1–3a2 repeat until all data are valid.
+    * Use case resumes from step 4.
+  
+* 3b. User specified missing field or wrong field:
+
+    * 3b1. AddressBook displays error.
+    * 3b2. AddressBook displays required field.
+    * 3b3. User corrects the command.
+    * Steps repeat until all single-valued fields are specified correctly.
+    * Use case resumes from step 4.
+
+
+* 4a. Duplicate contact detected.
+
+    * 4a1. AddressBook displays a console message indicating that the contact already exists.
+    * Use case ends.
+
+**Use case: UC02 - List Contacts**
+
+**MSS**
+
+1. User requests to list all contact.
+2. AddressBook parses the command.
+3. AddressBook validates the command format.
+4. AddressBook retrieves all saved contacts.
+5. AddressBook displays all contacts.
+6. AddressBook displays a console message indicating the number of contacts displayed.
+
+    Use case ends.
+
+**Extensions**
+
+* 5a. No contacts stored in AddressBook
+  * 5a1. AddressBook will not display any contacts.
+  * 5a2. AddressBook displays a console message indicating AddressBook is empty.
+  * Use case ends.
+
+**Use case: UC03 - Add Tags to Contact**
+
+**MSS**
+
+1. User includes tags when <u>adding a new contact (UC01).</u>
+2. AddressBook parses the tag values.
+3. AddressBook validates the tag values.
+4. AddressBook associates valid tags with the contact.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Tag value is invalid
+  * 3a1. AddressBook displays error message and requests for correction.
+  * 3a2. User corrects or remove invalid tags.
+  * Steps 3a1-3a2 repeat until all tags are valid.
+  * Use case resumes from step 4.
+
+
+**Use case: UC04 - Filter Contacts by Tags**
+
+**MSS**
+
+1. User requests to filter contacts with specified tags.
+2. AddressBook parses the tag values.
+3. AddressBook validates the tag values.
+4. AddressBook retrieves all contacts with the specified tags.
+5. AddressBook <u>lists these filtered contacts (UC02).</u>
+6. AddressBook displays a console message indicating the number of filtered contacts displayed.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. No tag provided in the command.
+  * 3a1. AddressBook displays an error message.
+  * Use case ends.
+* 3b. Tag value is invalid.
+  * 3b1. AddressBook will display an error message and request for correction.
+  * 3b2. User corrects the tag value.
+  * Step 3b1-3b2 repeats until all tags are valid.
+  * Use case resumes from step 4.
+* 3c. More than 10 tags specified.
+  * 3c1. AddressBook will display an error message and request for correction.
+  * 3c2. User corrects the command.
+  * Steps 3c1-3c2 repeats until tags are less than 10.
+  * Use case resumes from step 4.
+
+* 4a. No contact matches the specified tags.
+  * 4a1. AddressBook will not display any contacts
+  * 4a2. AddressBook will display a console message indicating no contacts found with the specified tags.
+  * Use case ends.
+
+
+**Use case: UC05 - Delete a person**
 
 **MSS**
 
