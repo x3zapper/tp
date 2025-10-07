@@ -26,3 +26,6 @@ docs/_markbind/logs/
 # Custom ignore files
 *.class
 *.old
+
+# Ignore compiled binaries and build artifacts
+/bin/
