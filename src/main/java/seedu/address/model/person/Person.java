@@ -24,17 +24,20 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Timezone timezone;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone) {
+        //todo ck: check who is sending null Timezone
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.timezone = timezone;
     }
 
     public Name getName() {
@@ -59,6 +62,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Timezone getTimezone() {
+        return timezone;
     }
 
     /**
@@ -95,12 +102,14 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags);
+                //todo ck: fix equality checks
+                // && timezone.equals(otherPerson.timezone);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, timezone);
     }
 
     @Override
@@ -112,6 +121,8 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .toString();
+                //todo ck: add this back
+                //.add("timezone", timezone)
     }
 
 }

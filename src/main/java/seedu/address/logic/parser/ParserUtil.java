@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -13,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Timezone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -120,5 +122,26 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /** Parses {@code Optional<String> tzStr} into {@code Timezone} */
+    public static Timezone parseTimezone(Optional<String> tzStr) throws ParseException {
+        requireNonNull(tzStr);
+        if (tzStr.isEmpty()) {
+            return new Timezone(Timezone.NO_TIMEZONE);
+        }
+
+        //Try to parse the TZ double value
+        double tz;
+        try {
+            tz = Double.parseDouble(tzStr.get());
+            //Disallow users using the special value
+            if (!Timezone.isValidTz(tz) || tz == Timezone.NO_TIMEZONE) {
+                throw new NumberFormatException("Invalid timezone " + tz);
+            }
+        } catch (NumberFormatException e) {
+            throw new ParseException(Timezone.MESSAGE_CONSTRAINTS);
+        }
+        return new Timezone(tz);
     }
 }
