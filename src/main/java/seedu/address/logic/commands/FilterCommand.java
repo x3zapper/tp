@@ -20,6 +20,8 @@ public class FilterCommand extends Command {
             + "Parameters: TAG [MORE_TAGS]...\n"
             + "Example: " + COMMAND_WORD + " client VIP";
 
+    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag '%s'. Tags may only contain alphanumeric characters.";
+
     private final TagContainsKeywordsPredicate predicate;
 
     public FilterCommand(TagContainsKeywordsPredicate predicate) {
@@ -29,9 +31,15 @@ public class FilterCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+
+
         model.updateFilteredPersonList(predicate);
+
+        int size = model.getFilteredPersonList().size();
+        String tagsString = String.join(", ", predicate.getTags());
+
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_WITH_TAGS, size, tagsString));
     }
 
     @Override
