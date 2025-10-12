@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -126,6 +129,18 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortFilteredPersonList() {
+        List<Person> sortedPersons = new ArrayList<>(this.addressBook.getPersonList());
+        Comparator<Person> comparator = Comparator.comparing(person ->
+            String.valueOf(person.getName())
+        );
+        sortedPersons.sort(comparator);
+        AddressBook newAddressBook = new AddressBook();
+        newAddressBook.setPersons(sortedPersons);
+        setAddressBook(newAddressBook);
     }
 
     @Override
