@@ -1,5 +1,5 @@
 package seedu.address.logic.parser;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;

@@ -1,11 +1,13 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
-import static java.util.Objects.requireNonNull;
+
 
 /**
  * Finds and lists all persons in address book whose tags contains any of those in the argument.
@@ -20,7 +22,8 @@ public class FilterCommand extends Command {
             + "Parameters: TAG [MORE_TAGS]...\n"
             + "Example: " + COMMAND_WORD + " client VIP";
 
-    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag '%s'. Tags may only contain alphanumeric characters.";
+    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag '%s'. "
+            + "Tags may only contain alphanumeric characters.";
 
     private final TagContainsKeywordsPredicate predicate;
 
