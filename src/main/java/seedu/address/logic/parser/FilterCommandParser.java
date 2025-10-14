@@ -30,6 +30,11 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         List<String> tags = Arrays.stream(trimmedArgs.split("\\s+"))
                 .collect(Collectors.toList());
 
+        if (tags.size() > 10) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_EXCESSIVE_TAGS));
+        }
+
         for (String tagName : tags) {
             if (!Tag.isValidTagName(tagName)) {
                 throw new ParseException(

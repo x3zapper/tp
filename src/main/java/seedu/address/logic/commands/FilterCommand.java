@@ -25,6 +25,9 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag '%s'. "
             + "Tags may only contain alphanumeric characters.";
 
+    public static final String MESSAGE_EXCESSIVE_TAGS = "Error: You can only filter by "
+            + "up to 10 tags.";
+
     private final TagContainsKeywordsPredicate predicate;
 
     public FilterCommand(TagContainsKeywordsPredicate predicate) {

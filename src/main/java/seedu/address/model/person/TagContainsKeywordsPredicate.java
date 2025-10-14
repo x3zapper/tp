@@ -24,6 +24,10 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
+        if (keywords.isEmpty()) {
+            return false; // explicitly return false for empty predicate
+        }
+
         Set<String> personTagNames = person.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.toSet());
