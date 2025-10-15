@@ -70,7 +70,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_emptyFilteredListSorted_showsEmptyListNoError() {
+    public void execute_emptyFilteredListSorted_showsEmptyList() {
         // empty filtered List
         showNoPerson(model);
 
