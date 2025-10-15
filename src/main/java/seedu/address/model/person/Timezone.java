@@ -54,9 +54,10 @@ public class Timezone {
 
     @Override
     public boolean equals(Object other) {
+        //Using java instanceof pattern matching (Java 14)
         return this == other
-                || (other instanceof Timezone
-                && tzOffset == ((Timezone) other).tzOffset);
+                || (other instanceof Timezone otherTz
+                && tzOffset == otherTz.tzOffset);
     }
 
     @Override
