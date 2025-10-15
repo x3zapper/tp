@@ -16,6 +16,8 @@ import seedu.address.model.tag.Tag;
  */
 public class FilterCommandParser implements Parser<FilterCommand> {
 
+    public static final int EXCESS_TAG_COUNT = 10;
+
     /**
      * Parses the given {@code String} of arguments in the context of the FilterCommand
      * and returns a FilterCommand object for execution.
@@ -29,6 +31,11 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
         List<String> tags = Arrays.stream(trimmedArgs.split("\\s+"))
                 .collect(Collectors.toList());
+
+        if (tags.size() > EXCESS_TAG_COUNT) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_EXCESSIVE_TAGS));
+        }
 
         for (String tagName : tags) {
             if (!Tag.isValidTagName(tagName)) {

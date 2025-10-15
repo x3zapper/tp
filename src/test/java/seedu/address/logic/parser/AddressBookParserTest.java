@@ -19,6 +19,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -26,6 +27,7 @@ import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -103,5 +105,13 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+    }
+
+    @Test
+    public void parseCommand_filter() throws Exception {
+        List<String> tags = Arrays.asList("friends", "colleagues");
+        FilterCommand command = (FilterCommand) parser.parseCommand(
+                FilterCommand.COMMAND_WORD + " " + String.join(" ", tags));
+        assertEquals(new FilterCommand(new TagContainsKeywordsPredicate(tags)), command);
     }
 }
