@@ -31,7 +31,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone) {
         //todo ck: check who is sending null Timezone
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, tags, timezone);
         this.name = name;
         this.phone = phone;
         this.email = email;
