@@ -25,6 +25,16 @@ public class Timezone {
         this.tzOffset = tzOffset;
     }
 
+    /**
+     * Validates a double value if it's a valid timezone value
+     *
+     * Values accept are:
+     * -24 < timezoneValue < 24 or
+     * special value -999
+     *
+     * Other functions calling this must decide if the special value
+     * is allowed at their point of ingestion. (e.g. a save file load might accept it but not via the AddCommand)
+     * */
     public static boolean isValidTz(double tz) {
         return (tz < MAX_TIMEZONE && tz > MIN_TIMEZONE) || (tz == NO_TIMEZONE);
     }

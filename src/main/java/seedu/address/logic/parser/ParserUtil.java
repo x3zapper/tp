@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -124,9 +123,10 @@ public class ParserUtil {
         return tagSet;
     }
 
-    /** Parses {@code Optional<String> tzStr} into {@code Timezone} */
-    public static Timezone parseTimezone(Optional<String> tzStr) throws ParseException {
+    /** Parses {@code String tzStr} into {@code Timezone} */
+    public static Timezone parseTimezone(String tzStr) throws ParseException {
         requireNonNull(tzStr);
+        //If empty string, set as no timezone
         if (tzStr.isEmpty()) {
             return new Timezone(Timezone.NO_TIMEZONE);
         }
@@ -134,7 +134,7 @@ public class ParserUtil {
         //Try to parse the TZ double value
         double tz;
         try {
-            tz = Double.parseDouble(tzStr.get());
+            tz = Double.parseDouble(tzStr);
             //Disallow users using the special value
             if (!Timezone.isValidTz(tz) || tz == Timezone.NO_TIMEZONE) {
                 throw new NumberFormatException("Invalid timezone " + tz);
