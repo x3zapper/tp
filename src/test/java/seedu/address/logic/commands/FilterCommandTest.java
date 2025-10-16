@@ -22,7 +22,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code FilterCommand}.
+ * Contains integration tests (interaction with the Model) for
+ * {@code FilterCommand}.
  */
 public class FilterCommandTest {
 
@@ -82,8 +83,7 @@ public class FilterCommandTest {
         String expectedMessage = String.format(
                 MESSAGE_PERSONS_LISTED_WITH_TAGS,
                 expectedModel.getFilteredPersonList().size(),
-                String.join(", ", tags)
-        );
+                String.join(", ", tags));
 
         // Assuming ALICE and BENSON both have the "friends" tag in TypicalPersons
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -101,12 +101,45 @@ public class FilterCommandTest {
         String expectedMessage = String.format(
                 MESSAGE_PERSONS_LISTED_WITH_TAGS,
                 expectedModel.getFilteredPersonList().size(),
-                String.join(", ", tags)
-        );
+                String.join(", ", tags));
 
         // Assuming only BENSON has both tags
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(BENSON), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_caseMismatchTag_noPersonFound() {
+        List<String> tags = Collections.singletonList("Friends");
+        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(tags);
+        FilterCommand command = new FilterCommand(predicate);
+
+        expectedModel.updateFilteredPersonList(predicate);
+
+        String expectedMessage = String.format(
+                MESSAGE_PERSONS_LISTED_WITH_TAGS,
+                expectedModel.getFilteredPersonList().size(),
+                String.join(", ", tags));
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_missingRequiredTag_noPersonFound() {
+        List<String> tags = Arrays.asList("friends", "vip");
+        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(tags);
+        FilterCommand command = new FilterCommand(predicate);
+
+        expectedModel.updateFilteredPersonList(predicate);
+
+        String expectedMessage = String.format(
+                MESSAGE_PERSONS_LISTED_WITH_TAGS,
+                expectedModel.getFilteredPersonList().size(),
+                String.join(", ", tags));
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
     @Test

@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.util.Objects;
 
 /**
@@ -21,10 +23,26 @@ public class Timezone {
 
     public final double tzOffset;
 
+    /**
+     * Constructs a {@code Timezone}.
+     *
+     * @param tzOffset A valid double value timezone offset.
+     */
     public Timezone(double tzOffset) {
+        checkArgument(isValidTz(tzOffset), MESSAGE_CONSTRAINTS);
         this.tzOffset = tzOffset;
     }
 
+    /**
+     * Validates a double value if it's a valid timezone value
+     *
+     * Values accept are:
+     * -24 < timezoneValue < 24 or
+     * special value -999
+     *
+     * Other functions calling this must decide if the special value
+     * is allowed at their point of ingestion. (e.g. a save file load might accept it but not via the AddCommand)
+     * */
     public static boolean isValidTz(double tz) {
         return (tz < MAX_TIMEZONE && tz > MIN_TIMEZONE) || (tz == NO_TIMEZONE);
     }
@@ -39,14 +57,17 @@ public class Timezone {
             return "No Timezone Specified";
         }
 
-        return ((tzOffset > 0) ? "+" : "-") + String.format("%.2f", tzOffset);
+        //todo ck: for now keep as raw TZ value
+        /*String.format("%.2f", tzOffset)*/
+        return "UTC" + ((tzOffset >= 0) ? "+" : "") + tzOffset;
     }
 
     @Override
     public boolean equals(Object other) {
+        //Using java instanceof pattern matching (Java 14)
         return this == other
-                || (other instanceof Timezone
-                && tzOffset == ((Timezone) other).tzOffset);
+                || (other instanceof Timezone otherTz
+                && tzOffset == otherTz.tzOffset);
     }
 
     @Override

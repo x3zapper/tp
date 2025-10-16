@@ -31,7 +31,7 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone) {
         //todo ck: check who is sending null Timezone
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, tags, timezone);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -101,9 +101,8 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags);
-                //todo ck: fix equality checks
-                // && timezone.equals(otherPerson.timezone);
+                && tags.equals(otherPerson.tags)
+                && timezone.equals(otherPerson.timezone);
     }
 
     @Override
@@ -120,9 +119,8 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("timezone", timezone)
                 .toString();
-                //todo ck: add this back
-                //.add("timezone", timezone)
     }
 
 }

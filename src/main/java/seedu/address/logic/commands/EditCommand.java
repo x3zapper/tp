@@ -80,6 +80,7 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        //Check if modifying a contact to one that already exists
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -101,10 +102,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Timezone updatedTimezone = editPersonDescriptor.getTimezone().orElse(personToEdit.getTimezone());
 
-        //todo ck: continue implementing
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                new Timezone(Timezone.NO_TIMEZONE));
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedTimezone);
     }
 
     @Override
@@ -141,6 +141,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Timezone timezone;
 
         public EditPersonDescriptor() {}
 
@@ -154,13 +155,14 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            setTimezone(toCopy.timezone);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, timezone);
         }
 
         public void setName(Name name) {
@@ -212,6 +214,14 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setTimezone(Timezone timezone) {
+            this.timezone = timezone;
+        }
+
+        public Optional<Timezone> getTimezone() {
+            return Optional.ofNullable(timezone);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -228,7 +238,8 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(timezone, otherEditPersonDescriptor.timezone);
         }
 
         @Override
@@ -239,6 +250,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
+                    .add("timezone", timezone)
                     .toString();
         }
     }
