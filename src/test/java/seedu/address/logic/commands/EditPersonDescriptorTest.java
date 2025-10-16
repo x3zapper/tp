@@ -55,17 +55,21 @@ public class EditPersonDescriptorTest {
         // different tags -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
+
+        //todo ck: can add test case for timezone data here
     }
 
     @Test
     public void toStringMethod() {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        String expected = EditPersonDescriptor.class.getCanonicalName() + "{name="
-                + editPersonDescriptor.getName().orElse(null) + ", phone="
-                + editPersonDescriptor.getPhone().orElse(null) + ", email="
-                + editPersonDescriptor.getEmail().orElse(null) + ", address="
-                + editPersonDescriptor.getAddress().orElse(null) + ", tags="
-                + editPersonDescriptor.getTags().orElse(null) + "}";
+        String expected = EditPersonDescriptor.class.getCanonicalName()
+                + "{name=" + editPersonDescriptor.getName().orElse(null)
+                + ", phone=" + editPersonDescriptor.getPhone().orElse(null)
+                + ", email=" + editPersonDescriptor.getEmail().orElse(null)
+                + ", address=" + editPersonDescriptor.getAddress().orElse(null)
+                + ", tags=" + editPersonDescriptor.getTags().orElse(null)
+                + ", timezone=" + editPersonDescriptor.getTimezone().orElse(null)
+                + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }

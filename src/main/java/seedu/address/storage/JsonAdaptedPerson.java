@@ -30,7 +30,7 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-    //private final double timezone;
+    private final Double timezone; //Allows to get a null for timezone value rather than jackson autofill
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -38,8 +38,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        /*, @JsonProperty("timezone") double timezone*/
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("timezone") Double timezone) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -47,7 +46,7 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        //this.timezone = timezone;
+        this.timezone = timezone;
     }
 
     /**
@@ -61,9 +60,10 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        //timezone = source.getTimezone().tzOffset;
+        timezone = source.getTimezone().tzOffset;
     }
 
+    //todo ck: If exception was thrown for just 1 person, whole data file will not load
     /**
      * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
      *
@@ -109,15 +109,20 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        //todo ck: curr using dummy values for the file saves
-        /*//If users choose to set the NO_TIMEZONE value themselves, it is technically valid
-        if (!Timezone.isValidTz(timezone)) {
+        //todo ck: consider func extraction?
+        final Timezone modelTimezone;
+        //If user deleted the value from savefile, still treat as valid and set NO_TIMEZONE value
+        if (timezone == null) {
+            modelTimezone = new Timezone(Timezone.NO_TIMEZONE);
+        } else if (!Timezone.isValidTz(timezone)) {
+            //Check value, if users choose to set the NO_TIMEZONE value themselves, it is technically valid
             throw new IllegalValueException(Timezone.MESSAGE_CONSTRAINTS);
+        } else {
+            //Restore tz value
+            modelTimezone = new Timezone(timezone);
         }
-        final Timezone modelTimezone = new Timezone(timezone);*/
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags,
-                new Timezone(Timezone.NO_TIMEZONE));
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelTimezone);
     }
 
 }
