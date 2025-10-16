@@ -50,7 +50,6 @@ public class SampleDataUtil {
             new Person(
                     new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    //todo ck: try using a invalid TZ after json saves are working
                     getTagSet("colleagues"), new Timezone(23.5)
             )
         };
