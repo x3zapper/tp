@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 import java.util.Objects;
 
 /**
@@ -22,6 +24,7 @@ public class Timezone {
     public final double tzOffset;
 
     public Timezone(double tzOffset) {
+        checkArgument(isValidTz(tzOffset), MESSAGE_CONSTRAINTS);
         this.tzOffset = tzOffset;
     }
 
