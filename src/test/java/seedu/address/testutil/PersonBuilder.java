@@ -21,6 +21,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final double DEFAULT_TIMEZONE = Timezone.NO_TIMEZONE;
 
     private Name name;
     private Phone phone;
@@ -38,7 +39,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        timezone = new Timezone(Timezone.NO_TIMEZONE);
+        timezone = new Timezone(DEFAULT_TIMEZONE);
     }
 
     /**
@@ -50,6 +51,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        timezone = personToCopy.getTimezone();
     }
 
     /**
@@ -89,6 +91,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withEmail(String email) {
         this.email = new Email(email);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Timezone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTimezone(double timezone) {
+        this.timezone = new Timezone(timezone);
         return this;
     }
 
