@@ -30,7 +30,7 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-    private final Double timezone;  //Allows to get a null for timezone value rather than jackson autofill
+    private final Double timezone; //Allows to get a null for timezone value rather than jackson autofill
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -114,13 +114,11 @@ class JsonAdaptedPerson {
         //If user deleted the value from savefile, still treat as valid and set NO_TIMEZONE value
         if (timezone == null) {
             modelTimezone = new Timezone(Timezone.NO_TIMEZONE);
-        }
-        //Check value, if users choose to set the NO_TIMEZONE value themselves, it is technically valid
-        else if (!Timezone.isValidTz(timezone)) {
+        } else if (!Timezone.isValidTz(timezone)) {
+            //Check value, if users choose to set the NO_TIMEZONE value themselves, it is technically valid
             throw new IllegalValueException(Timezone.MESSAGE_CONSTRAINTS);
-        }
-        //Restore tz value
-        else {
+        } else {
+            //Restore tz value
             modelTimezone = new Timezone(timezone);
         }
 

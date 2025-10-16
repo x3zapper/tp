@@ -23,6 +23,11 @@ public class Timezone {
 
     public final double tzOffset;
 
+    /**
+     * Constructs a {@code Timezone}.
+     *
+     * @param tzOffset A valid double value timezone offset.
+     */
     public Timezone(double tzOffset) {
         checkArgument(isValidTz(tzOffset), MESSAGE_CONSTRAINTS);
         this.tzOffset = tzOffset;
