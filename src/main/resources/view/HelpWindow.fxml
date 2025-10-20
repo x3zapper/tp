@@ -5,8 +5,10 @@
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
 <fx:root resizable="false" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
@@ -19,26 +21,107 @@
         <URL value="@HelpWindow.css" />
       </stylesheets>
 
-      <HBox alignment="CENTER" fx:id="helpMessageContainer">
+      <VBox spacing="10.0" id="help-window-root">
         <children>
-          <Label fx:id="helpMessage" text="Label">
-            <HBox.margin>
-              <Insets right="5.0" />
-            </HBox.margin>
-          </Label>
-          <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
-            <HBox.margin>
-              <Insets left="5.0" />
-            </HBox.margin>
-          </Button>
+          <VBox alignment="CENTER_LEFT" spacing="5.0" id="help-summary-container">
+            <children>
+              <Label id="help-summary-line-1" text="[Insert info here]" wrapText="true" />
+              <Label id="help-summary-line-2" text="Some command summary" wrapText="true" />
+            </children>
+            <padding>
+              <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+          </VBox>
+          <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" hbarPolicy="NEVER" id="help-command-scroll" maxHeight="220.0" prefViewportHeight="220.0" vbarPolicy="AS_NEEDED">
+            <VBox.margin>
+              <Insets left="10.0" right="10.0" />
+            </VBox.margin>
+            <content>
+              <VBox id="help-command-list" spacing="8.0">
+                <children>
+                  <VBox spacing="4.0" id="command-section-1">
+                    <children>
+                      <Label id="command-title-1" text="Command One" wrapText="true" />
+                      <Label id="command-description-1" text="First command usage details." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                  <VBox spacing="4.0" id="command-section-2">
+                    <children>
+                      <Label id="command-title-2" text="Command Two" wrapText="true" />
+                      <Label id="command-description-2" text="Second command usage details." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                  <VBox spacing="4.0" id="command-section-3">
+                    <children>
+                      <Label id="command-title-3" text="Command Three" wrapText="true" />
+                      <Label id="command-description-3" text="Third command usage details." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                  <VBox spacing="4.0" id="command-section-4">
+                    <children>
+                      <Label id="command-title-4" text="Command Four" wrapText="true" />
+                      <Label id="command-description-4" text="Fourth command usage details." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                  <VBox spacing="4.0" id="command-section-5">
+                    <children>
+                      <Label id="command-title-5" text="Command Five" wrapText="true" />
+                      <Label id="command-description-5" text="Fifth command usage details." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                  <VBox spacing="4.0" id="command-section-6">
+                    <children>
+                      <Label id="command-title-6" text="Command Six" wrapText="true" />
+                      <Label id="command-description-6" text="Sixth command usage details." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                </children>
+              </VBox>
+            </content>
+          </ScrollPane>
+          <HBox alignment="CENTER" fx:id="helpMessageContainer">
+            <children>
+              <Label fx:id="helpMessage" text="Label">
+                <HBox.margin>
+                  <Insets right="5.0" />
+                </HBox.margin>
+              </Label>
+              <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
+                <HBox.margin>
+                  <Insets left="5.0" />
+                </HBox.margin>
+              </Button>
+            </children>
+            <opaqueInsets>
+              <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
+            </opaqueInsets>
+            <padding>
+              <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
+            </padding>
+          </HBox>
         </children>
-        <opaqueInsets>
-          <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
-        </opaqueInsets>
         <padding>
           <Insets bottom="10.0" left="5.0" right="10.0" top="5.0" />
         </padding>
-      </HBox>
+      </VBox>
     </Scene>
   </scene>
 </fx:root>
