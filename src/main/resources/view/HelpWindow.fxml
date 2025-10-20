@@ -41,8 +41,8 @@
                 <children>
                   <VBox spacing="4.0" id="command-section-1">
                     <children>
-                      <Label id="command-title-1" text="Command One" wrapText="true" />
-                      <Label id="command-description-1" text="First command usage details." wrapText="true" />
+                      <Label id="command-title-1" text="list" wrapText="true" />
+                      <Label id="command-description-1" text="Displays every person in the address book. Usage: list" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
@@ -50,8 +50,8 @@
                   </VBox>
                   <VBox spacing="4.0" id="command-section-2">
                     <children>
-                      <Label id="command-title-2" text="Command Two" wrapText="true" />
-                      <Label id="command-description-2" text="Second command usage details." wrapText="true" />
+                      <Label id="command-title-2" text="help" wrapText="true" />
+                      <Label id="command-description-2" text="Opens the help window with guidance. Usage: help" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
