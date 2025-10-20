@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -14,8 +16,10 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class FindCommandParser implements Parser<FindCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * Parses the given {@code String} of arguments in the context of the
+     * FindCommand
      * and returns a FindCommand object for execution.
+     * 
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
@@ -25,9 +29,37 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        List<String> tokens = Arrays.asList(trimmedArgs.split("\\s+"));
+        List<String> keywords = new ArrayList<>();
+        boolean isStrict = false;
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        for (int i = 0; i < tokens.size(); i++) {
+            String token = tokens.get(i);
+            if ("/s".equalsIgnoreCase(token)) {
+                if (i + 1 >= tokens.size()) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                String modeToken = tokens.get(++i);
+                if ("1".equals(modeToken)) {
+                    isStrict = true;
+                } else if ("0".equals(modeToken)) {
+                    isStrict = false;
+                } else {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                continue;
+            }
+            keywords.add(token);
+        }
+
+        if (keywords.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        return new FindCommand(new NameContainsKeywordsPredicate(keywords, isStrict));
     }
 
 }
