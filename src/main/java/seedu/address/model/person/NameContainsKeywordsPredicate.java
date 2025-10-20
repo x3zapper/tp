@@ -17,6 +17,13 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         this(keywords, false);
     }
 
+    /**
+     * Constructs a predicate that matches names using the supplied keywords.
+     *
+     * @param keywords list of user-provided keywords to test against the name
+     * @param isStrict {@code true} for strict full-word matching, {@code false} for
+     *                 relaxed partial matching
+     */
     public NameContainsKeywordsPredicate(List<String> keywords, boolean isStrict) {
         this.keywords = keywords;
         this.isStrict = isStrict;

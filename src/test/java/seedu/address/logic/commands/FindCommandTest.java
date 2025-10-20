@@ -104,7 +104,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_strictMode_partialKeyword_noPersonFound() {
+    public void execute_strictMode_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = preparePredicate("Mei", true);
         FindCommand command = new FindCommand(predicate);
