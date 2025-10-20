@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
@@ -10,19 +11,27 @@ import seedu.address.commons.util.ToStringBuilder;
  */
 public class NameContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
+    private final boolean isStrict;
 
     public NameContainsKeywordsPredicate(List<String> keywords) {
+        this(keywords, false);
+    }
+
+    public NameContainsKeywordsPredicate(List<String> keywords, boolean isStrict) {
         this.keywords = keywords;
+        this.isStrict = isStrict;
     }
 
     @Override
     public boolean test(Person person) {
-        String lowerCaseName = person.getName().fullName.toLowerCase();
+        String fullName = person.getName().fullName;
+        String lowerCaseName = fullName.toLowerCase();
         return keywords.stream()
                 .map(String::trim)
                 .filter(keyword -> !keyword.isEmpty())
-                .map(String::toLowerCase)
-                .anyMatch(lowerCaseName::contains);
+                .anyMatch(keyword -> isStrict
+                        ? StringUtil.containsWordIgnoreCase(fullName, keyword)
+                        : lowerCaseName.contains(keyword.toLowerCase()));
     }
 
     @Override
@@ -37,11 +46,15 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         NameContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (NameContainsKeywordsPredicate) other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
+        return keywords.equals(otherNameContainsKeywordsPredicate.keywords)
+                && isStrict == otherNameContainsKeywordsPredicate.isStrict;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("keywords", keywords).toString();
+        return new ToStringBuilder(this)
+                .add("keywords", keywords)
+                .add("isStrict", isStrict)
+                .toString();
     }
 }

@@ -21,6 +21,8 @@ public class NameContainsKeywordsPredicateTest {
 
         NameContainsKeywordsPredicate firstPredicate = new NameContainsKeywordsPredicate(firstPredicateKeywordList);
         NameContainsKeywordsPredicate secondPredicate = new NameContainsKeywordsPredicate(secondPredicateKeywordList);
+        NameContainsKeywordsPredicate strictPredicate = new NameContainsKeywordsPredicate(firstPredicateKeywordList,
+                true);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
@@ -37,6 +39,9 @@ public class NameContainsKeywordsPredicateTest {
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
+
+        // different strict mode -> returns false
+        assertFalse(firstPredicate.equals(strictPredicate));
     }
 
     @Test
@@ -60,6 +65,10 @@ public class NameContainsKeywordsPredicateTest {
         // Partial keyword
         predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Ali"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Strict keyword
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"), true);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
     @Test
@@ -80,6 +89,10 @@ public class NameContainsKeywordsPredicateTest {
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
+
+        // Strict keyword does not match partial name
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Ali"), true);
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
     @Test
@@ -87,8 +100,8 @@ public class NameContainsKeywordsPredicateTest {
         List<String> keywords = List.of("keyword1", "keyword2");
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keywords);
 
-        String expected = NameContainsKeywordsPredicate.class.getCanonicalName() + "{keywords=" + keywords + "}";
+        String expected = NameContainsKeywordsPredicate.class.getCanonicalName()
+                + "{keywords=" + keywords + ", isStrict=false}";
         assertEquals(expected, predicate.toString());
     }
 }
-

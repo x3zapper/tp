@@ -36,6 +36,8 @@ public class FindCommandTest {
                 Collections.singletonList("first"));
         NameContainsKeywordsPredicate secondPredicate = new NameContainsKeywordsPredicate(
                 Collections.singletonList("second"));
+        NameContainsKeywordsPredicate strictPredicate = new NameContainsKeywordsPredicate(
+                Collections.singletonList("first"), true);
 
         FindCommand findFirstCommand = new FindCommand(firstPredicate);
         FindCommand findSecondCommand = new FindCommand(secondPredicate);
@@ -55,6 +57,10 @@ public class FindCommandTest {
 
         // different person -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
+
+        // different strictness -> returns false
+        FindCommand strictFindCommand = new FindCommand(strictPredicate);
+        assertFalse(findFirstCommand.equals(strictFindCommand));
     }
 
     @Test
@@ -98,6 +104,16 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_strictMode_partialKeyword_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        NameContainsKeywordsPredicate predicate = preparePredicate("Mei", true);
+        FindCommand command = new FindCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
     public void toStringMethod() {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
         FindCommand findCommand = new FindCommand(predicate);
@@ -110,5 +126,9 @@ public class FindCommandTest {
      */
     private NameContainsKeywordsPredicate preparePredicate(String userInput) {
         return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    private NameContainsKeywordsPredicate preparePredicate(String userInput, boolean isStrict) {
+        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")), isStrict);
     }
 }
