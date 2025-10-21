@@ -40,35 +40,24 @@
     -fx-background-color: transparent;
 }
 
-#command-section-1,
-#command-section-2,
-#command-section-3,
-#command-section-4,
-#command-section-5,
-#command-section-6 {
+/* Style all command sections */
+.command-section {
     -fx-background-radius: 6;
 }
 
-#command-section-1,
-#command-section-3,
-#command-section-5 {
+/* Alternating background colors for command sections */
+.command-section-odd {
     background-color: #3c3e3f;
     -fx-background-color: #3c3e3f;
 }
 
-#command-section-2,
-#command-section-4,
-#command-section-6 {
+.command-section-even {
     background-color: #515658;
     -fx-background-color: #515658;
 }
 
-#command-title-1,
-#command-title-2,
-#command-title-3,
-#command-title-4,
-#command-title-5,
-#command-title-6 {
+/* Style all command titles */
+.command-title {
     font-size: 13px;
     -fx-font-size: 13px;
     font-weight: bold;
@@ -76,12 +65,8 @@
     -fx-text-fill: white;
 }
 
-#command-description-1,
-#command-description-2,
-#command-description-3,
-#command-description-4,
-#command-description-5,
-#command-description-6 {
+/* Style all command descriptions */
+.command-description {
     opacity: 0.85;
     -fx-text-fill: white;
     -fx-opacity: 0.85;

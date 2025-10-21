@@ -39,55 +39,55 @@
             <content>
               <VBox id="help-command-list" spacing="8.0">
                 <children>
-                  <VBox spacing="4.0" id="command-section-1">
+                  <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
-                      <Label id="command-title-1" text="list" wrapText="true" />
-                      <Label id="command-description-1" text="Displays every person in the address book. Usage: list" wrapText="true" />
+                      <Label styleClass="command-title" text="list" wrapText="true" />
+                      <Label styleClass="command-description" text="Displays every person in the address book. Usage: list" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" id="command-section-2">
+                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
                     <children>
-                      <Label id="command-title-2" text="help" wrapText="true" />
-                      <Label id="command-description-2" text="Opens the help window with guidance. Usage: help" wrapText="true" />
+                      <Label styleClass="command-title" text="help" wrapText="true" />
+                      <Label styleClass="command-description" text="Opens the help window with guidance. Usage: help" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" id="command-section-3">
+                  <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
-                      <Label id="command-title-3" text="Command Three" wrapText="true" />
-                      <Label id="command-description-3" text="Third command usage details." wrapText="true" />
+                      <Label styleClass="command-title" text="Command Three" wrapText="true" />
+                      <Label styleClass="command-description" text="Third command usage details." wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" id="command-section-4">
+                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
                     <children>
-                      <Label id="command-title-4" text="Command Four" wrapText="true" />
-                      <Label id="command-description-4" text="Fourth command usage details." wrapText="true" />
+                      <Label styleClass="command-title" text="Command Four" wrapText="true" />
+                      <Label styleClass="command-description" text="Fourth command usage details." wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" id="command-section-5">
+                  <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
-                      <Label id="command-title-5" text="Command Five" wrapText="true" />
-                      <Label id="command-description-5" text="Fifth command usage details." wrapText="true" />
+                      <Label styleClass="command-title" text="Command Five" wrapText="true" />
+                      <Label styleClass="command-description" text="Fifth command usage details." wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" id="command-section-6">
+                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
                     <children>
-                      <Label id="command-title-6" text="Command Six" wrapText="true" />
-                      <Label id="command-description-6" text="Sixth command usage details." wrapText="true" />
+                      <Label styleClass="command-title" text="Command Six" wrapText="true" />
+                      <Label styleClass="command-description" text="Sixth command usage details." wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
