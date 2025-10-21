@@ -22,7 +22,9 @@ public class NameContainsKeywordsPredicateTest {
         NameContainsKeywordsPredicate firstPredicate = new NameContainsKeywordsPredicate(firstPredicateKeywordList);
         NameContainsKeywordsPredicate secondPredicate = new NameContainsKeywordsPredicate(secondPredicateKeywordList);
         NameContainsKeywordsPredicate strictPredicate = new NameContainsKeywordsPredicate(firstPredicateKeywordList,
-                true);
+                true, false);
+        NameContainsKeywordsPredicate fuzzyPredicate = new NameContainsKeywordsPredicate(firstPredicateKeywordList,
+                false, true);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
@@ -42,6 +44,9 @@ public class NameContainsKeywordsPredicateTest {
 
         // different strict mode -> returns false
         assertFalse(firstPredicate.equals(strictPredicate));
+
+        // different fuzzy mode -> returns false
+        assertFalse(firstPredicate.equals(fuzzyPredicate));
     }
 
     @Test
@@ -67,7 +72,19 @@ public class NameContainsKeywordsPredicateTest {
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         // Strict keyword
-        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"), true);
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"), true, false);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Fuzzy keyword - exact match
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"), false, true);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Fuzzy keyword - 1 character difference
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alica"), false, true);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Fuzzy keyword - 2 characters difference
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alic"), false, true);
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
@@ -91,7 +108,15 @@ public class NameContainsKeywordsPredicateTest {
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
 
         // Strict keyword does not match partial name
-        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Ali"), true);
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Ali"), true, false);
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Fuzzy keyword - too many differences (>2)
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("xyz"), false, true);
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Fuzzy keyword - 3 characters difference, should not match
+        predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Axyz"), false, true);
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
@@ -101,7 +126,7 @@ public class NameContainsKeywordsPredicateTest {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keywords);
 
         String expected = NameContainsKeywordsPredicate.class.getCanonicalName()
-                + "{keywords=" + keywords + ", isStrict=false}";
+                + "{keywords=" + keywords + ", isStrict=false, isFuzzy=false}";
         assertEquals(expected, predicate.toString());
     }
 }
