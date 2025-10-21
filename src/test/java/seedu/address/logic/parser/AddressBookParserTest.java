@@ -79,8 +79,8 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
 
         FindCommand strictCommand = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " /s 1 " + String.join(" ", keywords));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords, true)), strictCommand);
+                FindCommand.COMMAND_WORD + " " + String.join(" ", keywords) + " s/1");
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords, true, false)), strictCommand);
     }
 
     @Test
