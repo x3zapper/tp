@@ -10,6 +10,9 @@ import seedu.address.commons.util.ToStringBuilder;
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
 public class NameContainsKeywordsPredicate implements Predicate<Person> {
+    /** Maximum Levenshtein distance allowed for fuzzy matching. */
+    public static final int FUZZY_MATCH_THRESHOLD = 2;
+
     private final List<String> keywords;
     private final boolean isStrict;
     private final boolean isFuzzy;
@@ -79,8 +82,8 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     /**
      * Performs fuzzy matching between the name and keyword using Levenshtein
      * distance.
-     * A match is considered if any word in the name has a Levenshtein distance <= 2
-     * from the keyword.
+     * A match is considered if any word in the name has a Levenshtein distance
+     * &lt;= {@value #FUZZY_MATCH_THRESHOLD} from the keyword.
      *
      * @param name    the full name to check
      * @param keyword the keyword to match against
@@ -92,7 +95,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
 
         for (String word : words) {
             int distance = StringUtil.getLevenshteinDistance(word, lowerKeyword);
-            if (distance <= 2) {
+            if (distance <= FUZZY_MATCH_THRESHOLD) {
                 return true;
             }
         }
