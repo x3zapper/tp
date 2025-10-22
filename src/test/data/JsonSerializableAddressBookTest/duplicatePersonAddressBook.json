@@ -5,12 +5,14 @@
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
     "tags": [ "friends" ],
-    "timezone": 0.0
+    "timezone": 0.0,
+    "note": ""
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
-    "timezone": 0.0
+    "timezone": 0.0,
+    "note": ""
   } ]
 }
