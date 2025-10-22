@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
@@ -25,6 +26,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final List<Person> unsortedPersons;
+    private final SortedList<Person> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +40,8 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        unsortedPersons = this.addressBook.getPersonList();
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
     }
 
     public ModelManager() {
@@ -83,6 +88,11 @@ public class ModelManager implements Model {
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
         this.addressBook.resetData(addressBook);
+    }
+
+    @Override
+    public void setAddressBook(List<Person> persons) {
+        this.addressBook.setPersons(persons);
     }
 
     @Override
@@ -133,14 +143,8 @@ public class ModelManager implements Model {
 
     @Override
     public void sortFilteredPersonList() {
-        List<Person> sortedPersons = new ArrayList<>(this.addressBook.getPersonList());
-        Comparator<Person> comparator = Comparator.comparing(person ->
-            String.valueOf(person.getName())
-        );
-        sortedPersons.sort(comparator);
-        AddressBook newAddressBook = new AddressBook();
-        newAddressBook.setPersons(sortedPersons);
-        setAddressBook(newAddressBook);
+        List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
+        setAddressBook(sortedPersonsTemp);
     }
 
     @Override
@@ -156,8 +160,8 @@ public class ModelManager implements Model {
 
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
-                && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+            && userPrefs.equals(otherModelManager.userPrefs)
+            && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
 }
