@@ -1,19 +1,91 @@
 #copyButton, #helpMessage {
+    color: white;
     -fx-text-fill: white;
 }
 
 #copyButton {
+    background-color: dimgray;
     -fx-background-color: dimgray;
 }
 
 #copyButton:hover {
+    background-color: gray;
     -fx-background-color: gray;
 }
 
 #copyButton:armed {
+    background-color: darkgray;
     -fx-background-color: darkgray;
 }
 
 #helpMessageContainer {
+    background-color: derive(#1d1d1d, 20%);
     -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#help-window-root {
+    background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#help-summary-container {
+    background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: derive(#1d1d1d, 30%);
+}
+
+#help-command-scroll {
+    background-color: transparent;
+    -fx-background-color: transparent;
+    border-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#help-command-scroll .viewport {
+    background-color: transparent;
+    -fx-background-color: transparent;
+}
+
+#help-command-list {
+    background-color: transparent;
+    -fx-background-color: transparent;
+    padding: 0 5px 0 0;
+    -fx-padding: 0 5 0 0;
+}
+
+/* Style all command sections */
+.command-section {
+    border-radius: 6px;
+    -fx-background-radius: 6;
+}
+
+/* Alternating background colors for command sections */
+.command-section-odd {
+    background-color: #3c3e3f;
+    -fx-background-color: #3c3e3f;
+}
+
+.command-section-even {
+    background-color: #515658;
+    -fx-background-color: #515658;
+}
+
+/* Style all command titles */
+.command-title {
+    font-size: 13px;
+    -fx-font-size: 13px;
+    font-weight: bold;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* Style all command descriptions */
+.command-description {
+    opacity: 0.85;
+    -fx-text-fill: white;
+    -fx-opacity: 0.85;
+}
+
+#help-summary-container Label {
+    color: white;
+    -fx-text-fill: white;
 }
