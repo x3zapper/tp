@@ -13,6 +13,10 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
+    private static final String MODE_RELAXED = "0";
+    private static final String MODE_STRICT = "1";
+    private static final String MODE_FUZZY = "2";
+    private static final int MIN_MODE_PREFIX_LENGTH = 3; // "s/" + at least one digit
 
     /**
      * Parses the given {@code String} of arguments in the context of the
@@ -69,20 +73,60 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the search mode is invalid
      */
     private SearchMode extractSearchModeFromPrefix(String args) throws ParseException {
-        String[] parts = args.split("\\s+", 2);
+        String[] parts = splitArguments(args);
+        validateModePrefixParts(parts);
+
+        String modePrefix = parts[0];
+        validateModePrefixLength(modePrefix);
+
+        String mode = extractModeValue(modePrefix);
+        return parseMode(mode, parts[1]);
+    }
+
+    /**
+     * Splits the arguments into mode prefix and remaining arguments.
+     *
+     * @param args the arguments to split
+     * @return an array containing the mode prefix and remaining arguments
+     */
+    private String[] splitArguments(String args) {
+        return args.split("\\s+", 2);
+    }
+
+    /**
+     * Validates that the split parts contain both mode and keywords.
+     *
+     * @param parts the split parts to validate
+     * @throws ParseException if parts array has insufficient elements
+     */
+    private void validateModePrefixParts(String[] parts) throws ParseException {
         if (parts.length < 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+    }
 
-        String modePrefix = parts[0];
-        if (modePrefix.length() <= 2) {
+    /**
+     * Validates that the mode prefix has sufficient length.
+     *
+     * @param modePrefix the mode prefix to validate
+     * @throws ParseException if the mode prefix is too short
+     */
+    private void validateModePrefixLength(String modePrefix) throws ParseException {
+        if (modePrefix.length() < MIN_MODE_PREFIX_LENGTH) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+    }
 
-        String mode = modePrefix.substring(2);
-        return parseMode(mode, parts[1]);
+    /**
+     * Extracts the mode value from the mode prefix.
+     *
+     * @param modePrefix the mode prefix containing "s/" followed by the mode
+     * @return the mode value (e.g., "0", "1", "2")
+     */
+    private String extractModeValue(String modePrefix) {
+        return modePrefix.substring(2);
     }
 
     /**
@@ -113,16 +157,46 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private SearchMode parseMode(String mode, String remainingArgs) throws ParseException {
         switch (mode) {
-        case "0":
-            return new SearchMode(false, false, remainingArgs);
-        case "1":
-            return new SearchMode(true, false, remainingArgs);
-        case "2":
-            return new SearchMode(false, true, remainingArgs);
+        case MODE_RELAXED:
+            return createRelaxedMode(remainingArgs);
+        case MODE_STRICT:
+            return createStrictMode(remainingArgs);
+        case MODE_FUZZY:
+            return createFuzzyMode(remainingArgs);
         default:
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+    }
+
+    /**
+     * Creates a relaxed search mode.
+     *
+     * @param remainingArgs the remaining arguments after extracting the mode
+     * @return a SearchMode configured for relaxed matching
+     */
+    private SearchMode createRelaxedMode(String remainingArgs) {
+        return new SearchMode(false, false, remainingArgs);
+    }
+
+    /**
+     * Creates a strict search mode.
+     *
+     * @param remainingArgs the remaining arguments after extracting the mode
+     * @return a SearchMode configured for strict matching
+     */
+    private SearchMode createStrictMode(String remainingArgs) {
+        return new SearchMode(true, false, remainingArgs);
+    }
+
+    /**
+     * Creates a fuzzy search mode.
+     *
+     * @param remainingArgs the remaining arguments after extracting the mode
+     * @return a SearchMode configured for fuzzy matching
+     */
+    private SearchMode createFuzzyMode(String remainingArgs) {
+        return new SearchMode(false, true, remainingArgs);
     }
 
     /**
@@ -134,20 +208,48 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private List<String> extractKeywords(String argsToProcess) throws ParseException {
         String preamble = argsToProcess.trim();
+        validateNonEmptyPreamble(preamble);
 
+        List<String> keywords = splitIntoKeywords(preamble);
+        validateKeywords(keywords);
+
+        return keywords;
+    }
+
+    /**
+     * Validates that the preamble is not empty.
+     *
+     * @param preamble the preamble to validate
+     * @throws ParseException if the preamble is empty
+     */
+    private void validateNonEmptyPreamble(String preamble) throws ParseException {
         if (preamble.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+    }
 
-        List<String> keywords = List.of(preamble.split("\\s+"));
+    /**
+     * Splits the preamble into individual keywords.
+     *
+     * @param preamble the preamble to split
+     * @return a list of keywords
+     */
+    private List<String> splitIntoKeywords(String preamble) {
+        return List.of(preamble.split("\\s+"));
+    }
 
+    /**
+     * Validates that the keywords list is not empty and contains valid keywords.
+     *
+     * @param keywords the keywords to validate
+     * @throws ParseException if all keywords are blank
+     */
+    private void validateKeywords(List<String> keywords) throws ParseException {
         if (keywords.isEmpty() || keywords.stream().allMatch(String::isBlank)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-
-        return keywords;
     }
 
     /**
