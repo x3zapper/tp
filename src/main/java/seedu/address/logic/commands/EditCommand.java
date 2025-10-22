@@ -22,12 +22,14 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Timezone;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Edits the details of an existing person in the address book.
@@ -104,7 +106,11 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Timezone updatedTimezone = editPersonDescriptor.getTimezone().orElse(personToEdit.getTimezone());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedTimezone);
+        // Edits to dateAdded is NOT allowed
+        DateAdded dateAdded = personToEdit.getDateAdded();
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedTimezone,
+            dateAdded);
     }
 
     @Override
@@ -142,6 +148,7 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Timezone timezone;
+        // Note: Because dateAdded is not supposed to be edited, it will not be a property here.
 
         public EditPersonDescriptor() {}
 

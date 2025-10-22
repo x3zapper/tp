@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -25,6 +26,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
     private static final double INVALID_TIMEZONE = 24;
+    private static final String INVALID_DATEADDED = "0000-00-00T00:00:00.000000000Z";
 
     private static final String VALID_NAME = BENSON.getName().toString();
     private static final String VALID_PHONE = BENSON.getPhone().toString();
@@ -34,6 +36,7 @@ public class JsonAdaptedPersonTest {
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
     private static final double VALID_TIMEZONE = 8;
+    private static final String VALID_DATEADDED = "1999-12-31T23:59:59.000000001Z";
 
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
@@ -49,7 +52,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -63,7 +67,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -77,7 +82,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -91,7 +97,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -105,7 +112,8 @@ public class JsonAdaptedPersonTest {
                 INVALID_EMAIL,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -119,7 +127,8 @@ public class JsonAdaptedPersonTest {
                 null,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -133,7 +142,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 INVALID_ADDRESS,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -147,7 +157,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 null,
                 VALID_TAGS,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
@@ -163,7 +174,8 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 VALID_ADDRESS,
                 invalidTags,
-                VALID_TIMEZONE
+                VALID_TIMEZONE,
+                VALID_DATEADDED
         );
         assertThrows(IllegalValueException.class, person::toModelType);
     }
@@ -176,9 +188,25 @@ public class JsonAdaptedPersonTest {
                 VALID_EMAIL,
                 VALID_ADDRESS,
                 VALID_TAGS,
-                INVALID_TIMEZONE
+                INVALID_TIMEZONE,
+                VALID_DATEADDED
         );
         String expectedMessage = Timezone.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidDateAdded_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(
+            VALID_NAME,
+            VALID_PHONE,
+            VALID_EMAIL,
+            VALID_ADDRESS,
+            VALID_TAGS,
+            VALID_TIMEZONE,
+            INVALID_DATEADDED
+        );
+        String expectedMessage = DateAdded.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 

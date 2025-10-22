@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -31,6 +32,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final Double timezone; //Allows to get a null for timezone value rather than jackson autofill
+    private final String dateAdded; // Due to not wanting to use serialization, we are saving dateAdded to string
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -38,7 +40,8 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("timezone") Double timezone) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("timezone") Double timezone,
+            @JsonProperty("dateadded") String dateAdded) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -47,6 +50,7 @@ class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.timezone = timezone;
+        this.dateAdded = dateAdded;
     }
 
     /**
@@ -61,6 +65,7 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         timezone = source.getTimezone().tzOffset;
+        dateAdded = source.getDateAdded().toString();
     }
 
     //todo ck: If exception was thrown for just 1 person, whole data file will not load
@@ -122,7 +127,17 @@ class JsonAdaptedPerson {
             modelTimezone = new Timezone(timezone);
         }
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelTimezone);
+        if (dateAdded == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                DateAdded.class.getSimpleName()));
+        }
+        if (!DateAdded.isValidDateAdded(dateAdded)) {
+            throw new IllegalValueException(DateAdded.MESSAGE_CONSTRAINTS);
+        }
+        final DateAdded modelDateAdded = new DateAdded(dateAdded);
+
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelTimezone, modelDateAdded);
     }
 
 }

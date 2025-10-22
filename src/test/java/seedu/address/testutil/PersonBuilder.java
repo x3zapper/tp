@@ -1,9 +1,11 @@
 package seedu.address.testutil;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -22,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final double DEFAULT_TIMEZONE = Timezone.NO_TIMEZONE;
+    public static final Instant DEFAULT_DATE_ADDED = Instant.parse("1999-12-31T23:59:59.000000000Z");
 
     private Name name;
     private Phone phone;
@@ -29,6 +32,7 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
     private Timezone timezone;
+    private DateAdded dateAdded;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,6 +44,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         timezone = new Timezone(DEFAULT_TIMEZONE);
+        dateAdded = new DateAdded(DEFAULT_DATE_ADDED);
     }
 
     /**
@@ -52,6 +57,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
         timezone = personToCopy.getTimezone();
+        dateAdded = personToCopy.getDateAdded();
     }
 
     /**
@@ -102,8 +108,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DateAdded} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDateAdded(Instant dateAdded) {
+        this.dateAdded = new DateAdded(dateAdded);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, tags, timezone);
+        return new Person(name, phone, email, address, tags, timezone, dateAdded);
     }
 
 }
