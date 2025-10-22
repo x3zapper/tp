@@ -4,7 +4,9 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SEARCH_MODE;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -17,6 +19,7 @@ public class FindCommandParser implements Parser<FindCommand> {
     private static final String MODE_STRICT = "1";
     private static final String MODE_FUZZY = "2";
     private static final int MIN_MODE_PREFIX_LENGTH = 3; // "s/" + at least one digit
+    private static final Logger logger = LogsCenter.getLogger(FindCommandParser.class);
 
     /**
      * Parses the given {@code String} of arguments in the context of the
@@ -26,6 +29,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
+        assert args != null : "Arguments should not be null";
+
         String trimmedArgs = args.trim();
         validateNonEmptyArgs(trimmedArgs);
 
@@ -33,8 +38,27 @@ public class FindCommandParser implements Parser<FindCommand> {
         String argsToProcess = searchMode.getRemainingArgs();
         List<String> keywords = extractKeywords(argsToProcess);
 
+        logger.fine("Parsed find command with mode: " + getModeDescription(searchMode)
+                + ", keywords: " + keywords);
+
         return new FindCommand(new NameContainsKeywordsPredicate(
                 keywords, searchMode.isStrict(), searchMode.isFuzzy()));
+    }
+
+    /**
+     * Gets a human-readable description of the search mode.
+     *
+     * @param searchMode the search mode to describe
+     * @return a string describing the search mode
+     */
+    private String getModeDescription(SearchMode searchMode) {
+        if (searchMode.isFuzzy()) {
+            return "fuzzy";
+        } else if (searchMode.isStrict()) {
+            return "strict";
+        } else {
+            return "relaxed";
+        }
     }
 
     /**
@@ -100,6 +124,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if parts array has insufficient elements
      */
     private void validateModePrefixParts(String[] parts) throws ParseException {
+        assert parts != null : "Parts array should not be null";
+
         if (parts.length < 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -246,6 +272,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if all keywords are blank
      */
     private void validateKeywords(List<String> keywords) throws ParseException {
+        assert keywords != null : "Keywords list should not be null";
+
         if (keywords.isEmpty() || keywords.stream().allMatch(String::isBlank)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -261,6 +289,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         private final String remainingArgs;
 
         SearchMode(boolean isStrict, boolean isFuzzy, String remainingArgs) {
+            assert remainingArgs != null : "Remaining arguments should not be null";
+            assert !(isStrict && isFuzzy) : "Cannot be both strict and fuzzy";
+
             this.isStrict = isStrict;
             this.isFuzzy = isFuzzy;
             this.remainingArgs = remainingArgs;
