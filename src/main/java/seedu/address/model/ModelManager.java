@@ -5,13 +5,13 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
@@ -25,6 +25,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final List<Person> unsortedPersons;
+    private final SortedList<Person> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +39,11 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        unsortedPersons = this.addressBook.getPersonList();
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList(),
+            // COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING
+            COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
+        );
     }
 
     public ModelManager() {
@@ -86,6 +93,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setAddressBook(List<Person> persons) {
+        this.addressBook.setPersons(persons);
+    }
+
+    @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
@@ -132,15 +144,17 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void sortFilteredPersonList() {
-        List<Person> sortedPersons = new ArrayList<>(this.addressBook.getPersonList());
-        Comparator<Person> comparator = Comparator.comparing(person ->
-            String.valueOf(person.getName())
-        );
-        sortedPersons.sort(comparator);
-        AddressBook newAddressBook = new AddressBook();
-        newAddressBook.setPersons(sortedPersons);
-        setAddressBook(newAddressBook);
+    public void sortFilteredPersonListByName() {
+        this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
+        List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
+        setAddressBook(sortedPersonsTemp);
+    }
+
+    @Override
+    public void sortFilteredPersonListByDateAdded() {
+        this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING);
+        List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
+        setAddressBook(sortedPersonsTemp);
     }
 
     @Override

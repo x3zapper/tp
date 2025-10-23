@@ -17,12 +17,28 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all persons by their names "
-            + "by the the first character of their name.";
+            + "by the the first character of their name."
+            + "Parameters: 'name' or 'dateadded'\n"
+            + "Example: " + COMMAND_WORD + "name";
+
+    private final String sortType;
+
+    /**
+     * @param sortType sort type, can either be by name or by the date added
+     */
+    public SortCommand(String sortType) {
+        requireNonNull(sortType);
+        this.sortType = sortType;
+    }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.sortFilteredPersonList();
+        if (this.sortType.equals("dateadded")) {
+            model.sortFilteredPersonListByDateAdded();
+        } else {
+            model.sortFilteredPersonListByName();
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

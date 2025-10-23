@@ -7,6 +7,7 @@
     "address" : "123, Jurong West Ave 6, #08-111",
     "tags" : [ "friends" ],
     "timezone": 0,
+    "dateadded": "1999-12-31T23:59:59.000000001Z",
     "note":""
   }, {
     "name" : "Benson Meier",
@@ -15,6 +16,7 @@
     "address" : "311, Clementi Ave 2, #02-25",
     "tags" : [ "owesMoney", "friends" ],
     "timezone": -8,
+    "dateadded": "2000-01-01T00:00:00.000000002Z",
     "note":""
   }, {
     "name" : "Carl Kurz",
@@ -22,6 +24,7 @@
     "email" : "heinz@example.com",
     "address" : "wall street",
     "tags" : [ ],
+    "dateadded": "2000-01-01T00:00:00.000000003Z",
     "note":""
   }, {
     "name" : "Daniel Meier",
@@ -29,6 +32,7 @@
     "email" : "cornelia@example.com",
     "address" : "10th street",
     "tags" : [ "friends" ],
+    "dateadded": "2000-01-01T00:00:00.000000002Z",
     "note":""
   }, {
     "name" : "Elle Meyer",
@@ -36,6 +40,7 @@
     "email" : "werner@example.com",
     "address" : "michegan ave",
     "tags" : [ ],
+    "dateadded": "2000-01-01T00:00:00.000000007Z",
     "note":""
   }, {
     "name" : "Fiona Kunz",
@@ -43,6 +48,7 @@
     "email" : "lydia@example.com",
     "address" : "little tokyo",
     "tags" : [ ],
+    "dateadded": "2000-01-01T00:00:00.000000006Z",
     "note":""
   }, {
     "name" : "George Best",
@@ -50,6 +56,7 @@
     "email" : "anna@example.com",
     "address" : "4th street",
     "tags" : [ ],
+    "dateadded": "2000-01-01T00:00:00.000000005Z",
     "note":""
   } ]
 }

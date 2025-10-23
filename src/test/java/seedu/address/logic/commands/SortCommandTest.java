@@ -42,18 +42,18 @@ public class SortCommandTest {
         sortedAddrBook.addPerson(CARL);
 
         expectedModel.setAddressBook(sortedAddrBook);
-        assertCommandSuccess(new SortCommand(), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsDoubleSorted_showsSameAsSingleSort() {
         // sort once, will be sorted again when assert command success is called
-        model.sortFilteredPersonList();
+        model.sortFilteredPersonListByName();
 
         // only sorts once
-        expectedModel.sortFilteredPersonList();
+        expectedModel.sortFilteredPersonListByName();
 
-        assertCommandSuccess(new SortCommand(), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class SortCommandTest {
         // empty list
         expectedModel.setAddressBook(new AddressBook());
 
-        assertCommandSuccess(new SortCommand(), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class SortCommandTest {
         // empty filtered List
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(new SortCommand(), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     /**

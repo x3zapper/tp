@@ -25,12 +25,15 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Timezone timezone;
+    private final DateAdded dateAdded;
     private final Note note;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone, Note note) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone,
+                  DateAdded dateAdded, Note note) {
+        this.dateAdded = dateAdded;
         //todo ck: check who is sending null Timezone
         requireAllNonNull(name, phone, email, address, tags, timezone);
         this.name = name;
@@ -68,6 +71,10 @@ public class Person {
 
     public Timezone getTimezone() {
         return timezone;
+    }
+
+    public DateAdded getDateAdded() {
+        return dateAdded;
     }
 
     public Note getNote() {
@@ -114,7 +121,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, timezone);
+        return Objects.hash(name, phone, email, address, tags, timezone, dateAdded);
     }
 
     @Override
@@ -126,6 +133,7 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("timezone", timezone)
+                .add("dateadded", dateAdded)
                 .toString();
     }
 

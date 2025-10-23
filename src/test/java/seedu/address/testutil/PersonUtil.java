@@ -40,6 +40,7 @@ public class PersonUtil {
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         sb.append(getTimezoneCommandStr(person.getTimezone()));
+
         return sb.toString();
     }
 

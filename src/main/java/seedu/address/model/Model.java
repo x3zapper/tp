@@ -1,6 +1,9 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.time.Instant;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -13,6 +16,26 @@ import seedu.address.model.person.Person;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Comparator} that compares persons' name in ascending order */
+    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING = Comparator.comparing(person ->
+        String.valueOf(person.getName())
+    );
+
+    /** {@code Comparator} that compares persons' name in descending order */
+    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING = COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
+        .reversed();
+
+    /** {@code Comparator} that compares the persons' date added ascending */
+    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING = Comparator.comparing(person ->
+            Instant.parse(person.getDateAdded().toString())
+    );
+
+    /** {@code Comparator} that reverses the original order, date added descending */
+    Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = (a, b) -> 0;
+
+    // /** {@code Comparator} that reverses the original order, date added ascending */
+    // Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = Comparator.reverseOrder();
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -48,6 +71,12 @@ public interface Model {
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
+
+    /**
+     * Replaces address book data with the data in {@code persons}.
+     */
+    void setAddressBook(List<Person> persons);
+
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
@@ -88,5 +117,10 @@ public interface Model {
     /**
      * Sorts the filtered person list by the names of the Person and updates it
      */
-    void sortFilteredPersonList();
+    void sortFilteredPersonListByName();
+
+    /**
+     * Sorts the filtered person list by the date added of the Person and updates it
+     */
+    void sortFilteredPersonListByDateAdded();
 }

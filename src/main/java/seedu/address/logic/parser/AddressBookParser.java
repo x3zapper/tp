@@ -84,7 +84,7 @@ public class AddressBookParser {
             return new FilterCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
-            return new SortCommand();
+            return new SortCommandParser().parse(arguments);
 
         case NoteCommand.COMMAND_WORD:
             return new NoteCommandParser().parse(arguments);
