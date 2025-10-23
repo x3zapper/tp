@@ -140,4 +140,58 @@ public class StringUtilTest {
         assertThrows(NullPointerException.class, () -> StringUtil.getDetails(null));
     }
 
+    // ---------------- Tests for getLevenshteinDistance --------------------------------------
+
+    @Test
+    public void getLevenshteinDistance_nullInputs_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> StringUtil.getLevenshteinDistance(null, "test"));
+        assertThrows(NullPointerException.class, () -> StringUtil.getLevenshteinDistance("test", null));
+        assertThrows(NullPointerException.class, () -> StringUtil.getLevenshteinDistance(null, null));
+    }
+
+    @Test
+    public void getLevenshteinDistance_identicalStrings_returnsZero() {
+        assertTrue(StringUtil.getLevenshteinDistance("", "") == 0);
+        assertTrue(StringUtil.getLevenshteinDistance("a", "a") == 0);
+        assertTrue(StringUtil.getLevenshteinDistance("abc", "abc") == 0);
+        assertTrue(StringUtil.getLevenshteinDistance("hello", "hello") == 0);
+    }
+
+    @Test
+    public void getLevenshteinDistance_emptyStrings_returnsCorrectDistance() {
+        assertTrue(StringUtil.getLevenshteinDistance("", "abc") == 3);
+        assertTrue(StringUtil.getLevenshteinDistance("abc", "") == 3);
+        assertTrue(StringUtil.getLevenshteinDistance("", "a") == 1);
+    }
+
+    @Test
+    public void getLevenshteinDistance_singleCharacterDifference_returnsOne() {
+        // Substitution
+        assertTrue(StringUtil.getLevenshteinDistance("cat", "bat") == 1);
+        assertTrue(StringUtil.getLevenshteinDistance("abc", "adc") == 1);
+
+        // Insertion
+        assertTrue(StringUtil.getLevenshteinDistance("cat", "cats") == 1);
+        assertTrue(StringUtil.getLevenshteinDistance("abc", "abcd") == 1);
+
+        // Deletion
+        assertTrue(StringUtil.getLevenshteinDistance("cats", "cat") == 1);
+        assertTrue(StringUtil.getLevenshteinDistance("abcd", "abc") == 1);
+    }
+
+    @Test
+    public void getLevenshteinDistance_multipleOperations_returnsCorrectDistance() {
+        assertTrue(StringUtil.getLevenshteinDistance("kitten", "sitting") == 3);
+        assertTrue(StringUtil.getLevenshteinDistance("saturday", "sunday") == 3);
+        assertTrue(StringUtil.getLevenshteinDistance("alice", "alica") == 1);
+        assertTrue(StringUtil.getLevenshteinDistance("alice", "alics") == 1);
+        assertTrue(StringUtil.getLevenshteinDistance("alice", "alic") == 1);
+    }
+
+    @Test
+    public void getLevenshteinDistance_caseSensitive_returnsCorrectDistance() {
+        assertTrue(StringUtil.getLevenshteinDistance("Alice", "alice") == 1);
+        assertTrue(StringUtil.getLevenshteinDistance("HELLO", "hello") == 5);
+    }
+
 }
