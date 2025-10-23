@@ -16,6 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Timezone;
@@ -60,8 +61,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Timezone timezone = ParserUtil.parseTimezone(argMultimap.getValue(PREFIX_TIMEZONE).orElse(""));
+        Note note = new Note(""); //add command does not allow adding note straight away
 
-        Person person = new Person(name, phone, email, address, tagList, timezone);
+        Person person = new Person(name, phone, email, address, tagList, timezone, note);
 
         return new AddCommand(person);
     }

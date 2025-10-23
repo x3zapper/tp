@@ -20,6 +20,7 @@ public class Timezone {
     public static final double NO_TIMEZONE = -999;
     private static final double MAX_TIMEZONE = 24.0;
     private static final double MIN_TIMEZONE = -24.0;
+    private static final double BASE_TZ_OFFSET = 8.0; // User's time, Singapore UTC+8
 
     public final double tzOffset;
 
@@ -51,15 +52,48 @@ public class Timezone {
         return "NOT IMPLEMENTED";
     }
 
+    /**
+     * Returns the relative time difference between this timezone and Singapore time (UTC+8).
+     * Example outputs:
+     *  - "Same as Singapore time"
+     *  - "3 hours ahead of Singapore"
+     *  - "5 hours behind Singapore"
+     */
+    public String getRelativeToSingapore() {
+
+        double diff = tzOffset - BASE_TZ_OFFSET;
+
+        if (diff == 0) {
+            return "Same as Singapore time";
+        }
+
+        int totalMinutes = (int) Math.round(diff * 60);
+        int hours = totalMinutes / 60;
+        int minutes = Math.abs(totalMinutes % 60);
+        String aheadBehind = diff > 0 ? "ahead" : "behind";
+
+        if (minutes == 0) {
+            return String.format("%d hours %s of Singapore", Math.abs(hours), aheadBehind);
+        } else {
+            return String.format("%d hours %d minutes %s of Singapore", Math.abs(hours), minutes, aheadBehind);
+        }
+    }
+
     @Override
     public String toString() {
         if (tzOffset == NO_TIMEZONE) {
             return "No Timezone Specified";
         }
 
-        //todo ck: for now keep as raw TZ value
-        /*String.format("%.2f", tzOffset)*/
-        return "UTC" + ((tzOffset >= 0) ? "+" : "") + tzOffset;
+        String baseTz = "UTC" + ((tzOffset >= 0) ? "+" : "") + tzOffset;
+        String relative = getRelativeToSingapore();
+
+        // Only show relative if different from base or NO_TIMEZONE
+        if (!relative.equals(baseTz)) {
+            return String.format("%s (%s)", baseTz, relative);
+        } else {
+            return baseTz;
+        }
     }
 
     @Override
