@@ -18,6 +18,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Timezone;
@@ -63,8 +64,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Timezone timezone = ParserUtil.parseTimezone(argMultimap.getValue(PREFIX_TIMEZONE).orElse(""));
         DateAdded dateAdded = new DateAdded(Instant.now());
+        Note note = new Note(""); //add command does not allow adding note straight away
 
-        Person person = new Person(name, phone, email, address, tagList, timezone, dateAdded);
+        Person person = new Person(name, phone, email, address, tagList, timezone, dateAdded, note);
 
         return new AddCommand(person);
     }

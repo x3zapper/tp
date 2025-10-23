@@ -25,6 +25,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Timezone;
@@ -105,12 +106,13 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Timezone updatedTimezone = editPersonDescriptor.getTimezone().orElse(personToEdit.getTimezone());
+        Note updatedNote = personToEdit.getNote(); //edit command does not allow editing note
 
         // Edits to dateAdded is NOT allowed
         DateAdded dateAdded = personToEdit.getDateAdded();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedTimezone,
-            dateAdded);
+            dateAdded, updatedNote);
     }
 
     @Override

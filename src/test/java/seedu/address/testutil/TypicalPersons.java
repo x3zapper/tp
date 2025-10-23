@@ -30,6 +30,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withTimezone(0)
             .withDateAdded(Instant.parse("1999-12-31T23:59:59.000000001Z"))
+            .withNote("She likes aardvarks.")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -37,6 +38,7 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withTimezone(-8)
             .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000002Z"))
+            .withNote("She likes aardvarks.")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")

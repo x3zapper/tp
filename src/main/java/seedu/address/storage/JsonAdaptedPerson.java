@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Timezone;
@@ -33,6 +34,7 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final Double timezone; //Allows to get a null for timezone value rather than jackson autofill
     private final String dateAdded; // Due to not wanting to use serialization, we are saving dateAdded to string
+    private final String note;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -41,7 +43,7 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("timezone") Double timezone,
-            @JsonProperty("dateadded") String dateAdded) {
+            @JsonProperty("dateadded") String dateAdded, @JsonProperty("note") String note) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -51,6 +53,7 @@ class JsonAdaptedPerson {
         }
         this.timezone = timezone;
         this.dateAdded = dateAdded;
+        this.note = note;
     }
 
     /**
@@ -66,6 +69,7 @@ class JsonAdaptedPerson {
                 .collect(Collectors.toList()));
         timezone = source.getTimezone().tzOffset;
         dateAdded = source.getDateAdded().toString();
+        note = source.getNote().value;
     }
 
     //todo ck: If exception was thrown for just 1 person, whole data file will not load
@@ -136,8 +140,14 @@ class JsonAdaptedPerson {
         }
         final DateAdded modelDateAdded = new DateAdded(dateAdded);
 
+        if (note == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Note.class.getSimpleName()));
+        }
+        final Note modelNote = new Note(note);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelTimezone, modelDateAdded);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelTimezone, modelDateAdded,
+                modelNote);
     }
 
 }

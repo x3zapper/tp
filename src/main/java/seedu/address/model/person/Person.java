@@ -26,12 +26,13 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final Timezone timezone;
     private final DateAdded dateAdded;
+    private final Note note;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone,
-                  DateAdded dateAdded) {
+                  DateAdded dateAdded, Note note) {
         this.dateAdded = dateAdded;
         //todo ck: check who is sending null Timezone
         requireAllNonNull(name, phone, email, address, tags, timezone);
@@ -41,6 +42,7 @@ public class Person {
         this.address = address;
         this.tags.addAll(tags);
         this.timezone = timezone;
+        this.note = note;
     }
 
     public Name getName() {
@@ -73,6 +75,10 @@ public class Person {
 
     public DateAdded getDateAdded() {
         return dateAdded;
+    }
+
+    public Note getNote() {
+        return note;
     }
 
     /**
