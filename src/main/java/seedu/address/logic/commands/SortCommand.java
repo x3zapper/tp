@@ -24,6 +24,7 @@ public class SortCommand extends Command {
     private final String sortType;
 
     public SortCommand(String sortType) {
+        requireNonNull(sortType);
         this.sortType = sortType;
     }
 
