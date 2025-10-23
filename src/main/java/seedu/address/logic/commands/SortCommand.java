@@ -23,6 +23,9 @@ public class SortCommand extends Command {
 
     private final String sortType;
 
+    /**
+     * @param sortType sort type, can either be by name or by the date added
+     */
     public SortCommand(String sortType) {
         requireNonNull(sortType);
         this.sortType = sortType;
