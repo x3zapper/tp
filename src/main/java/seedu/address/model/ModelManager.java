@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -41,7 +40,10 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         unsortedPersons = this.addressBook.getPersonList();
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList(),
+            // COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING
+            COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
+        );
     }
 
     public ModelManager() {
@@ -142,7 +144,15 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void sortFilteredPersonList() {
+    public void sortFilteredPersonListByName() {
+        this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
+        List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
+        setAddressBook(sortedPersonsTemp);
+    }
+
+    @Override
+    public void sortFilteredPersonListByDateAdded() {
+        this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING);
         List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
         setAddressBook(sortedPersonsTemp);
     }

@@ -1,9 +1,10 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.Comparator;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
@@ -25,8 +26,10 @@ public interface Model {
     Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING = COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
         .reversed();
 
-    /** {@code Comparator} that does not do anything hence keeping the original order, date added descending */
-    Comparator<Person> COMPARATOR_KEEP_ORIGINAL_ORDER = (a, b) -> 0;
+    /** {@code Comparator} that compares the persons' date added ascending */
+    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING = Comparator.comparing(person ->
+            Instant.parse(person.getDateAdded().toString())
+    );
 
     /** {@code Comparator} that reverses the original order, date added descending */
     Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = (a, b) -> 0;
@@ -114,5 +117,10 @@ public interface Model {
     /**
      * Sorts the filtered person list by the names of the Person and updates it
      */
-    void sortFilteredPersonList();
+    void sortFilteredPersonListByName();
+
+    /**
+     * Sorts the filtered person list by the date added of the Person and updates it
+     */
+    void sortFilteredPersonListByDateAdded();
 }
