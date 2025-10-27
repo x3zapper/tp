@@ -26,7 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final double DEFAULT_TIMEZONE = Timezone.NO_TIMEZONE;
     public static final Instant DEFAULT_DATE_ADDED = Instant.parse("1999-12-31T23:59:59.000000000Z");
-    public static final String DEFAULT_NOTE = "She likes aardvarks.";
+    public static final String DEFAULT_NOTE = "";
 
     private Name name;
     private Phone phone;

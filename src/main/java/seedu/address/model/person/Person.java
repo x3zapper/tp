@@ -115,13 +115,15 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && timezone.equals(otherPerson.timezone);
+                && timezone.equals(otherPerson.timezone)
+                //&& dateAdded.equals(otherPerson.dateAdded)
+                && note.equals(otherPerson.note);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, timezone, dateAdded);
+        return Objects.hash(name, phone, email, address, tags, timezone);
     }
 
     @Override
@@ -134,7 +136,9 @@ public class Person {
                 .add("tags", tags)
                 .add("timezone", timezone)
                 .add("dateadded", dateAdded)
+                .add("note", note)
                 .toString();
     }
+
 
 }
