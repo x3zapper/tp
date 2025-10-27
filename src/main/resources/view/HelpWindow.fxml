@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root resizable="false" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root resizable="true" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
     <Image url="@/images/help_icon.png" />
   </icons>
@@ -23,7 +23,7 @@
 
       <VBox spacing="10.0" id="help-window-root">
         <children>
-          <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" hbarPolicy="NEVER" id="help-command-scroll" maxHeight="220.0" prefViewportHeight="220.0" vbarPolicy="AS_NEEDED">
+          <ScrollPane VBox.vgrow="ALWAYS" fitToWidth="true" hbarPolicy="NEVER" id="help-command-scroll" prefViewportHeight="220.0" vbarPolicy="AS_NEEDED">
             <VBox.margin>
               <Insets left="10.0" right="10.0" />
             </VBox.margin>
