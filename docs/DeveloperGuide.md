@@ -334,7 +334,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a2. User re-enters the corrected data.
     * Steps 3a1–3a2 repeat until all data are valid.
     * Use case resumes from step 4.
-  
+
 * 3b. User specified missing field or wrong field:
 
     * 3b1. AddressBook displays error.
