@@ -76,7 +76,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getSortedPersonList());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.singletonList(FIONA), model.getFilteredPersonList());
+        assertEquals(Collections.singletonList(FIONA), model.getSortedPersonList());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(BENSON, DANIEL), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(BENSON, DANIEL), model.getSortedPersonList());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount);
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
         // Should have at most 5 persons in the filtered list
-        assertTrue(model.getFilteredPersonList().size() <= 5);
+        assertTrue(model.getSortedPersonList().size() <= 5);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount);
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
         // Should return top 5 (or all available) even if far from the keyword
-        assertEquals(expectedCount, model.getFilteredPersonList().size());
+        assertEquals(expectedCount, model.getSortedPersonList().size());
     }
 
     @Test

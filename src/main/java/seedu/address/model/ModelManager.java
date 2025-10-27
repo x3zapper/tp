@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -25,7 +24,6 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
-    private final List<Person> unsortedPersons;
     private final SortedList<Person> sortedPersons;
 
     /**
@@ -39,10 +37,10 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        unsortedPersons = this.addressBook.getPersonList();
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList(),
-            // COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING
-            COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
+
+        // NOTE: the sorted list wraps around filteredPersons, that is to say any filtering will take in effect as well!
+        sortedPersons = new SortedList<>(filteredPersons,
+            COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING
         );
     }
 
@@ -143,18 +141,31 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Sorted FilteredPerson List Accessors =======================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Person} that is filtered and backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Person> getSortedPersonList() {
+        return sortedPersons;
+    }
+
     @Override
     public void sortFilteredPersonListByName() {
         this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
-        List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
-        setAddressBook(sortedPersonsTemp);
     }
 
     @Override
     public void sortFilteredPersonListByDateAdded() {
         this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING);
-        List<Person> sortedPersonsTemp = new ArrayList<>(sortedPersons);
-        setAddressBook(sortedPersonsTemp);
+    }
+
+    @Override
+    public void reverseSortOrder() {
+        assert sortedPersons.getComparator() != null;
+        sortedPersons.setComparator(sortedPersons.getComparator().reversed());
     }
 
     @Override

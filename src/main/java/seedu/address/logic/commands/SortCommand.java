@@ -8,12 +8,13 @@ import seedu.address.model.Model;
  * Lists all persons in the address book to the user.
  */
 public class SortCommand extends Command {
-    // TODO Add sort as a param e.g. s/ (will need to edit clisyntax.java)
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_SUCCESS = "Sorted all persons";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Sort command not implemented yet!";
+    public static final String DATE_ADDED_SORT_TYPE_ARGUMENT = "dateadded";
+    public static final String NAME_SORT_TYPE_ARGUMENT = "name";
+    public static final String REVERSE_SORT_TYPE_ARGUMENT = "reverse";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts all persons by their names "
@@ -34,10 +35,12 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        if (this.sortType.equals("dateadded")) {
+        if (this.sortType.equals(DATE_ADDED_SORT_TYPE_ARGUMENT)) {
             model.sortFilteredPersonListByDateAdded();
-        } else {
+        } else if (this.sortType.equals(NAME_SORT_TYPE_ARGUMENT)) {
             model.sortFilteredPersonListByName();
+        } else {
+            model.reverseSortOrder();
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }

@@ -22,20 +22,10 @@ public interface Model {
         String.valueOf(person.getName())
     );
 
-    /** {@code Comparator} that compares persons' name in descending order */
-    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING = COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
-        .reversed();
-
     /** {@code Comparator} that compares the persons' date added ascending */
     Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING = Comparator.comparing(person ->
             Instant.parse(person.getDateAdded().toString())
     );
-
-    /** {@code Comparator} that reverses the original order, date added descending */
-    Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = (a, b) -> 0;
-
-    // /** {@code Comparator} that reverses the original order, date added ascending */
-    // Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = Comparator.reverseOrder();
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -115,12 +105,20 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Sorts the filtered person list by the names of the Person and updates it
+     * Sorts the filtered person list by the names (ascending) of the Person
      */
     void sortFilteredPersonListByName();
 
     /**
-     * Sorts the filtered person list by the date added of the Person and updates it
+     * Sorts the filtered person list by the date added of the Person (ascending)
      */
     void sortFilteredPersonListByDateAdded();
+
+    /**
+     * Reverses the current sort order of the SortedList
+     */
+    void reverseSortOrder();
+
+    /** Returns an unmodifiable view of the sorted person list backed by the filtered person list */
+    ObservableList<Person> getSortedPersonList();
 }

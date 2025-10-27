@@ -21,8 +21,9 @@ public class SortCommandParser {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        } else if (!trimmedArgs.equalsIgnoreCase("name")
-                && !trimmedArgs.equalsIgnoreCase("dateadded")) {
+        } else if (!trimmedArgs.equalsIgnoreCase(SortCommand.DATE_ADDED_SORT_TYPE_ARGUMENT)
+                && !trimmedArgs.equalsIgnoreCase(SortCommand.NAME_SORT_TYPE_ARGUMENT)
+            && !trimmedArgs.equalsIgnoreCase(SortCommand.REVERSE_SORT_TYPE_ARGUMENT)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 

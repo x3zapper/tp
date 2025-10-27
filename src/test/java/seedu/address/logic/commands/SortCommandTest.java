@@ -1,53 +1,95 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.transformation.SortedList;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 
+
 public class SortCommandTest {
 
     private Model model;
     private Model expectedModel;
+    private AddressBook sortedAddrBookByNameAsc;
+    private AddressBook sortedAddrBookByDateAsc;
+    private AddressBook sortedAddrBookByNameDsc;
+    private AddressBook sortedAddrBookByDateDsc;
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        sortedAddrBookByNameAsc = new AddressBook();
+        sortedAddrBookByNameAsc.addPerson(ALICE);
+        sortedAddrBookByNameAsc.addPerson(BENSON);
+        sortedAddrBookByNameAsc.addPerson(CARL);
+        sortedAddrBookByNameAsc.addPerson(DANIEL);
+        sortedAddrBookByNameAsc.addPerson(ELLE);
+        sortedAddrBookByNameAsc.addPerson(FIONA);
+
+        sortedAddrBookByNameDsc = new AddressBook();
+        sortedAddrBookByNameDsc.addPerson(FIONA);
+        sortedAddrBookByNameDsc.addPerson(ELLE);
+        sortedAddrBookByNameDsc.addPerson(DANIEL);
+        sortedAddrBookByNameDsc.addPerson(CARL);
+        sortedAddrBookByNameDsc.addPerson(BENSON);
+        sortedAddrBookByNameDsc.addPerson(ALICE);
+
+        sortedAddrBookByDateAsc = new AddressBook();
+        sortedAddrBookByDateAsc.addPerson(CARL);
+        sortedAddrBookByDateAsc.addPerson(ALICE);
+        sortedAddrBookByDateAsc.addPerson(BENSON);
+        sortedAddrBookByDateAsc.addPerson(DANIEL);
+        sortedAddrBookByDateAsc.addPerson(ELLE);
+        sortedAddrBookByDateAsc.addPerson(FIONA);
+
+        sortedAddrBookByDateDsc = new AddressBook();
+        sortedAddrBookByDateDsc.addPerson(FIONA);
+        sortedAddrBookByDateDsc.addPerson(ELLE);
+        sortedAddrBookByDateDsc.addPerson(DANIEL);
+        sortedAddrBookByDateDsc.addPerson(BENSON);
+        sortedAddrBookByDateDsc.addPerson(ALICE);
+        sortedAddrBookByDateDsc.addPerson(CARL);
+
+        model = new ModelManager(sortedAddrBookByDateDsc, new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
 
     @Test
     public void execute_typicalAddrBookSorted_success() {
-        AddressBook unsortedAddrBook = new AddressBook();
-        unsortedAddrBook.addPerson(CARL);
-        unsortedAddrBook.addPerson(ALICE);
-        unsortedAddrBook.addPerson(BENSON);
 
-        model.setAddressBook(unsortedAddrBook);
+        // Commented to show that test cases like these will not work, because the underylying address book is different
+        // expectedModel.setAddressBook(sortedAddrBookByNameAsc);
+        // assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
 
-        AddressBook sortedAddrBook = new AddressBook();
-        sortedAddrBook.addPerson(ALICE);
-        sortedAddrBook.addPerson(BENSON);
-        sortedAddrBook.addPerson(CARL);
+        SortCommand sortCommand = new SortCommand("name");
+        sortCommand.execute(model);
+        SortedList modelSL = new SortedList(model.getSortedPersonList());
+        assertEquals(modelSL, new SortedList(sortedAddrBookByNameAsc.getPersonList()));
 
-        expectedModel.setAddressBook(sortedAddrBook);
-        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        sortCommand = new SortCommand("dateadded");
+        sortCommand.execute(model);
+        modelSL = new SortedList(model.getSortedPersonList());
+        assertEquals(modelSL, new SortedList(sortedAddrBookByDateAsc.getPersonList()));
     }
 
     @Test
     public void execute_listIsDoubleSorted_showsSameAsSingleSort() {
         // sort once, will be sorted again when assert command success is called
+        model.sortFilteredPersonListByName();
         model.sortFilteredPersonListByName();
 
         // only sorts once
@@ -60,9 +102,11 @@ public class SortCommandTest {
     public void execute_emptyListSorted_showsEmptyList() {
         // empty list
         model.setAddressBook(new AddressBook());
+        showNoPerson(model);
 
         // empty list
         expectedModel.setAddressBook(new AddressBook());
+        showNoPerson(expectedModel);
 
         assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -84,8 +128,7 @@ public class SortCommandTest {
      */
     private void showNoPerson(Model model) {
         model.updateFilteredPersonList(p -> false);
-
-        assertTrue(model.getFilteredPersonList().isEmpty());
+        assertTrue(model.getSortedPersonList().isEmpty());
     }
 
 
