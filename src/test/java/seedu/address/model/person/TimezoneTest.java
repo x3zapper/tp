@@ -20,6 +20,25 @@ public class TimezoneTest {
         return offset.getTotalSeconds() / SECONDS_PER_HOUR;
     }
 
+    private String computeExpectedRelative(double tzOffset, double referenceOffset) {
+        double diff = tzOffset - referenceOffset;
+
+        if (diff == 0) {
+            return "Same as local time";
+        }
+
+        int totalMinutes = (int) Math.round(diff * 60);
+        int hours = totalMinutes / 60;
+        int minutes = Math.abs(totalMinutes % 60);
+        String aheadBehind = diff > 0 ? "ahead" : "behind";
+
+        if (minutes == 0) {
+            return String.format("%d hours %s of local time", Math.abs(hours), aheadBehind);
+        } else {
+            return String.format("%d hours %d minutes %s of local time", Math.abs(hours), minutes, aheadBehind);
+        }
+    }
+
     @Test
     public void constructor_invalidTz_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Timezone(25.0)); // > 24
@@ -52,16 +71,24 @@ public class TimezoneTest {
 
     @Test
     public void toStringAndRelative() {
+        double localOffset = getLocalOffset();
+
         Timezone tz = new Timezone(0.0);
-        assertEquals("UTC+0.0 (8 hours behind of local time)", tz.toString());
-        assertEquals("8 hours behind of local time", tz.getRelativeToLocal());
+        String expectedRelative = computeExpectedRelative(tz.tzOffset, localOffset);
+        String expectedString = String.format("UTC+0.0 (%s)", expectedRelative);
+        assertEquals(expectedRelative, tz.getRelativeToLocal());
+        assertEquals(expectedString, tz.toString());
 
         Timezone tz2 = new Timezone(8.0);
-        assertEquals("UTC+8.0 (Same as local time)", tz2.toString());
-        assertEquals("Same as local time", tz2.getRelativeToLocal());
+        expectedRelative = computeExpectedRelative(tz2.tzOffset, localOffset);
+        expectedString = String.format("UTC+8.0 (%s)", expectedRelative);
+        assertEquals(expectedRelative, tz2.getRelativeToLocal());
+        assertEquals(expectedString, tz2.toString());
 
-        Timezone tz3 = new Timezone(13.5);
-        assertEquals("UTC+13.5 (5 hours 30 minutes ahead of local time)", tz3.toString());
-        assertEquals("5 hours 30 minutes ahead of local time", tz3.getRelativeToLocal());
+        Timezone tz3 = new Timezone(-13.5);
+        expectedRelative = computeExpectedRelative(tz3.tzOffset, localOffset);
+        expectedString = String.format("UTC-13.5 (%s)", expectedRelative);
+        assertEquals(expectedRelative, tz3.getRelativeToLocal());
+        assertEquals(expectedString, tz3.toString());
     }
 }
