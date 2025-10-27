@@ -5,9 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+
 import org.junit.jupiter.api.Test;
 
 public class TimezoneTest {
+
+    private static final double SECONDS_PER_HOUR = 3600;
+
+    private static double getLocalOffset() {
+        ZoneOffset offset = ZoneId.systemDefault().getRules().getOffset(Instant.now());
+        return offset.getTotalSeconds() / SECONDS_PER_HOUR;
+    }
 
     @Test
     public void constructor_invalidTz_throwsIllegalArgumentException() {
@@ -42,15 +53,15 @@ public class TimezoneTest {
     @Test
     public void toStringAndRelative() {
         Timezone tz = new Timezone(0.0);
-        assertEquals("UTC+0.0 (8 hours behind of Singapore)", tz.toString());
-        assertEquals("8 hours behind of Singapore", tz.getRelativeToSingapore());
+        assertEquals("UTC+0.0 (8 hours behind of local time)", tz.toString());
+        assertEquals("8 hours behind of local time", tz.getRelativeToLocal());
 
         Timezone tz2 = new Timezone(8.0);
-        assertEquals("UTC+8.0 (Same as Singapore time)", tz2.toString());
-        assertEquals("Same as Singapore time", tz2.getRelativeToSingapore());
+        assertEquals("UTC+8.0 (Same as local time)", tz2.toString());
+        assertEquals("Same as local time", tz2.getRelativeToLocal());
 
         Timezone tz3 = new Timezone(13.5);
-        assertEquals("UTC+13.5 (5 hours 30 minutes ahead of Singapore)", tz3.toString());
-        assertEquals("5 hours 30 minutes ahead of Singapore", tz3.getRelativeToSingapore());
+        assertEquals("UTC+13.5 (5 hours 30 minutes ahead of local time)", tz3.toString());
+        assertEquals("5 hours 30 minutes ahead of local time", tz3.getRelativeToLocal());
     }
 }
