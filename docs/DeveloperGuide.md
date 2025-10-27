@@ -158,6 +158,11 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Filter feature
+The filter command allows for the user to filter their contacts based on specified tags (up to 10).
+
+<puml src="diagrams/FilterClassDiagram.puml" alt="FilterClassDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
