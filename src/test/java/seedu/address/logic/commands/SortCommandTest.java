@@ -18,7 +18,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
+import seedu.address.model.person.Person;
 
 
 public class SortCommandTest {
@@ -75,27 +75,28 @@ public class SortCommandTest {
         // expectedModel.setAddressBook(sortedAddrBookByNameAsc);
         // assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
 
-        SortCommand sortCommand = new SortCommand("name");
+        SortCommand sortCommand = new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
         sortCommand.execute(model);
-        SortedList modelSL = new SortedList(model.getSortedPersonList());
-        assertEquals(modelSL, new SortedList(sortedAddrBookByNameAsc.getPersonList()));
+        SortedList<Person> modelSL = new SortedList<Person>(model.getSortedPersonList());
+        assertEquals(modelSL, new SortedList<Person>(sortedAddrBookByNameAsc.getPersonList()));
 
-        sortCommand = new SortCommand("dateadded");
+        sortCommand = new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING);
         sortCommand.execute(model);
-        modelSL = new SortedList(model.getSortedPersonList());
-        assertEquals(modelSL, new SortedList(sortedAddrBookByDateAsc.getPersonList()));
+        modelSL = new SortedList<Person>(model.getSortedPersonList());
+        assertEquals(modelSL, new SortedList<Person>(sortedAddrBookByDateAsc.getPersonList()));
     }
 
     @Test
     public void execute_listIsDoubleSorted_showsSameAsSingleSort() {
         // sort once, will be sorted again when assert command success is called
-        model.sortFilteredPersonListByName();
-        model.sortFilteredPersonListByName();
+        model.updateSortComparator(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
+        model.updateSortComparator(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
 
         // only sorts once
-        expectedModel.sortFilteredPersonListByName();
+        expectedModel.updateSortComparator(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
 
-        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING),
+                model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -108,7 +109,8 @@ public class SortCommandTest {
         expectedModel.setAddressBook(new AddressBook());
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING),
+                model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -119,7 +121,8 @@ public class SortCommandTest {
         // empty filtered List
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(new SortCommand("name"), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING),
+                model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     /**

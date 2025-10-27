@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 
 /**
@@ -40,7 +42,7 @@ public class ModelManager implements Model {
 
         // NOTE: the sorted list wraps around filteredPersons, that is to say any filtering will take in effect as well!
         sortedPersons = new SortedList<>(filteredPersons,
-            COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING
+            SortCommand.COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING
         );
     }
 
@@ -153,20 +155,11 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void sortFilteredPersonListByName() {
-        this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
+    public void updateSortComparator(Comparator<Person> comparator) {
+        requireAllNonNull(comparator);
+        this.sortedPersons.setComparator(comparator);
     }
 
-    @Override
-    public void sortFilteredPersonListByDateAdded() {
-        this.sortedPersons.setComparator(COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING);
-    }
-
-    @Override
-    public void reverseSortOrder() {
-        assert sortedPersons.getComparator() != null;
-        sortedPersons.setComparator(sortedPersons.getComparator().reversed());
-    }
 
     @Override
     public boolean equals(Object other) {
