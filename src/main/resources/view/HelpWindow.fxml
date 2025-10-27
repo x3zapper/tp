@@ -33,16 +33,6 @@
 
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
-                      <Label styleClass="command-title" text="list" wrapText="true" />
-                      <Label styleClass="command-description" text="Displays every person in the address book." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: list" wrapText="true" />
-                    </children>
-                    <padding>
-                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
-                    </padding>
-                  </VBox>
-                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
-                    <children>
                       <Label styleClass="command-title" text="help" wrapText="true" />
                       <Label styleClass="command-description" text="Opens the help window with guidance." wrapText="true" />
                       <Label styleClass="command-description" text="Usage: help" wrapText="true" />
@@ -51,6 +41,17 @@
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
+                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
+                    <children>
+                      <Label styleClass="command-title" text="list" wrapText="true" />
+                      <Label styleClass="command-description" text="Displays every person in the address book." wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: list" wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
                       <Label styleClass="command-title" text="add" wrapText="true" />
@@ -75,6 +76,16 @@
                   </VBox>
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
+                      <Label styleClass="command-title" text="delete" wrapText="true" />
+                      <Label styleClass="command-description" text="Deletes contact from the current view list with the corresponding index" wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: delete INDEX" wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
+                    <children>
                       <Label styleClass="command-title" text="clear" wrapText="true" />
                       <Label styleClass="command-description" text="Clears all entries from the address book." wrapText="true" />
                       <Label styleClass="command-description" text="Usage: clear" wrapText="true" />
@@ -83,26 +94,17 @@
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
-                    <children>
-                      <Label styleClass="command-title" text="exit" wrapText="true" />
-                      <Label styleClass="command-description" text="Exit CustomerRelationBook application." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: exit" wrapText="true" />
-                    </children>
-                    <padding>
-                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
-                    </padding>
-                  </VBox>
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
-                      <Label styleClass="command-title" text="filter" wrapText="true" />
-                      <Label styleClass="command-description" text="Filters contacts based on specified tags." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: filter &lt;tag1&gt; &lt;tag2&gt;.." wrapText="true" />
+                      <Label styleClass="command-title" text="note" wrapText="true" />
+                      <Label styleClass="command-description" text="TO BE FILLED" wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: note ...TO BE FILLED" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
+
                   <VBox spacing="4.0" styleClass="command-section, command-section-even">
                     <children>
                       <Label styleClass="command-title" text="find" wrapText="true" />
@@ -120,6 +122,17 @@
                   </VBox>
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
+                      <Label styleClass="command-title" text="filter" wrapText="true" />
+                      <Label styleClass="command-description" text="Filters contacts based on specified tags." wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: filter &lt;tag1&gt; &lt;tag2&gt;.." wrapText="true" />
+                    </children>
+                    <padding>
+                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
+                    </padding>
+                  </VBox>
+
+                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
+                    <children>
                       <Label styleClass="command-title" text="sort" wrapText="true" />
                       <Label styleClass="command-description" text="Sort based on names ascending or date added ascending." wrapText="true" />
                       <Label styleClass="command-description" text="Usage: `sort name` or `sort dateadded`" wrapText="true" />
@@ -128,21 +141,12 @@
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
                     </padding>
                   </VBox>
-                  <VBox spacing="4.0" styleClass="command-section, command-section-even">
-                    <children>
-                      <Label styleClass="command-title" text="delete" wrapText="true" />
-                      <Label styleClass="command-description" text="Deletes contact from the current view list with the corresponding index" wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: delete INDEX" wrapText="true" />
-                    </children>
-                    <padding>
-                      <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
-                    </padding>
-                  </VBox>
+
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
-                      <Label styleClass="command-title" text="note" wrapText="true" />
-                      <Label styleClass="command-description" text="TO BE FILLED" wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: note ...TO BE FILLED" wrapText="true" />
+                      <Label styleClass="command-title" text="exit" wrapText="true" />
+                      <Label styleClass="command-description" text="Exit CustomerRelationBook application." wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: exit" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
