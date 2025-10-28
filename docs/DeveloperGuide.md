@@ -158,6 +158,11 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Filter feature
+The filter command allows for the user to filter their contacts based on specified tags (up to 10).
+
+<puml src="diagrams/FilterClassDiagram.puml" alt="FilterClassDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -329,7 +334,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a2. User re-enters the corrected data.
     * Steps 3a1–3a2 repeat until all data are valid.
     * Use case resumes from step 4.
-  
+
 * 3b. User specified missing field or wrong field:
 
     * 3b1. AddressBook displays error.
