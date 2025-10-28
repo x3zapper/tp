@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -19,15 +16,13 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final int HISTORY_INACTIVE = -1;
 
     private final CommandExecutor commandExecutor;
 
     @FXML
     private TextField commandTextField;
 
-    private final List<String> commandHistory;
-    private int historyIndex;
+    private final CommandHistory commandHistory;
 
     /**
      * Creates a {@code CommandBox} with the given {@code CommandExecutor}.
@@ -35,8 +30,7 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(CommandExecutor commandExecutor) {
         super(FXML);
         this.commandExecutor = commandExecutor;
-        this.commandHistory = new ArrayList<String>();
-        this.historyIndex = HISTORY_INACTIVE;
+        this.commandHistory = new CommandHistory();
         initEventListeners();
     }
 
@@ -77,10 +71,7 @@ public class CommandBox extends UiPart<Region> {
         }
 
         //Store command history
-        //todo ck: might want to reject adding the same latest command
         commandHistory.add(commandText);
-        //Reset command browsing index
-        historyIndex = HISTORY_INACTIVE;
 
         try {
             commandExecutor.execute(commandText);
@@ -94,24 +85,10 @@ public class CommandBox extends UiPart<Region> {
      * Navigate to previous command in history.
      */
     private void handleHistoryUp() {
-        //Sanity check
-        if (commandHistory.isEmpty()) {
-            return;
-        }
-
-        if (historyIndex > 0) {
-            //Check if there is more history to traverse
-            historyIndex -= 1;
-        } else if (historyIndex == HISTORY_INACTIVE) {
-            //Check if just started browsing
-            historyIndex = commandHistory.size() - 1;
-        } else {
-            //No more history to traverse
-            return;
-        }
+        String commandText = commandTextField.getText();
 
         //Set TextField to past command recorded
-        commandTextField.setText(commandHistory.get(historyIndex));
+        commandTextField.setText(commandHistory.getPrevious(commandText));
         //Move cursor to the end of the command
         commandTextField.positionCaret(commandTextField.getText().length());
     }
@@ -120,22 +97,10 @@ public class CommandBox extends UiPart<Region> {
      * Navigate to next command in history.
      */
     private void handleHistoryDown() {
-        //Sanity check
-        if (commandHistory.isEmpty()) {
-            return;
-        }
+        String commandText = commandTextField.getText();
 
-        if (historyIndex < commandHistory.size() - 1) {
-            //Check if more history to traverse
-            historyIndex += 1;
-            //Set TextField to past command recorded
-            commandTextField.setText(commandHistory.get(historyIndex));
-        } else {
-            //Latest history item
-            historyIndex = commandHistory.size();
-            //Moving out of history view
-            commandTextField.clear();
-        }
+        //Set TextField to past command recorded
+        commandTextField.setText(commandHistory.getNext(commandText));
         //Move cursor to the end of the command
         commandTextField.positionCaret(commandTextField.getText().length());
     }

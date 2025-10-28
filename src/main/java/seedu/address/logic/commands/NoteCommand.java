@@ -30,8 +30,6 @@ public class NoteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + "nt/ Likes to swim.";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
-
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to Person: %1$s";
     public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed note from Person: %1$s";
 

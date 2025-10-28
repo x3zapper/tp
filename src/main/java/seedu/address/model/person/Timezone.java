@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Objects;
 
 /**
@@ -20,7 +23,8 @@ public class Timezone {
     public static final double NO_TIMEZONE = -999;
     private static final double MAX_TIMEZONE = 24.0;
     private static final double MIN_TIMEZONE = -24.0;
-    private static final double BASE_TZ_OFFSET = 8.0; // User's time, Singapore UTC+8
+    private static final double SECONDS_PER_HOUR = 3600;
+    private static final int MINUTES_PER_HOUR = 60;
 
     public final double tzOffset;
 
@@ -48,34 +52,40 @@ public class Timezone {
         return (tz < MAX_TIMEZONE && tz > MIN_TIMEZONE) || (tz == NO_TIMEZONE);
     }
 
-    public String getTzOffset(Timezone other) {
-        return "NOT IMPLEMENTED";
+    /**
+     * Returns the local system's UTC offset in hours.
+     */
+    private static double getLocalOffsetHours() {
+
+        ZoneOffset offset = ZoneId.systemDefault().getRules().getOffset(Instant.now());
+        return offset.getTotalSeconds() / SECONDS_PER_HOUR; //Converting to numerical value as offset is an object
     }
 
     /**
-     * Returns the relative time difference between this timezone and Singapore time (UTC+8).
+     * Returns the relative time difference between this timezone and the local system time.
      * Example outputs:
-     *  - "Same as Singapore time"
-     *  - "3 hours ahead of Singapore"
-     *  - "5 hours behind Singapore"
+     *  - "Same as local time"
+     *  - "3 hours ahead of local time"
+     *  - "5 hours behind local time"
      */
-    public String getRelativeToSingapore() {
+    public String getRelativeToLocal() {
 
-        double diff = tzOffset - BASE_TZ_OFFSET;
+        double localOffset = getLocalOffsetHours();
+        double diff = tzOffset - localOffset;
 
         if (diff == 0) {
-            return "Same as Singapore time";
+            return "Same as local time";
         }
 
-        int totalMinutes = (int) Math.round(diff * 60);
-        int hours = totalMinutes / 60;
-        int minutes = Math.abs(totalMinutes % 60);
+        int totalMinutes = (int) Math.round(diff * MINUTES_PER_HOUR);
+        int hours = totalMinutes / MINUTES_PER_HOUR;
+        int minutes = Math.abs(totalMinutes % MINUTES_PER_HOUR);
         String aheadBehind = diff > 0 ? "ahead" : "behind";
 
         if (minutes == 0) {
-            return String.format("%d hours %s of Singapore", Math.abs(hours), aheadBehind);
+            return String.format("%d hours %s of local time", Math.abs(hours), aheadBehind);
         } else {
-            return String.format("%d hours %d minutes %s of Singapore", Math.abs(hours), minutes, aheadBehind);
+            return String.format("%d hours %d minutes %s of local time", Math.abs(hours), minutes, aheadBehind);
         }
     }
 
@@ -86,7 +96,7 @@ public class Timezone {
         }
 
         String baseTz = "UTC" + ((tzOffset >= 0) ? "+" : "") + tzOffset;
-        String relative = getRelativeToSingapore();
+        String relative = getRelativeToLocal();
 
         // Only show relative if different from base or NO_TIMEZONE
         if (!relative.equals(baseTz)) {

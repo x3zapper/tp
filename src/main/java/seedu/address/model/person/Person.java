@@ -33,8 +33,6 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone,
                   DateAdded dateAdded, Note note) {
-        this.dateAdded = dateAdded;
-        //todo ck: check who is sending null Timezone
         requireAllNonNull(name, phone, email, address, tags, timezone);
         this.name = name;
         this.phone = phone;
@@ -42,6 +40,7 @@ public class Person {
         this.address = address;
         this.tags.addAll(tags);
         this.timezone = timezone;
+        this.dateAdded = dateAdded;
         this.note = note;
     }
 
@@ -115,13 +114,15 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && timezone.equals(otherPerson.timezone);
+                && timezone.equals(otherPerson.timezone)
+                //&& dateAdded.equals(otherPerson.dateAdded)
+                && note.equals(otherPerson.note);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, timezone, dateAdded);
+        return Objects.hash(name, phone, email, address, tags, timezone);
     }
 
     @Override
@@ -134,7 +135,9 @@ public class Person {
                 .add("tags", tags)
                 .add("timezone", timezone)
                 .add("dateadded", dateAdded)
+                .add("note", note)
                 .toString();
     }
+
 
 }

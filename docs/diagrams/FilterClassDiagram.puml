@@ -1,0 +1,40 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Command {
+  +execute(model : Model) : CommandResult
+}
+
+class FilterCommand {
+  +COMMAND_WORD : String
+  +MESSAGE_USAGE : String
+  -predicate : TagContainsKeywordsPredicate
+  +FilterCommand(predicate : TagContainsKeywordsPredicate)
+  +execute(model : Model) : CommandResult
+}
+
+class FilterCommandParser {
+  +parse(args : String) : FilterCommand
+}
+
+class TagContainsKeywordsPredicate {
+  -keywords : List<String>
+  +test(person : Person) : boolean
+}
+
+class CommandResult {
+  +feedbackToUser : String
+}
+
+class Model {
+  +updateFilteredPersonList(predicate : Predicate<Person>) : void
+  +getFilteredPersonList() : List<Person>
+}
+
+Command <|-- FilterCommand
+FilterCommandParser --> FilterCommand
+FilterCommand --> TagContainsKeywordsPredicate
+FilterCommand --> CommandResult
+FilterCommand --> Model
+TagContainsKeywordsPredicate --> Person
+@enduml
