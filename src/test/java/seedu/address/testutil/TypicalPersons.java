@@ -29,7 +29,7 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withTags("friends")
             .withTimezone(0)
-            .withDateAdded(Instant.parse("1999-12-31T23:59:59.000000001Z"))
+            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000002Z"))
             .withNote("")
             .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
@@ -37,24 +37,24 @@ public class TypicalPersons {
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends")
             .withTimezone(-8)
-            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000002Z"))
+            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000003Z"))
             .withNote("")
             .build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000003Z")).build();
+            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000001Z")).build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
             .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000004Z")).build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000007Z")).build();
+            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000005Z")).build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
             .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000006Z")).build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
-            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000005Z")).build();
+            .withDateAdded(Instant.parse("2000-01-01T00:00:00.000000007Z")).build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
-import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,25 +16,6 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
-    /** {@code Comparator} that compares persons' name in ascending order */
-    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING = Comparator.comparing(person ->
-        String.valueOf(person.getName())
-    );
-
-    /** {@code Comparator} that compares persons' name in descending order */
-    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING = COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING
-        .reversed();
-
-    /** {@code Comparator} that compares the persons' date added ascending */
-    Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING = Comparator.comparing(person ->
-            Instant.parse(person.getDateAdded().toString())
-    );
-
-    /** {@code Comparator} that reverses the original order, date added descending */
-    Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = (a, b) -> 0;
-
-    // /** {@code Comparator} that reverses the original order, date added ascending */
-    // Comparator<Person> COMPARATOR_REVERSE_ORIGINAL_ORDER = Comparator.reverseOrder();
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -115,12 +95,12 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Sorts the filtered person list by the names of the Person and updates it
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
      */
-    void sortFilteredPersonListByName();
+    void updateSortComparator(Comparator<Person> comparator);
 
-    /**
-     * Sorts the filtered person list by the date added of the Person and updates it
-     */
-    void sortFilteredPersonListByDateAdded();
+
+    /** Returns an unmodifiable view of the sorted person list backed by the filtered person list */
+    ObservableList<Person> getSortedPersonList();
 }

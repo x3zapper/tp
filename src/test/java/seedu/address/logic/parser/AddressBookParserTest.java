@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_ORDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_TYPE;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -31,6 +33,7 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+
 
 public class AddressBookParserTest {
 
@@ -97,7 +100,11 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_sort() throws Exception {
-        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " name") instanceof SortCommand);
+        String userInput = SortCommand.COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + SortCommand.NAME_SORT_TYPE_ARGUMENT
+            + " " + PREFIX_SORT_ORDER + " " + SortCommand.ASCENDING_SORT_ORDER_ARGUMENT;
+        SortCommand manualCommand = (SortCommand) parser.parseCommand(userInput);
+        SortCommand autoCommand = new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING);
+        assertEquals(autoCommand, manualCommand);
     }
 
     @Test

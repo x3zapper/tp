@@ -41,7 +41,7 @@ public class FilterCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
 
-        int size = model.getFilteredPersonList().size();
+        int size = model.getSortedPersonList().size();
         String tagsString = String.join(", ", predicate.getTags());
 
         return new CommandResult(

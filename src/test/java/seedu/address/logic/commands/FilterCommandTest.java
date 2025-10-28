@@ -69,7 +69,7 @@ public class FilterCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_WITH_TAGS, 0, String.join(", ", tags));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
 
     @Test
@@ -82,12 +82,12 @@ public class FilterCommandTest {
 
         String expectedMessage = String.format(
                 MESSAGE_PERSONS_LISTED_WITH_TAGS,
-                expectedModel.getFilteredPersonList().size(),
+                expectedModel.getSortedPersonList().size(),
                 String.join(", ", tags));
 
         // Assuming ALICE and BENSON both have the "friends" tag in TypicalPersons
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getSortedPersonList());
     }
 
     @Test
@@ -100,12 +100,12 @@ public class FilterCommandTest {
 
         String expectedMessage = String.format(
                 MESSAGE_PERSONS_LISTED_WITH_TAGS,
-                expectedModel.getFilteredPersonList().size(),
+                expectedModel.getSortedPersonList().size(),
                 String.join(", ", tags));
 
         // Assuming only BENSON has both tags
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(BENSON), model.getFilteredPersonList());
+        assertEquals(Arrays.asList(BENSON), model.getSortedPersonList());
     }
 
     @Test
@@ -118,11 +118,11 @@ public class FilterCommandTest {
 
         String expectedMessage = String.format(
                 MESSAGE_PERSONS_LISTED_WITH_TAGS,
-                expectedModel.getFilteredPersonList().size(),
+                expectedModel.getSortedPersonList().size(),
                 String.join(", ", tags));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
 
     @Test
@@ -135,11 +135,11 @@ public class FilterCommandTest {
 
         String expectedMessage = String.format(
                 MESSAGE_PERSONS_LISTED_WITH_TAGS,
-                expectedModel.getFilteredPersonList().size(),
+                expectedModel.getSortedPersonList().size(),
                 String.join(", ", tags));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+        assertEquals(Collections.emptyList(), model.getSortedPersonList());
     }
 
     @Test

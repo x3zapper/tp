@@ -63,7 +63,7 @@ public class FindCommand extends Command {
      */
     private CommandResult executeNormalSearch(Model model) {
         model.updateFilteredPersonList(predicate);
-        int resultCount = model.getFilteredPersonList().size();
+        int resultCount = model.getSortedPersonList().size();
 
         logger.info("Normal search completed. Found " + resultCount + " person(s)");
 
@@ -89,7 +89,7 @@ public class FindCommand extends Command {
         // Update the filtered list with top 5 matches
         model.updateFilteredPersonList(rankedPersons::contains);
 
-        int resultCount = model.getFilteredPersonList().size();
+        int resultCount = model.getSortedPersonList().size();
         logger.info("Fuzzy search completed. Returning top " + resultCount + " match(es)");
 
         return new CommandResult(
