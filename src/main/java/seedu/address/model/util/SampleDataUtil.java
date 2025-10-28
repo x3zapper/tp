@@ -25,7 +25,6 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         Timezone noTz = new Timezone(Timezone.NO_TIMEZONE);
         Note emptyNote = new Note("");
-        Instant baseTimestampAdded = Instant.now();
 
         return new Person[] {
             new Person(
@@ -36,32 +35,27 @@ public class SampleDataUtil {
             new Person(
                     new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getTagSet("colleagues", "friends"), noTz, new DateAdded(baseTimestampAdded
-                            .plusSeconds(100)), emptyNote
+                    getTagSet("colleagues", "friends"), noTz, new DateAdded(), emptyNote
             ),
             new Person(
                     new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                    getTagSet("neighbours"), new Timezone(0), new DateAdded(baseTimestampAdded
-                            .plusSeconds(100)), emptyNote
+                    getTagSet("neighbours"), new Timezone(0), new DateAdded(), emptyNote
             ),
             new Person(
                     new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    getTagSet("family"), new Timezone(12.0), new DateAdded(baseTimestampAdded
-                            .plusSeconds(101)), emptyNote
+                    getTagSet("family"), new Timezone(12.0), new DateAdded(), emptyNote
             ),
             new Person(
                     new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                     new Address("Blk 47 Tampines Street 20, #17-35"),
-                    getTagSet("classmates"), new Timezone(-23.9), new DateAdded(baseTimestampAdded
-                        .plusSeconds(102)), emptyNote
+                    getTagSet("classmates"), new Timezone(-23.9), new DateAdded(), emptyNote
             ),
             new Person(
                     new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    getTagSet("colleagues"), new Timezone(23.5), new DateAdded(baseTimestampAdded
-                        .plusSeconds(103)), emptyNote
+                    getTagSet("colleagues"), new Timezone(23.5), new DateAdded(), emptyNote
             )
         };
     }
