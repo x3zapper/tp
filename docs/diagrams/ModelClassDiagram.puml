@@ -19,6 +19,8 @@ Class Email
 Class Name
 Class Phone
 Class Tag
+Class DateAdded
+Class TimeZone
 
 Class I #FFFFFF
 }
@@ -39,6 +41,8 @@ AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
 Person *--> Name
 Person *--> Phone
+Person *--> Email
+Person *--> Address
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
