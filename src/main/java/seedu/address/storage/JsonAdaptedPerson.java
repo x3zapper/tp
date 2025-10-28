@@ -72,7 +72,6 @@ class JsonAdaptedPerson {
         note = source.getNote().value;
     }
 
-    //todo ck: If exception was thrown for just 1 person, whole data file will not load
     /**
      * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
      *
@@ -83,6 +82,8 @@ class JsonAdaptedPerson {
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
+
+        //Note: If exception was thrown for just 1 person, whole data file will not load
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -118,7 +119,6 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        //todo ck: consider func extraction?
         final Timezone modelTimezone;
         //If user deleted the value from savefile, still treat as valid and set NO_TIMEZONE value
         if (timezone == null) {

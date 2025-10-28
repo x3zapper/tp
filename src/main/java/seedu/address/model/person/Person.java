@@ -33,8 +33,6 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Timezone timezone,
                   DateAdded dateAdded, Note note) {
-        this.dateAdded = dateAdded;
-        //todo ck: check who is sending null Timezone
         requireAllNonNull(name, phone, email, address, tags, timezone);
         this.name = name;
         this.phone = phone;
@@ -42,6 +40,7 @@ public class Person {
         this.address = address;
         this.tags.addAll(tags);
         this.timezone = timezone;
+        this.dateAdded = dateAdded;
         this.note = note;
     }
 
