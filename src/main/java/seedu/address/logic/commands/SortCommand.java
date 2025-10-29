@@ -42,12 +42,15 @@ public class SortCommand extends Command {
     public static final String DESCENDING_SORT_ORDER_ARGUMENT = "dsc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts all persons by their names "
-            + "by the the first character of their name. \n There are ONLY 'dateadded' & 'name' for sort type and "
+            + ": Changes sorting of shown contacts lexicographically by name or by their date added to the address book"
+            + "\n There are ONLY 'dateadded' & 'name' for sort type and "
             + "'asc' & 'dsc' for ascending & descending sort orders respectively.\n"
+            + "Note: Sort order will stick throughout the session.\n"
             + "Parameters: <" + PREFIX_SORT_TYPE + "SORT_TYPE> "
             + "<" + PREFIX_SORT_ORDER + "SORT_ORDER>" + "\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + NAME_SORT_TYPE_ARGUMENT + " "
+            + PREFIX_SORT_ORDER + " " + DESCENDING_SORT_ORDER_ARGUMENT + "\n"
+            + "Default: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
             + PREFIX_SORT_ORDER + " " + ASCENDING_SORT_ORDER_ARGUMENT;
 
     private final Comparator<Person> comparator;
