@@ -5,16 +5,17 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_ORDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_TYPE;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-
 
 /**
  * Parses input arguments and creates a new SortCommand object
  */
 public class SortCommandParser {
-
+    private static final Logger logger = LogsCenter.getLogger(SortCommandParser.class);
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
      * and returns a SortCommand object for execution.
@@ -40,6 +41,8 @@ public class SortCommandParser {
 
         String sortType = argMultimap.getValue(PREFIX_SORT_TYPE).get();
         String sortOrder = argMultimap.getValue(PREFIX_SORT_ORDER).get();
+        logger.fine("SortCommandParser sort type: " + sortType);
+        logger.fine("SortCommandParser sort order: " + sortOrder);
 
         // for case of date added type sorting
         if (sortType.equalsIgnoreCase(SortCommand.DATE_ADDED_SORT_TYPE_ARGUMENT)) {
