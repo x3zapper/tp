@@ -87,7 +87,7 @@
                   <VBox spacing="4.0" styleClass="command-section, command-section-even">
                     <children>
                       <Label styleClass="command-title" text="clear" wrapText="true" />
-                      <Label styleClass="command-description" text="Clears all entries from the address book." wrapText="true" />
+                      <Label styleClass="command-description" text="Clears all contact entries from the address book." wrapText="true" />
                       <Label styleClass="command-description" text="Usage: clear" wrapText="true" />
                     </children>
                     <padding>
@@ -115,6 +115,7 @@
                       <Label styleClass="command-description" text="• Fuzzy: typo-tolerant, top 5 results" wrapText="true" />
                       <Label styleClass="command-description" text="Usage: find [s/MODE] KEYWORD..." wrapText="true" />
                       <Label styleClass="command-description" text="Examples: find alice | find s/1 bob | find s/2 alica" wrapText="true" />
+                      <Label styleClass="command-description" text="Note: Find/Filter are mutually exclusive searching operations" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
@@ -123,8 +124,9 @@
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
                       <Label styleClass="command-title" text="filter" wrapText="true" />
-                      <Label styleClass="command-description" text="Filters contacts based on specified tags." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: filter &lt;tag1&gt; &lt;tag2&gt;.." wrapText="true" />
+                      <Label styleClass="command-description" text="List contacts that have all specified tags." wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: filter TAG [MORE_TAGS]..." wrapText="true" />
+                      <Label styleClass="command-description" text="Note: Find/Filter are mutually exclusive searching operations" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
