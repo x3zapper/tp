@@ -68,7 +68,7 @@
                       <Label styleClass="command-title" text="edit" wrapText="true" />
                       <Label styleClass="command-description" text="Edit a contact's detail(s)." wrapText="true" />
                       <Label styleClass="command-description" text="Refer to the user guide for an in-depth explanation on available parameters." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [tz/UTC_TIMEZONE_OFFSET]" wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
@@ -98,7 +98,10 @@
                     <children>
                       <Label styleClass="command-title" text="note" wrapText="true" />
                       <Label styleClass="command-description" text="Adds a note to the contact at the specified position." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: note INDEX nt/NOTE" wrapText="true" />
+                      <Label styleClass="command-description" text="Able to add/edit/delete" wrapText="true" />
+                        <Label styleClass="command-description" text="Usage: " wrapText="true" />
+                        <Label styleClass="command-description" text="• Add/Edit: note INDEX nt/NOTE" wrapText="true" />
+                        <Label styleClass="command-description" text="• Delete: note INDEX nt/" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
@@ -123,8 +126,8 @@
                   <VBox spacing="4.0" styleClass="command-section, command-section-odd">
                     <children>
                       <Label styleClass="command-title" text="filter" wrapText="true" />
-                      <Label styleClass="command-description" text="Filters contacts based on specified tags." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: filter &lt;tag1&gt; &lt;tag2&gt;.." wrapText="true" />
+                      <Label styleClass="command-description" text="List contacts that have all specified tags" wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: filter &lt;tag1&gt; [tag2].." wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
