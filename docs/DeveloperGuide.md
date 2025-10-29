@@ -163,6 +163,10 @@ The filter command allows for the user to filter their contacts based on specifi
 
 <puml src="diagrams/FilterClassDiagram.puml" alt="FilterClassDiagram" />
 
+### Sort feature
+The sort command allows the user to change the sort ordering of the conctact list displayed.
+<puml src="diagrams/SortClassDiagram.puml" alt="SortClassDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
