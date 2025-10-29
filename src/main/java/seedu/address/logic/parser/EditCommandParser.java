@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
@@ -39,7 +40,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_EMAIL,
                 PREFIX_ADDRESS,
                 PREFIX_TAG,
-                PREFIX_TIMEZONE
+                PREFIX_TIMEZONE,
+                PREFIX_NOTE
         );
 
         Index index;
@@ -55,7 +57,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                 PREFIX_PHONE,
                 PREFIX_EMAIL,
                 PREFIX_ADDRESS,
-                PREFIX_TIMEZONE
+                PREFIX_TIMEZONE,
+                PREFIX_NOTE
         );
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
@@ -77,6 +80,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setTimezone(
                     ParserUtil.parseTimezone(argMultimap.getValue(PREFIX_TIMEZONE).orElse(""))
             );
+        }
+
+        if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
+            editPersonDescriptor.setNote(ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get()));
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
