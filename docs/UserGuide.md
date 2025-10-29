@@ -202,6 +202,23 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 _Details coming soon ..._
 
+### Sorting all persons: `sort`
+
+Sorts the current list of persons according to chosen sort type and sort order.<br>
+Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
+each contact lexicographically case-insensitive.<br>
+Sort orders: `asc` for ascending and `dsc` for descending<br>
+<br>
+Format: `sort st/SORT_TYPE so/SORT_ORDER`<br>
+<br>
+Examples: <br>
+- `sort st/dateadded so/asc`
+- `sort st/dateadded so/dsc`
+- `sort st/name so/asc`
+- `sort st/name so/dsc`
+
+Note: The default sort order and type would be `sort st/dateadded so/asc`
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ

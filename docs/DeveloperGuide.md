@@ -294,6 +294,10 @@ The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filt
   * Pros: User can adjust based on needs.
   * Cons: Added complexity, may impact performance with large limits.
 
+### Sort feature
+The sort command allows the user to change the sort ordering of the conctact list displayed.
+<puml src="diagrams/SortClassDiagram.puml" alt="SortClassDiagram" />
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
