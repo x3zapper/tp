@@ -50,7 +50,7 @@ public class NoteCommandTest {
         Person editedPerson = new PersonBuilder(firstPerson).withNote("").build();
 
         NoteCommand noteCommand = new NoteCommand(INDEX_FIRST_PERSON,
-                new Note(editedPerson.getNote().toString()));
+                new Note(""));
 
         String expectedMessage = String.format(NoteCommand.MESSAGE_DELETE_NOTE_SUCCESS, Messages.format(editedPerson));
 

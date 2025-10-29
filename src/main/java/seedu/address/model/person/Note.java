@@ -8,6 +8,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Note {
 
+    public static final String DEFAULT_NOTE = "No current note";
     public final String value;
 
     /**
@@ -18,11 +19,14 @@ public class Note {
      */
     public Note(String note) {
         requireNonNull(note);
-        value = note;
+        this.value = note;
     }
 
     @Override
     public String toString() {
+        if (this.value.isEmpty()) {
+            return DEFAULT_NOTE;
+        }
         return value;
     }
 
