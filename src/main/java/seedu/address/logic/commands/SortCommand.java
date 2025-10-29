@@ -19,9 +19,10 @@ public class SortCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Sorted all persons";
 
     /** {@code Comparator} that compares persons' name in ascending order */
-    public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING = Comparator.comparing(person ->
-        String.valueOf(person.getName())
-    );
+    public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING =
+        Comparator.<Person, String>comparing(person -> person.getName().toString().toLowerCase(),
+                Comparator.naturalOrder())
+                .thenComparing(person -> Instant.parse(person.getDateAdded().toString()));
 
     /** {@code Comparator} that compares persons' name in ascending order */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING =
@@ -29,7 +30,8 @@ public class SortCommand extends Command {
 
     /** {@code Comparator} that compares the persons' date added ascending */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING =
-        Comparator.comparing(person -> Instant.parse(person.getDateAdded().toString()));
+        Comparator.<Person, Instant>comparing(person -> Instant.parse(person.getDateAdded().toString()))
+                .thenComparing(person -> person.getName().toString().toLowerCase(), Comparator.naturalOrder());
 
     /** {@code Comparator} that compares the persons' date added ascending */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_DESCENDING =
@@ -42,13 +44,16 @@ public class SortCommand extends Command {
     public static final String DESCENDING_SORT_ORDER_ARGUMENT = "dsc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts all persons by their names "
-            + "by the the first character of their name. \n There are ONLY 'dateadded' & 'name' for sort type and "
+            + ": Changes sorting of shown contacts lexicographically by name or by their date added to the address book"
+            + "\n There are ONLY 'dateadded' & 'name' for sort type and "
             + "'asc' & 'dsc' for ascending & descending sort orders respectively.\n"
-            + "Parameters: [" + PREFIX_SORT_TYPE + "SORT_TYPE] "
-            + "[" + PREFIX_SORT_ORDER + "SORT_ORDER]" + "\n"
-            + "Examples: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
-            + ASCENDING_SORT_ORDER_ARGUMENT;
+            + "Note: Sort order will stick throughout the session.\n"
+            + "Parameters: <" + PREFIX_SORT_TYPE + "SORT_TYPE> "
+            + "<" + PREFIX_SORT_ORDER + "SORT_ORDER>" + "\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + NAME_SORT_TYPE_ARGUMENT + " "
+            + PREFIX_SORT_ORDER + DESCENDING_SORT_ORDER_ARGUMENT + "\n"
+            + "Default: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
+            + PREFIX_SORT_ORDER + ASCENDING_SORT_ORDER_ARGUMENT;
 
     private final Comparator<Person> comparator;
 
