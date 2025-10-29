@@ -186,7 +186,7 @@ The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` ca
 
 **Mode values:**
 * `s/0` - Relaxed mode (default): Partial substring matching
-* `s/1` - Strict mode: Full word matching only  
+* `s/1` - Strict mode: Full word matching only
 * `s/2` - Fuzzy mode: Returns up to 5 closest matches using Levenshtein distance
 
 **Parsing logic:**
