@@ -9,11 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Timezone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -143,5 +139,18 @@ public class ParserUtil {
             throw new ParseException(Timezone.MESSAGE_CONSTRAINTS);
         }
         return new Timezone(tz);
+    }
+
+    /**
+     * Parses a {@code String note} into a {@code Note}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param note The input string, can be empty.
+     * @return A Note object. If empty, Note will represent "no current note".
+     * @throws ParseException never thrown in this implementation (optional to keep consistent API)
+     */
+    public static Note parseNote(String note) throws ParseException {
+        requireNonNull(note);
+        return new Note(note);
     }
 }

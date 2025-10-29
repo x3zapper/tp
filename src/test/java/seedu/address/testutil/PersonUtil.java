@@ -1,12 +1,5 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
-
 import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
@@ -14,6 +7,8 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Timezone;
 import seedu.address.model.tag.Tag;
+
+import static seedu.address.logic.parser.CliSyntax.*;
 
 /**
  * A utility class for Person.
@@ -39,7 +34,10 @@ public class PersonUtil {
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
-        sb.append(getTimezoneCommandStr(person.getTimezone()));
+        sb.append(getTimezoneCommandStr(person.getTimezone()) + " ");
+        if (!person.getNote().value.isEmpty()) {
+            sb.append(PREFIX_NOTE).append(person.getNote().value);
+        }
 
         return sb.toString();
     }
@@ -61,7 +59,8 @@ public class PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        descriptor.getTimezone().ifPresent(timezone -> sb.append(getTimezoneCommandStr(timezone)));
+        descriptor.getTimezone().ifPresent(timezone -> sb.append(getTimezoneCommandStr(timezone)).append(" "));
+        descriptor.getNote().ifPresent(note -> sb.append(PREFIX_NOTE).append(note.value));
         return sb.toString();
     }
 
