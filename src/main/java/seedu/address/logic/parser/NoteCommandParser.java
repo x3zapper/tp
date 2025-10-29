@@ -10,6 +10,8 @@ import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Note;
 
+
+
 /**
  * Parses input arguments and creates a new {@code RemarkCommand} object
  */
@@ -22,6 +24,7 @@ public class NoteCommandParser implements Parser<NoteCommand> {
     public NoteCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
+        String trimmedArgs = args.trim();
 
         Index index;
         try {
@@ -30,7 +33,15 @@ public class NoteCommandParser implements Parser<NoteCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE), ive);
         }
 
-        String note = argMultimap.getValue(PREFIX_NOTE).orElse("");
+        //After nt/ treat the rest of the arguement as a string
+        int firstPrefixIndex = trimmedArgs.indexOf("nt/");
+        if (firstPrefixIndex == -1) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE));
+        }
+
+        // Extract everything after "nt/" as a normal string
+        String note = trimmedArgs.substring(firstPrefixIndex + 3);
+
 
         return new NoteCommand(index, new Note(note));
     }
