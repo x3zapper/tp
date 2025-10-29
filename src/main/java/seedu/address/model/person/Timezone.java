@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public class Timezone {
     public static final String MESSAGE_CONSTRAINTS = "Timezone value is a floating point number that represents\n"
-            + "the time offset from UTC in hours. This value cannot be >24.0 or <-24.0.";
+            + "the time offset from UTC in hours. This value cannot be >=24.0 or <=-24.0.";
 
     public static final double NO_TIMEZONE = -999;
     private static final double MAX_TIMEZONE = 24.0;
