@@ -20,7 +20,7 @@ public class SortCommand extends Command {
 
     /** {@code Comparator} that compares persons' name in ascending order */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING = Comparator.comparing(person ->
-        String.valueOf(person.getName())
+        person.getName().toString().toLowerCase(), Comparator.naturalOrder()
     );
 
     /** {@code Comparator} that compares persons' name in ascending order */
