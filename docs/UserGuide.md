@@ -118,19 +118,44 @@ Examples:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search mode can be specified using `s/MODE` where MODE can be:
+    * `0` - **Relaxed mode** (default): Partial word matching. e.g. `Han` will match `Hans`, `Johann`
+    * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
+    * `2` - **Fuzzy mode**: Returns up to 5 closest matches based on edit distance, tolerant of typos. Results are unordered. e.g. `Alica` will match `Alice`
+* The mode flag `s/MODE` can be placed at the beginning or end of the command.
+* If multiple mode flags are specified (not at the beginning), the **last** mode flag will be used, this means that all prior `s/X` patterns will be treated as keywords..
+* If the mode flag is at the beginning and other mode flags appear later, the **first** mode flag will be used and subsequent `s/X` patterns will be treated as keywords.
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find alex david` returns `Alex Yeoh`, `David Li` (relaxed mode - default, partial match)<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find Yeoh s/1` returns `Alex Yeoh` (strict mode - only full word matches)<br>
+  ![result for 'find Yeoh s/1'](images/findYeohStrictResult.png)
+* `find Bernoce s/2` returns up to 5 closest matches (unordered) including `Bernice Yu` (fuzzy mode - tolerates typo "Bernoce" → "Bernice")<br>
+  ![result for 'find Bernoce s/2'](images/findBernoceFuzzyResult.png)
+
+<box type="tip" seamless>
+
+**When to use each mode:**
+
+| Scenario | Best Mode | Example |
+|----------|-----------|---------|
+| "Someone with 'Yeo' in name" | Relaxed (default) | `find Yeo` |
+| "Find EXACTLY 'Yeoh'" | Strict (`s/1`) | `find Yeoh s/1` |
+| "Was it 'Yeo' or 'Yeoh'?" | Fuzzy (`s/2`) | `find Yeo s/2` |
+| Exploring all 'Alex' variations | Relaxed (default) | `find Alex` |
+| Only "Alex" as full word | Strict (`s/1`) | `find Alex s/1` |
+| Misspelled as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
+
+**Progressive search strategy:** Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. If no results, use **Fuzzy mode** in case you misspelled the name.
+</box>
 
 ### Deleting a person : `delete`
 
@@ -218,6 +243,6 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Find**   | `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`<br> e.g., `find alex david`, `find Yeoh s/1`, `find s/2 Bernoce`
 **List**   | `list`
 **Help**   | `help`

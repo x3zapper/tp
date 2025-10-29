@@ -115,7 +115,6 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
                 && timezone.equals(otherPerson.timezone)
-                //&& dateAdded.equals(otherPerson.dateAdded)
                 && note.equals(otherPerson.note);
     }
 

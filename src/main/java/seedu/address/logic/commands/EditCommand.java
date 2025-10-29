@@ -108,7 +108,7 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Timezone updatedTimezone = editPersonDescriptor.getTimezone().orElse(personToEdit.getTimezone());
-        Note updatedNote = personToEdit.getNote(); //edit command does not allow editing note
+        Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
 
         // Edits to dateAdded is NOT allowed
         DateAdded dateAdded = personToEdit.getDateAdded();
@@ -152,6 +152,7 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Timezone timezone;
+        private Note note;
         // Note: Because dateAdded is not supposed to be edited, it will not be a property here.
 
         public EditPersonDescriptor() {}
@@ -167,13 +168,14 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setTimezone(toCopy.timezone);
+            setNote(toCopy.note);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, timezone);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, timezone, note);
         }
 
         public void setName(Name name) {
@@ -233,6 +235,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(timezone);
         }
 
+        public void setNote(Note note) {
+            this.note = note;
+        }
+
+        public Optional<Note> getNote() {
+            return Optional.ofNullable(note);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -250,7 +260,8 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(timezone, otherEditPersonDescriptor.timezone);
+                    && Objects.equals(timezone, otherEditPersonDescriptor.timezone)
+                    && Objects.equals(note, otherEditPersonDescriptor.note);
         }
 
         @Override
@@ -262,6 +273,7 @@ public class EditCommand extends Command {
                     .add("address", address)
                     .add("tags", tags)
                     .add("timezone", timezone)
+                    .add("note", note)
                     .toString();
         }
     }

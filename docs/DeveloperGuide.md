@@ -27,7 +27,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ### Architecture
 
-<puml src="diagrams/ArchitectureDiagram.puml" width="280" />
+    <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
 The ***Architecture Diagram*** given above explains the high-level design of the App.
 
@@ -162,6 +162,137 @@ This section describes some noteworthy details on how certain features are imple
 The filter command allows for the user to filter their contacts based on specified tags (up to 10).
 
 <puml src="diagrams/FilterClassDiagram.puml" alt="FilterClassDiagram" />
+
+### Find feature with multiple search modes
+
+The find command allows users to search for contacts by name using three different search modes: relaxed (default), strict, and fuzzy. Each mode provides different matching behavior to suit various search scenarios.
+
+#### Implementation
+
+The find feature is implemented through three main components:
+
+1. **FindCommandParser** - Parses user input and extracts search mode and keywords
+2. **FindCommand** - Executes the search based on the parsed predicate
+3. **NameContainsKeywordsPredicate** - Implements the matching logic for each mode
+
+<puml src="diagrams/FindParserClassDiagram.puml" alt="FindParserClassDiagram" />
+
+#### Parsing search modes
+
+The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` can be placed either at the beginning or end of the command:
+
+* `find s/1 alex` - Mode flag at beginning
+* `find alex s/1` - Mode flag at end
+
+**Mode values:**
+* `s/0` - Relaxed mode (default): Partial substring matching
+* `s/1` - Strict mode: Full word matching only
+* `s/2` - Fuzzy mode: Returns up to 5 closest matches using Levenshtein distance
+
+**Parsing logic:**
+
+1. If arguments start with `s/`, `extractSearchModeFromPrefix()` is called:
+   - Splits arguments by first whitespace
+   - Extracts first mode value (e.g., "1" from "s/1")
+   - Remaining text becomes keywords
+   - Any subsequent `s/X` patterns are treated as keywords
+
+2. Otherwise, `extractSearchModeFromSuffix()` is called:
+   - Uses `ArgumentTokenizer` to find all `s/` occurrences
+   - If multiple mode flags exist, **last value wins** via `getValue(PREFIX_SEARCH_MODE)`
+   - Preamble becomes keywords
+
+**Example parsing scenarios:**
+
+| Command | Mode Used | Keywords | Notes |
+|---------|-----------|----------|-------|
+| `find alex s/1` | Strict (`s/1`) | `["alex"]` | Last mode wins |
+| `find s/2 alex` | Fuzzy (`s/2`) | `["alex"]` | First mode at beginning |
+| `find alex s/0 s/1 s/2` | Fuzzy (`s/2`) | `["alex"]` | Last mode wins (not at beginning) |
+| `find s/1 alex s/2` | Strict (`s/1`) | `["alex", "s/2"]` | First mode wins, `s/2` becomes keyword |
+
+#### Search mode behaviors
+
+The `FindCommand#execute()` method checks the predicate mode and delegates to either `FindCommand#executeNormalSearch()` for relaxed and strict modes, or `FindCommand#executeFuzzySearch()` for fuzzy mode.
+
+**Relaxed Mode (s/0 - Default):**
+
+The `NameContainsKeywordsPredicate#test()` performs partial substring matching by checking if the lowercase name contains the lowercase keyword. For example, `find Yeo` matches "Alex Yeoh", "Yeong", or "George" (contains "eo").
+
+**Strict Mode (s/1):**
+
+Uses `StringUtil#containsWordIgnoreCase()` to perform full word matching by splitting the name into words and checking for exact matches. The implementation splits the sentence by whitespace and uses a stream to check if any word matches the keyword (case-insensitive). For example, `find Yeoh s/1` matches "Alex Yeoh" but NOT "Yeohng" or "Yeo".
+
+**Fuzzy Mode (s/2):**
+
+The `FindCommand#executeFuzzySearch()` method ranks all persons by their minimum Levenshtein distance to the keywords using `FindCommand#rankPersonsByDistance()`, which sorts persons by distance in ascending order and limits results to the top 5 matches. The sorted list may not be preserved in the displayed order in the UI.
+
+#### Levenshtein Distance Algorithm
+
+The fuzzy search mode uses the Levenshtein distance algorithm to measure similarity between strings. The Levenshtein distance is the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one string into another.
+
+The algorithm is implemented in `StringUtil#getLevenshteinDistance()` using dynamic programming with a 2D matrix approach:
+
+1. A matrix `dp[i][j]` is created where `i` and `j` represent positions in the two strings
+2. Base cases are initialized: `dp[i][0] = i` (delete all characters from s1) and `dp[0][j] = j` (insert all characters from s2)
+3. For each cell, if characters match, no operation is needed: `dp[i][j] = dp[i-1][j-1]`
+4. Otherwise, the minimum cost of three operations is taken: substitution `dp[i-1][j-1]`, deletion `dp[i-1][j]`, or insertion `dp[i][j-1]`, each plus 1
+5. The final value `dp[len1][len2]` gives the minimum edit distance
+
+**How fuzzy matching uses Levenshtein distance:**
+
+The `NameContainsKeywordsPredicate#getMinimumDistance()` method calculates the minimum distance for each person by:
+1. Splitting the person's name into individual words
+2. Comparing each word against all keywords using `StringUtil#getLevenshteinDistance()`
+3. Returning the smallest distance found
+
+This distance is then used by `FindCommand#rankPersonsByDistance()` to sort all persons by distance and select the top 5 closest matches using a stream with `Comparator.comparingInt()` and `limit(FUZZY_RESULT_LIMIT)` where `FUZZY_RESULT_LIMIT = 5`.
+
+For example, comparing "Alek" to "Alex" results in a distance of 1 (one substitution: 'k' → 'x'). The matrix computation produces:
+
+|     |   | a | l | e | x |
+|-----|---|---|---|---|---|
+|     | 0 | 1 | 2 | 3 | 4 |
+| a   | 1 | 0 | 1 | 2 | 3 |
+| l   | 2 | 1 | 0 | 1 | 2 |
+| e   | 3 | 2 | 1 | 0 | 1 |
+| k   | 4 | 3 | 2 | 1 | 1 |
+
+The final distance is 1, making "Alek" a close match that would appear in fuzzy search results.
+
+The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filtering during the `test()` method, though in fuzzy mode execution, the top 5 closest matches are returned regardless of their distance.
+
+#### Design considerations:
+
+**Aspect: Mode flag position handling:**
+
+* **Alternative 1 (current choice):** Supports both prefix and suffix positions.
+  * Pros: Flexible syntax, user-friendly for different typing patterns.
+  * Cons: More complex parsing logic, potential ambiguity with multiple flags.
+
+* **Alternative 2:** Require mode flag at fixed position (e.g., always at end).
+  * Pros: Simpler parsing, no ambiguity.
+  * Cons: Less flexible, may not match user intuition.
+
+**Aspect: Multiple mode flag resolution:**
+
+* **Alternative 1 (current choice):** Last mode wins (when not at beginning), first mode wins (when at beginning).
+  * Pros: Predictable behavior, documented in user guide.
+  * Cons: May confuse users who accidentally type multiple flags.
+
+* **Alternative 2:** Throw error on multiple mode flags.
+  * Pros: Prevents ambiguity, forces correct input.
+  * Cons: Less forgiving, requires user to fix command.
+
+**Aspect: Fuzzy search result limit:**
+
+* **Alternative 1 (current choice):** Fixed limit of 5 results.
+  * Pros: Prevents overwhelming user with too many results, fast processing.
+  * Cons: May miss relevant matches if more than 5 similar names exist.
+
+* **Alternative 2:** Configurable result limit.
+  * Pros: User can adjust based on needs.
+  * Cons: Added complexity, may impact performance with large limits.
 
 ### Sort feature
 The sort command allows the user to change the sort ordering of the conctact list displayed.
