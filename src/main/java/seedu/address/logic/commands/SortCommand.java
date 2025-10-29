@@ -45,10 +45,10 @@ public class SortCommand extends Command {
             + ": Sorts all persons by their names "
             + "by the the first character of their name. \n There are ONLY 'dateadded' & 'name' for sort type and "
             + "'asc' & 'dsc' for ascending & descending sort orders respectively.\n"
-            + "Parameters: [" + PREFIX_SORT_TYPE + "SORT_TYPE] "
-            + "[" + PREFIX_SORT_ORDER + "SORT_ORDER]" + "\n"
-            + "Examples: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
-            + ASCENDING_SORT_ORDER_ARGUMENT;
+            + "Parameters: <" + PREFIX_SORT_TYPE + "SORT_TYPE> "
+            + "<" + PREFIX_SORT_ORDER + "SORT_ORDER>" + "\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
+            + PREFIX_SORT_ORDER + " " + ASCENDING_SORT_ORDER_ARGUMENT;
 
     private final Comparator<Person> comparator;
 
