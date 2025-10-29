@@ -48,10 +48,10 @@ public class SortCommand extends Command {
             + "Note: Sort order will stick throughout the session.\n"
             + "Parameters: <" + PREFIX_SORT_TYPE + "SORT_TYPE> "
             + "<" + PREFIX_SORT_ORDER + "SORT_ORDER>" + "\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + NAME_SORT_TYPE_ARGUMENT + " "
-            + PREFIX_SORT_ORDER + " " + DESCENDING_SORT_ORDER_ARGUMENT + "\n"
-            + "Default: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + " " + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
-            + PREFIX_SORT_ORDER + " " + ASCENDING_SORT_ORDER_ARGUMENT;
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + NAME_SORT_TYPE_ARGUMENT + " "
+            + PREFIX_SORT_ORDER + DESCENDING_SORT_ORDER_ARGUMENT + "\n"
+            + "Default: " + COMMAND_WORD + " " + PREFIX_SORT_TYPE + DATE_ADDED_SORT_TYPE_ARGUMENT + " "
+            + PREFIX_SORT_ORDER + ASCENDING_SORT_ORDER_ARGUMENT;
 
     private final Comparator<Person> comparator;
 
