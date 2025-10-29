@@ -19,9 +19,10 @@ public class SortCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Sorted all persons";
 
     /** {@code Comparator} that compares persons' name in ascending order */
-    public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING = Comparator.comparing(person ->
-        person.getName().toString().toLowerCase(), Comparator.naturalOrder()
-    );
+    public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING =
+        Comparator.<Person, String>comparing(person -> person.getName().toString().toLowerCase(),
+                Comparator.naturalOrder())
+                .thenComparing(person -> Instant.parse(person.getDateAdded().toString()));
 
     /** {@code Comparator} that compares persons' name in ascending order */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING =
@@ -29,7 +30,8 @@ public class SortCommand extends Command {
 
     /** {@code Comparator} that compares the persons' date added ascending */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING =
-        Comparator.comparing(person -> Instant.parse(person.getDateAdded().toString()));
+        Comparator.<Person, Instant>comparing(person -> Instant.parse(person.getDateAdded().toString()))
+                .thenComparing(person -> person.getName().toString().toLowerCase(), Comparator.naturalOrder());
 
     /** {@code Comparator} that compares the persons' date added ascending */
     public static final Comparator<Person> COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_DESCENDING =
