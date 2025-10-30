@@ -1,0 +1,21 @@
+@startuml
+!include style.puml
+
+actor User
+participant "CommandBox (UI)" as CB
+participant "CommandHistory" as CH
+participant "TextField" as TF
+
+User -> TF : types "del" (partial)
+TF -> CB : (text property bound)
+User -> CB : press UP
+CB -> CH : getPrevious(currentInput="del")
+CH -> CB : returns "add Alice"
+CB -> TF : setText("add Alice") + positionCaret(end)
+
+User -> CB : press DOWN
+CB -> CH : getNext(currentInput="add Alice")
+CH -> CB : returns "del"   <-- saved partial restored
+CB -> TF : setText("del") + positionCaret(end)
+
+@enduml
