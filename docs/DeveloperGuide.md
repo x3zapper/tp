@@ -82,6 +82,33 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
+#### Updating the Help Window
+
+The help window displays a list of available commands with usage details. To update the command list:
+
+1. **Locate the FXML file**: Navigate to `src/main/resources/view/HelpWindow.fxml`
+2. **Find the command list section**: Look for the `ScrollPane` with `id="help-command-scroll"` containing a `VBox` with `id="help-command-list"`
+3. **Add/modify commands**: Each command is represented by a `VBox` with `styleClass="command-section"`. The structure includes:
+   - Command title (Label with `styleClass="command-title"`)
+   - Command description (one or more Labels with `styleClass="command-description"`)
+   - Usage format (Label showing the command syntax)
+4. **Alternate styling**: Use `command-section-odd` and `command-section-even` for alternating background colors
+5. **Update window settings**: The help window size and position are persisted in `GuiSettings`. Default dimensions are:
+   - Width: 600px (minimum: 450px)
+   - Height: 500px (minimum: 400px)
+
+Example command entry structure:
+```xml
+<VBox spacing="4.0" styleClass="command-section, command-section-odd">
+  <children>
+    <Label styleClass="command-title" text="command_name" ... />
+    <Label styleClass="command-description" text="Brief description" ... />
+    <Label styleClass="command-description" text="Usage: command_name PARAMS" ... />
+  </children>
+  <padding>...</padding>
+</VBox>
+```
+
 ### Logic component
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)

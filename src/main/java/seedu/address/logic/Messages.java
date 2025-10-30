@@ -49,6 +49,8 @@ public class Messages {
         person.getTags().forEach(builder::append);
         builder.append("; Timezone: ")
                 .append(person.getTimezone());
+        builder.append("; Note: ")
+                .append(person.getNote());
         return builder.toString();
     }
 
