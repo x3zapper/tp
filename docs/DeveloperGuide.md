@@ -189,8 +189,8 @@ This section describes some noteworthy details on how certain features are imple
 The filter command allows for the user to filter their contacts based on specified tags (up to 10).
 
 #### Feature Overview
-The `filter` command filters and lists all persons in the address book whose tags contain any of the specified keywords.  
-Tag matching is **case-sensitive**.  
+The `filter` command filters and lists all persons in the address book whose tags contain any of the specified keywords.
+Tag matching is **case-sensitive**.
 For example, entering `filter t/friend` will display only the contacts with the tag “friend”.
 
 #### Implementation
