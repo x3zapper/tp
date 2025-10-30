@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Customer Relation Book Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,10 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+* For the detailed documentation of the `AddressBook-Level3` project, see the [Address Book Product Website](https://se-education.org/addressbook-level3).
+* This project is a part of the se-education.org initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
+* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -27,7 +30,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ### Architecture
 
-    <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
+<puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
 The ***Architecture Diagram*** given above explains the high-level design of the App.
 
@@ -35,7 +38,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +70,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -111,7 +114,7 @@ Example command entry structure:
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -143,7 +146,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -166,7 +169,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -184,6 +187,8 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+---
 
 ### Filter feature
 The filter command allows for the user to filter their contacts based on specified tags (up to 10).
@@ -213,8 +218,6 @@ When the user executes the command:
 
 #### Key Code Snippet
 ```java
-
-
 @Override
 public CommandResult execute(Model model) {
     requireNonNull(model);
@@ -403,7 +406,7 @@ The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filt
   * Pros: User can adjust based on needs.
   * Cons: Added complexity, may impact performance with large limits.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ### Sort feature
 The sort command allows the user to change the sort ordering of the conctact list displayed.
@@ -443,6 +446,70 @@ As this would cause some issues with sorting, `COMPARATOR_SORT_PERSONS_BY_DATE_A
 Since CRB currently does not allow for `Person`s of the same `name` (contact list gets reset), this is sufficient.
 
 
+---
+
+### Command box history feature
+
+This section documents the command-history feature used by `CommandBox`.
+
+#### Feature Overview
+
+The command-history feature provides a terminal-like experience where previously executed commands can be navigated using the Up and Down arrow keys. It supports:
+* Browsing older commands with `UP` and newer commands with `DOWN`.
+* Preserving the currently typed (partial) input when the user begins browsing history and restoring it when the user navigates back to the most recent position (so the user can continue editing). 
+* Preventing duplicate consecutive history entries (the same command repeated in succession). 
+* Limiting the history size (e.g. 100 entries) to avoid unbounded memory growth.
+
+Example interaction flow:
+* Type `add Alice` and press `Enter` -> command is executed and stored in history. 
+* Type `del` (partial), press `UP` -> previous command shown, partial `del` saved. 
+* Press `DOWN` until out of history -> `del` restored for continued editing.
+
+#### Implementation
+
+The feature is split into two components:
+1. `CommandBox` (UI layer)
+  * Handles user keyboard input and UI updates (TextField contents & caret position). 
+  * Delegates history navigation to `CommandHistory`. 
+  * Uses a `CommandExecutor` functional interface (provided by `MainWindow`) to execute commands.
+2. `CommandHistory` (logic layer / helper class)
+  * Encapsulates history storage (a `List<String>`), the browsing index, and a saved partial command. 
+  * Exposes:
+    * `boolean add(String commandText)` - store a new command, trims history and avoids duplicates. 
+    * `String getPrevious(String currentInput)` - return older command; save current partial input when browsing starts. 
+    * `String getNext(String currentInput)` - return newer command or restore saved partial input when leaving history. 
+    * `void reset()` - clear browsing state. 
+    * `boolean isEmpty()` - check if history is empty.
+
+Flow when user presses Up/Down arrow keys:
+1. `CommandBox` intercepts `KeyEvent` for `UP`/`DOWN`. 
+2. `CommandBox` calls `commandHistory.getPrevious(commandTextField.getText())` or `commandHistory.getNext(commandTextField.getText())`. 
+3. `CommandHistory` returns the appropriate string. 
+4. `CommandBox` sets the `TextField` text and positions the caret at the end.
+
+Flow when user presses Enter:
+1. `CommandBox.handleCommandEntered() ` calls `commandHistory.add(commandText)`. 
+2. `commandHistory.add()` checks if:
+  1. New command is a duplicate of latest entry, if so do not add
+  2. History is full, if so remove the oldest entry
+3. `commandHistory.add()` internally calls `reset()` to ensure browsing state is cleared.
+
+#### List Access Safety
+* `getPrevious` and `getNext` perform empty-history checks first and return safely without indexing.
+* `historyIndex` is always maintained within the range `HISTORY_INACTIVE` (−1) or valid list indices 0 to `history.size()-1`.
+* Note: The code assumes single-threaded use on the JavaFX Application Thread; if accessed from other threads concurrently, external synchronization is required.
+
+#### Class Diagram
+<puml src="diagrams/CommandHistoryClassDiagram.puml" alt="CommandHistoryClassDiagram" />
+
+#### Sequence Diagram - Navigation (Up/Down)
+<puml src="diagrams/CommandHistorySequenceDiagram_Navigation.puml" alt="CommandHistoryNavigationSequenceDiagram" />
+
+#### Sequence Diagram - Execute (Enter)
+<puml src="diagrams/CommandHistorySequenceDiagram_Execute.puml" alt="CommandHistoryExecuteSequenceDiagram" />
+
+#### Possible Future Development Ideas
+* Persistence - Command history can be written to a save file when exiting the application and restored upon next launch
 
 ### \[Proposed\] Undo/redo feature
 
@@ -483,7 +550,7 @@ Step 4. The user now decides that adding the person was a mistake, and decides t
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial CustomerRelationBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -506,7 +573,7 @@ The `redo` command does the opposite — it calls `Model#redoAddressBook()`,
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone CustomerRelationBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
@@ -578,21 +645,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
 | `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
 | `* * *`  | user                                       | add a new person             | store contact details for future reference                             |
+| `* * *`  | user                                       | edit contact information     | keep contact details up to date when they change                       |
 | `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
 | `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
 | `* * *`  | user                                       | view all my contacts         | see an overview of all stored contacts                                 |
 | `* * *`  | user                                       | filter contacts by tags      | focus on specific groups like clients or vendors                       |
+| `* * *`  | user                                       | clear all contacts           | start fresh with a clean address book when needed                      |
 | `* * *`  | user                                       | exit the application         | close the app when I'm done using it                                   |
 | `* * *`  | user                                       | have my data automatically saved | not lose my contact information when the app closes                    |
 | `* * *`  | user                                       | use consistent commands      | interact with the app reliably and predictably                        |
+| `* *`    | user                                       | add notes to contacts        | remember important details or context about each person                |
+| `* *`    | user                                       | edit notes for contacts      | update or remove notes as circumstances change                         |
+| `* *`    | user                                       | search with fuzzy matching   | find contacts even if I misspell their names                           |
+| `* *`    | user                                       | search with strict matching  | find only exact name matches when I know the full name                 |
+| `* *`    | user                                       | navigate command history     | quickly reuse previous commands without retyping them                  |
+| `* *`    | user                                       | sort my contacts by name     | view contacts in alphabetical order for easier browsing                |
+| `* *`    | user                                       | sort by date added           | see my newest or oldest contacts first                                 |
 | `* *`    | startup founder                            | add custom tags to contacts  | categorize them by type for better organization                        |
+| `* *`    | international business owner               | store timezone information   | know what time it is for my contacts in different regions              |
 | `* *`    | tech business owner                        | mark contacts as favorites   | quickly access my most important clients or vendors                   |
-| `*`      | normal user                                | sort my contacts             | locate a person easily without scrolling through the full list        |
 | `*`      | small business owner                       | backup my contact information | restore my data in case I lose the current information                |
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the CustomerRelationBook and the **Actor** is the `user`, unless specified otherwise)
 
 **Use Case: UC01 - Add a New Contact**
 
@@ -600,10 +676,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User chooses to add a new contact.
 2. User enters contact details (e.g., name, phone, email, address).
-3. AddressBook parses the contact details.
-4. AddressBook validates each field details.
-5. AddressBook checks for duplicates.
-6. AddressBook saves the new contact and confirms successful addition.
+3. CustomerRelationBook parses the contact details.
+4. CustomerRelationBook validates each field details.
+5. CustomerRelationBook checks for duplicates.
+6. CustomerRelationBook saves the new contact and confirms successful addition.
 
     Use case ends.
 
@@ -611,15 +687,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. User enters invalid data for any field.
 
-    * 3a1. AddressBook displays appropriate error message for the fields.
+    * 3a1. CustomerRelationBook displays appropriate error message for the fields.
     * 3a2. User re-enters the corrected data.
     * Steps 3a1–3a2 repeat until all data are valid.
     * Use case resumes from step 4.
 
 * 3b. User specified missing field or wrong field:
 
-    * 3b1. AddressBook displays error.
-    * 3b2. AddressBook displays required field.
+    * 3b1. CustomerRelationBook displays error.
+    * 3b2. CustomerRelationBook displays required field.
     * 3b3. User corrects the command.
     * Steps repeat until all single-valued fields are specified correctly.
     * Use case resumes from step 4.
@@ -627,7 +703,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. Duplicate contact detected.
 
-    * 4a1. AddressBook displays a console message indicating that the contact already exists.
+    * 4a1. CustomerRelationBook displays a console message indicating that the contact already exists.
     * Use case ends.
 
 **Use case: UC02 - List Contacts**
@@ -635,19 +711,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to list all contact.
-2. AddressBook parses the command.
-3. AddressBook validates the command format.
-4. AddressBook retrieves all saved contacts.
-5. AddressBook displays all contacts.
-6. AddressBook displays a console message indicating the number of contacts displayed.
+2. CustomerRelationBook parses the command.
+3. CustomerRelationBook validates the command format.
+4. CustomerRelationBook retrieves all saved contacts.
+5. CustomerRelationBook displays all contacts.
+6. CustomerRelationBook displays a console message indicating the number of contacts displayed.
 
     Use case ends.
 
 **Extensions**
 
-* 5a. No contacts stored in AddressBook
-  * 5a1. AddressBook will not display any contacts.
-  * 5a2. AddressBook displays a console message indicating AddressBook is empty.
+* 5a. No contacts stored in CustomerRelationBook
+  * 5a1. CustomerRelationBook will not display any contacts.
+  * 5a2. CustomerRelationBook displays a console message indicating CustomerRelationBook is empty.
   * Use case ends.
 
 **Use case: UC03 - Add Tags to Contact**
@@ -655,16 +731,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User includes tags when <u>adding a new contact (UC01).</u>
-2. AddressBook parses the tag values.
-3. AddressBook validates the tag values.
-4. AddressBook associates valid tags with the contact.
+2. CustomerRelationBook parses the tag values.
+3. CustomerRelationBook validates the tag values.
+4. CustomerRelationBook associates valid tags with the contact.
 
     Use case ends.
 
 **Extensions**
 
 * 3a. Tag value is invalid
-  * 3a1. AddressBook displays error message and requests for correction.
+  * 3a1. CustomerRelationBook displays error message and requests for correction.
   * 3a2. User corrects or remove invalid tags.
   * Steps 3a1-3a2 repeat until all tags are valid.
   * Use case resumes from step 4.
@@ -675,33 +751,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to filter contacts with specified tags.
-2. AddressBook parses the tag values.
-3. AddressBook validates the tag values.
-4. AddressBook retrieves all contacts with the specified tags.
-5. AddressBook <u>lists these filtered contacts (UC02).</u>
-6. AddressBook displays a console message indicating the number of filtered contacts displayed.
+2. CustomerRelationBook parses the tag values.
+3. CustomerRelationBook validates the tag values.
+4. CustomerRelationBook retrieves all contacts with the specified tags.
+5. CustomerRelationBook <u>lists these filtered contacts (UC02).</u>
+6. CustomerRelationBook displays a console message indicating the number of filtered contacts displayed.
 
     Use case ends.
 
 **Extensions**
 
 * 3a. No tag provided in the command.
-  * 3a1. AddressBook displays an error message.
+  * 3a1. CustomerRelationBook displays an error message.
   * Use case ends.
 * 3b. Tag value is invalid.
-  * 3b1. AddressBook will display an error message and request for correction.
+  * 3b1. CustomerRelationBook will display an error message and request for correction.
   * 3b2. User corrects the tag value.
   * Step 3b1-3b2 repeats until all tags are valid.
   * Use case resumes from step 4.
 * 3c. More than 10 tags specified.
-  * 3c1. AddressBook will display an error message and request for correction.
+  * 3c1. CustomerRelationBook will display an error message and request for correction.
   * 3c2. User corrects the command.
   * Steps 3c1-3c2 repeats until tags are less than 10.
   * Use case resumes from step 4.
 
 * 4a. No contact matches the specified tags.
-  * 4a1. AddressBook will not display any contacts
-  * 4a2. AddressBook will display a console message indicating no contacts found with the specified tags.
+  * 4a1. CustomerRelationBook will not display any contacts
+  * 4a2. CustomerRelationBook will display a console message indicating no contacts found with the specified tags.
   * Use case ends.
 
 
@@ -710,9 +786,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  CustomerRelationBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  CustomerRelationBook deletes the person
 
     Use case ends.
 
@@ -724,11 +800,165 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CustomerRelationBook shows an error message.
 
       Use case resumes at step 2.
 
-*{More to be added}*
+
+**Use case: UC06 - Edit a Contact**
+
+**MSS**
+
+1. User <u>lists contacts (UC02)</u> or <u>finds contacts (UC08)</u>.
+2. CustomerRelationBook displays the list of contacts.
+3. User requests to edit a specific contact with new field values.
+4. CustomerRelationBook parses the edit command.
+5. CustomerRelationBook validates the index and field values.
+6. CustomerRelationBook updates the contact with new values.
+7. CustomerRelationBook confirms successful update.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. No index provided.
+  * 3a1. CustomerRelationBook displays error message.
+  * Use case ends.
+
+* 5a. The given index is invalid.
+  * 5a1. CustomerRelationBook displays error message.
+  * Use case resumes at step 3.
+
+* 5b. No fields to edit provided.
+  * 5b1. CustomerRelationBook displays error message requiring at least one field.
+  * Use case resumes at step 3.
+
+* 5c. Field value is invalid.
+  * 5c1. CustomerRelationBook displays error message for the specific field.
+  * 5c2. User corrects the field value.
+  * Steps 5c1-5c2 repeat until all fields are valid.
+  * Use case resumes from step 6.
+
+
+**Use case: UC07 - Clear All Contacts**
+
+**MSS**
+
+1. User requests to clear all contacts.
+2. CustomerRelationBook parses the command.
+3. CustomerRelationBook removes all contacts.
+4. CustomerRelationBook confirms successful clearing.
+
+    Use case ends.
+
+
+**Use case: UC08 - Find Contacts by Name**
+
+**MSS**
+
+1. User requests to find contacts by name keywords.
+2. CustomerRelationBook parses the keywords and search mode.
+3. CustomerRelationBook validates the command format.
+4. CustomerRelationBook searches for contacts matching the keywords.
+5. CustomerRelationBook displays matching contacts.
+6. CustomerRelationBook displays a console message indicating the number of contacts found.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. No keywords provided.
+  * 2a1. CustomerRelationBook displays error message.
+  * Use case ends.
+
+* 2b. Invalid search mode specified.
+  * 2b1. CustomerRelationBook displays error message with valid modes.
+  * Use case resumes at step 1.
+
+* 4a. No contacts match the keywords.
+  * 4a1. CustomerRelationBook displays empty list.
+  * 4a2. CustomerRelationBook displays message indicating no contacts found.
+  * Use case ends.
+
+
+**Use case: UC09 - Sort Contacts**
+
+**MSS**
+
+1. User requests to sort contacts by specified criteria.
+2. CustomerRelationBook parses sort type and sort order.
+3. CustomerRelationBook validates the sort parameters.
+4. CustomerRelationBook sorts the contact list accordingly.
+5. CustomerRelationBook displays sorted contacts.
+6. CustomerRelationBook confirms successful sorting.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Missing sort type or sort order.
+  * 2a1. CustomerRelationBook displays error message with required parameters.
+  * Use case ends.
+
+* 3a. Invalid sort type specified.
+  * 3a1. CustomerRelationBook displays error message with valid sort types (dateadded, name).
+  * Use case resumes at step 1.
+
+* 3b. Invalid sort order specified.
+  * 3b1. CustomerRelationBook displays error message with valid sort orders (asc, dsc).
+  * Use case resumes at step 1.
+
+
+**Use case: UC10 - Add or Edit Note for Contact**
+
+**MSS**
+
+1. User <u>lists contacts (UC02)</u> or <u>finds contacts (UC08)</u>.
+2. CustomerRelationBook displays the list of contacts.
+3. User requests to add/edit note for a specific contact.
+4. CustomerRelationBook parses the note command.
+5. CustomerRelationBook validates the index and note content.
+6. CustomerRelationBook updates the contact's note.
+7. CustomerRelationBook confirms successful note update.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. No index provided.
+  * 3a1. CustomerRelationBook displays error message.
+  * Use case ends.
+
+* 5a. The given index is invalid.
+  * 5a1. CustomerRelationBook displays error message.
+  * Use case resumes at step 3.
+
+* 5b. Note prefix missing.
+  * 5b1. CustomerRelationBook displays error message.
+  * Use case resumes at step 3.
+
+* 5c. Empty note content (to delete note).
+  * 5c1. CustomerRelationBook removes the contact's note.
+  * 5c2. CustomerRelationBook confirms note deletion.
+  * Use case ends.
+
+
+**Use case: UC11 - View Help**
+
+**MSS**
+
+1. User requests to view help.
+2. CustomerRelationBook parses the help command.
+3. CustomerRelationBook opens help window.
+4. Help window displays all available commands with usage details.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Help window is already open but minimized.
+  * 3a1. User manually restores the minimized help window.
+  * Use case resumes at step 4.
 
 ### Non-Functional Requirements
 
@@ -775,38 +1005,236 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file.<br>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+   2. Re-launch the app by double-clicking the jar file.<br>
+      Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Viewing help
+
+1. Opening the help window
+
+   1. Test case: `help`<br>
+      Expected: Help window opens showing scrollable list of all commands with usage details.
+
+   2. Test case: Close help window and run `help` again<br>
+      Expected: Help window reopens at the same size and position as before.
+
+   3. Test case: Minimize help window and run `help`<br>
+      Expected: Help window remains minimized. User must manually restore it.
+
+### Adding a person
+
+1. Adding a new contact
+
+   1. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/123 Street`<br>
+      Expected: New contact added to the list. Success message displayed.
+
+   2. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/123 Street`<br>
+      Expected: Error message indicating duplicate contact.
+
+   3. Test case: `add n/Jane p/1234567 e/invalid a/456 Road`<br>
+      Expected: Error message indicating invalid email format.
+
+   4. Test case: `add n/Bob p/abc e/bob@example.com a/789 Ave`<br>
+      Expected: Error message indicating invalid phone number.
+
+   5. Test case: `add p/12345678 e/test@example.com a/Address`<br>
+      Expected: Error message indicating missing name field.
+
+### Listing all persons
+
+1. Listing all contacts
+
+   1. Test case: `list`<br>
+      Expected: All contacts displayed. Message shows total number of contacts.
+
+   2. Test case: `list extra parameters`<br>
+      Expected: All contacts displayed (extra parameters ignored).
+
+### Editing a person
+
+1. Editing a contact while all persons are shown
+
+   1. Prerequisites: List all persons using `list`. Multiple persons in the list.
+
+   2. Test case: `edit 1 p/91234567 e/newemail@example.com`<br>
+      Expected: First contact's phone and email updated. Success message displayed.
+
+   3. Test case: `edit 2 t/`<br>
+      Expected: Second contact's tags cleared. Success message displayed.
+
+   4. Test case: `edit 1 nt/Important client`<br>
+      Expected: First contact's note updated. Success message displayed.
+
+   5. Test case: `edit 0 p/12345678`<br>
+      Expected: Error message indicating invalid index.
+
+   6. Test case: `edit 1`<br>
+      Expected: Error message indicating at least one field must be provided.
+
+   7. Test case: `edit x p/12345678` (where x exceeds list size)<br>
+      Expected: Error message indicating invalid index.
 
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1. Deleting a person while all persons are shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all persons using `list`. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   2. Test case: `delete 1`<br>
+      Expected: First contact deleted. Details of deleted contact shown. Timestamp updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   3. Test case: `delete 0`<br>
+      Expected: Error message indicating invalid index. No person deleted.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   4. Test case: `delete` (no index)<br>
+      Expected: Error message indicating invalid command format.
 
-1. _{ more test cases …​ }_
+   5. Test case: `delete x` (where x exceeds list size)<br>
+      Expected: Error message indicating invalid index.
+
+### Finding persons by name
+
+1. Finding contacts by name
+
+   1. Prerequisites: Have contacts with various names in the address book.
+
+   2. Test case: `find alex`<br>
+      Expected: Contacts with "alex" (case-insensitive, partial match) displayed. Count shown.
+
+   3. Test case: `find alex david`<br>
+      Expected: Contacts matching "alex" OR "david" displayed.
+
+   4. Test case: `find Yeoh s/1`<br>
+      Expected: Only contacts with exact word "Yeoh" displayed (strict mode).
+
+   5. Test case: `find s/2 Alica`<br>
+      Expected: Up to 5 closest matches to "Alica" displayed (fuzzy mode, tolerates typos).
+
+   6. Test case: `find`<br>
+      Expected: Error message indicating keywords cannot be empty.
+
+   7. Test case: `find s/9 alex`<br>
+      Expected: Error message indicating invalid search mode.
+
+### Filtering persons by tags
+
+1. Filtering contacts by tags
+
+   1. Prerequisites: Have contacts with various tags in the address book.
+
+   2. Test case: `filter friends`<br>
+      Expected: Only contacts with "friends" tag displayed (case-sensitive). Count shown.
+
+   3. Test case: `filter friends VIP`<br>
+      Expected: Only contacts with BOTH "friends" AND "VIP" tags displayed.
+
+   4. Test case: `filter`<br>
+      Expected: Error message indicating invalid command format.
+
+   5. Test case: `filter @invalid`<br>
+      Expected: Error message indicating invalid tag format (alphanumeric only).
+
+   6. Test case: `filter t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11`<br>
+      Expected: Error message indicating maximum 10 tags allowed.
+
+### Sorting persons
+
+1. Sorting the contact list
+
+   1. Prerequisites: Have multiple contacts in the address book.
+
+   2. Test case: `sort st/name so/asc`<br>
+      Expected: Contacts sorted alphabetically by name (ascending). Success message shown.
+
+   3. Test case: `sort st/name so/dsc`<br>
+      Expected: Contacts sorted alphabetically by name (descending).
+
+   4. Test case: `sort st/dateadded so/asc`<br>
+      Expected: Contacts sorted by date added (oldest first).
+
+   5. Test case: `sort st/dateadded so/dsc`<br>
+      Expected: Contacts sorted by date added (newest first).
+
+   6. Test case: `sort st/name`<br>
+      Expected: Error message indicating missing sort order.
+
+   7. Test case: `sort so/asc`<br>
+      Expected: Error message indicating missing sort type.
+
+   8. Test case: `sort st/invalid so/asc`<br>
+      Expected: Error message indicating invalid sort type.
+
+### Adding or editing notes
+
+1. Managing notes for contacts
+
+   1. Prerequisites: List all persons using `list`. Multiple persons in the list.
+
+   2. Test case: `note 1 nt/Important client, needs follow-up`<br>
+      Expected: Note added to first contact. Success message with note content displayed.
+
+   3. Test case: `note 2 nt/`<br>
+      Expected: Note removed from second contact. Success message displayed.
+
+   4. Test case: `note 0 nt/Some note`<br>
+      Expected: Error message indicating invalid index.
+
+   5. Test case: `note 1`<br>
+      Expected: Error message indicating note prefix required.
+
+   6. Test case: `note x nt/Some note` (where x exceeds list size)<br>
+      Expected: Error message indicating invalid index.
+
+### Clearing all entries
+
+1. Clearing the address book
+
+   1. Test case: `clear`<br>
+      Expected: All contacts removed. Success message displayed. Empty list shown.
+
+   2. Test case: `clear extra parameters`<br>
+      Expected: All contacts removed (extra parameters ignored).
+
+### Command history navigation
+
+1. Using arrow keys to navigate command history
+
+   1. Prerequisites: Execute several commands (e.g., `list`, `add n/Test p/12345678 e/test@test.com a/Test St`, `find alex`).
+
+   2. Test case: Press UP arrow key in command box<br>
+      Expected: Previous command (`find alex`) appears in command box.
+
+   3. Test case: Press UP arrow key again<br>
+      Expected: Command before that (`add...`) appears.
+
+   4. Test case: Press DOWN arrow key<br>
+      Expected: More recent command (`find alex`) appears again.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Dealing with missing data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Delete the `data/addressbook.json` file from the application folder.
+   2. Launch the application.<br>
+      Expected: Application starts with sample data loaded.
 
-1. _{ more test cases …​ }_
+2. Dealing with corrupted data files
+
+   1. Open `data/addressbook.json` in a text editor.
+   2. Modify the file to make it invalid JSON (e.g., remove a closing brace).
+   3. Launch the application.<br>
+      Expected: Application starts with empty data, corrupted file discarded.
+
+3. Automatic saving
+
+   1. Add, edit, or delete a contact.
+   2. Close the application without using `exit` command.
+   3. Relaunch the application.<br>
+      Expected: Changes are persisted, data is retained.
