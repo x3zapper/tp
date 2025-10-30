@@ -191,7 +191,89 @@ This section describes some noteworthy details on how certain features are imple
 ### Filter feature
 The filter command allows for the user to filter their contacts based on specified tags (up to 10).
 
+#### Feature Overview
+The `filter` command filters and lists all persons in the address book whose tags contain any of the specified keywords.
+Tag matching is **case-sensitive**.
+For example, entering `filter t/friend` will display only the contacts with the tag “friend”.
+
+#### Implementation
+The `FilterCommand` feature is implemented using the **Command design pattern**, similar to other commands in the Logic component.
+
+When the user executes the command:
+
+1. The `FilterCommandParser` parses the user input into individual tag keywords.
+2. A `TagContainsKeywordsPredicate` object is created using these keywords.
+3. A `FilterCommand` is constructed with this predicate and executed.
+4. Inside the `execute(Model model)` method, the model’s `updateFilteredPersonList(predicate)` is called.
+5. The UI automatically refreshes to display only persons who match the predicate condition.
+
+#### Main Classes Involved
+- `FilterCommand`
+- `FilterCommandParser`
+- `TagContainsKeywordsPredicate`
+- `Model` (interface)
+- `ModelManager` (concrete implementation)
+
+#### Key Code Snippet
+```java
+
+
+@Override
+public CommandResult execute(Model model) {
+    requireNonNull(model);
+    model.updateFilteredPersonList(predicate);
+    return new CommandResult(
+        String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+}
+```
+
+#### Class Diagram
+The class diagram below illustrates the main classes involved in the `FilterCommand` feature and their relationships.
+
 <puml src="diagrams/FilterClassDiagram.puml" alt="FilterClassDiagram" />
+
+#### Parsing Logic
+
+The `FilterCommandParser` is responsible for parsing the user input for the `filter` command and creating a corresponding `FilterCommand` object.
+
+**Steps of Parsing Logic:**
+
+1. **Trim and validate input**
+    - The parser first removes leading and trailing whitespace from the input string.
+    - If the input is empty, a `ParseException` is thrown, indicating invalid command format.
+
+2. **Split input into keywords**
+    - The remaining string is split by whitespace to obtain individual tag keywords.
+    - If more than 10 tags are provided, a `ParseException` is thrown to enforce the tag limit.
+
+3. **Validate each tag**
+    - Each keyword is checked against the `Tag.isValidTagName()` method.
+    - Invalid tags (non-alphanumeric) trigger a `ParseException` with a helpful error message.
+
+4. **Create Predicate**
+    - A `TagContainsKeywordsPredicate` object is instantiated with the validated list of tags.
+
+5. **Return FilterCommand**
+    - A new `FilterCommand` is created using the predicate and returned for execution.
+
+#### TagContainsKeywordsPredicate
+
+The `TagContainsKeywordsPredicate` class implements the `Predicate<Person>` interface and is responsible for **testing whether a person contains all of the specified tags**.
+
+**Responsibilities:**
+
+- Encapsulates the list of tag keywords used for filtering.
+- Provides a `test(Person person)` method that returns `true` if the person contains **all tags** in the keyword list.
+- Supports **case-sensitive matching** for tags.
+- Provides a `getTags()` method to retrieve the list of keywords, which can be used for displaying messages to the user.
+
+#### Sequence Diagram
+
+The sequence diagram below illustrates the interactions between the user, logic, parser, command, and model when executing the `filter` command. Using an example of command "filter friend VIP".
+
+<puml src="diagrams/FilterSequenceDiagram.puml" alt="FilterSequenceDiagram" />
+
+---
 
 ### Find feature with multiple search modes
 
