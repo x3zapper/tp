@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +22,10 @@ public class HelpWindow extends UiPart<Stage> {
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
+
+    private double lastKnownX;
+    private double lastKnownY;
+    private boolean hasStoredPosition = false;
 
     @FXML
     private Button copyButton;
@@ -43,6 +48,12 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow() {
         this(new Stage());
+        // Capture position when user closes window with X button
+        getRoot().setOnCloseRequest(event -> {
+            lastKnownX = getRoot().getX();
+            lastKnownY = getRoot().getY();
+            hasStoredPosition = true;
+        });
     }
 
     /**
@@ -52,8 +63,9 @@ public class HelpWindow extends UiPart<Stage> {
         getRoot().setHeight(guiSettings.getHelpWindowHeight());
         getRoot().setWidth(guiSettings.getHelpWindowWidth());
         if (guiSettings.getHelpWindowCoordinates() != null) {
-            getRoot().setX(guiSettings.getHelpWindowCoordinates().getX());
-            getRoot().setY(guiSettings.getHelpWindowCoordinates().getY());
+            lastKnownX = guiSettings.getHelpWindowCoordinates().getX();
+            lastKnownY = guiSettings.getHelpWindowCoordinates().getY();
+            hasStoredPosition = true;
         }
     }
 
@@ -78,8 +90,21 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
+
         getRoot().show();
-        getRoot().centerOnScreen();
+
+        // Apply stored position after showing using Platform.runLater to ensure it
+        // takes effect
+        if (hasStoredPosition) {
+            logger.fine("Applying stored position: x=" + lastKnownX + ", y=" + lastKnownY);
+            Platform.runLater(() -> {
+                getRoot().setX(lastKnownX);
+                getRoot().setY(lastKnownY);
+            });
+        } else {
+            logger.fine("No stored position, centering on screen");
+            getRoot().centerOnScreen();
+        }
     }
 
     /**
@@ -93,7 +118,31 @@ public class HelpWindow extends UiPart<Stage> {
      * Hides the help window.
      */
     public void hide() {
+        // Save position before hiding
+        if (getRoot().isShowing()) {
+            lastKnownX = getRoot().getX();
+            lastKnownY = getRoot().getY();
+            hasStoredPosition = true;
+        }
         getRoot().hide();
+    }
+
+    /**
+     * Gets the last known X coordinate of the help window.
+     * If window is currently showing, returns current X. Otherwise returns stored
+     * X.
+     */
+    public double getLastKnownX() {
+        return getRoot().isShowing() ? getRoot().getX() : lastKnownX;
+    }
+
+    /**
+     * Gets the last known Y coordinate of the help window.
+     * If window is currently showing, returns current Y. Otherwise returns stored
+     * Y.
+     */
+    public double getLastKnownY() {
+        return getRoot().isShowing() ? getRoot().getY() : lastKnownY;
     }
 
     /**
