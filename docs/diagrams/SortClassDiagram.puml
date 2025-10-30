@@ -1,0 +1,25 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+skinparam packageStyle rectangle
+
+Package Logic as LogicPackage <<Rectangle>> {
+
+  Class Command
+  Class SortCommand
+  Class CliSyntax
+  Class SortCommandParser
+  Class CommandResult
+  Class Model
+
+}
+
+Command <|-- SortCommand
+CliSyntax --> SortCommandParser
+SortCommandParser --> SortCommand
+SortCommand --> CommandResult
+SortCommand --> Model
+
+@enduml
