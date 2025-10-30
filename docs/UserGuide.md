@@ -1,7 +1,8 @@
+
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
 # AB-3 User Guide
@@ -29,15 +30,15 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -56,7 +57,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -65,7 +66,8 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
+  </box>
+
 
 
 ### Viewing help: `help`
@@ -90,6 +92,11 @@ Adds a person to the address book.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`
 
 <box type="tip" seamless>
+
+**Note:** Users are not allowed to add `Note` field through the `add` feature. The `Note` field is omitted
+to simplify the creation process as most users typically only need basic details when adding a contact. `Notes`
+are considered supplementary information that is optional and can be added later on through the `note` command
+when the user desires.
 
 **Tip:** A person can have any number of tags (including 0)
 </box>
@@ -139,16 +146,29 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### TBC Adding a complex note to person: `note`
+### Adding a complex note to person: `note`
 
-TBC by Yuzu
-
+The `note` command allows the user to add, edit, or delete a note for a specific person in the address book.
+Notes can be used to store additional information such as remarks, reminders, or comments about a person.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
-Format: `note INDEX nt/NOTE`
+Format:
+
+**Add/Edit:**`note INDEX nt/NOTE` If the contact already has a current note, it will be replaced with the new `note`
+
+**Delete:** `note INDEX nt/`
+
+
+* `Note` can contain special characters
+* All characters following `nt/` are treated as the note content
+* `Note` is empty by default when a contact is freshly added
+* Contacts with no `Note` will display `No current note` by default
+* `INDEX` must be a valid number corresponding to the currently displayed list
+
 
 Examples:
 * `note 8 nt/This is a new nt/note` Sets the 8th person's note data to `This is a new nt/note`
+* `note 8 nt/` Removes the 8th person's note data
 
 
 ### Locating persons by name: `find`
@@ -196,15 +216,22 @@ Examples:
 
 Note: `find`/`filter` are mutually exclusive searching operations.
 
-### TBC Filtering persons by tags: `filter`
+### Filtering persons by tags: `filter`
 
-TBC by Yuzu
+The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
+This helps users quickly narrow down their address book to relevant entries.
 
 Format: `filter TAG [MORE_TAGS]...`
 
+* The filter is **case-sensitive**. e.g Filtering with `friends` will not list a contact with tag `Friends`
+* The order of the tags does not matter
+* User can only filter with a maximum of **10** tags
+* When searching with multiple tags, the filter will only list contacts that contain ALL specified tags
+* Tags specified must follow the Tag feature naming convention of only containing **alpha-numeric** values.
+
 Examples:
-* `filter friends`
-* `filter friends enemies`
+* `filter friends` will only list contacts that have the tag `friends`
+* `filter friends enemies` will only list contacts that have **both** the tags `friends` and `enemies`
 
 Note: `find`/`filter` are mutually exclusive searching operations.
 
