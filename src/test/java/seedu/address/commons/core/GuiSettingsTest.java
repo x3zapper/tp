@@ -72,4 +72,26 @@ public class GuiSettingsTest {
                 + guiSettings.getHelpWindowCoordinates() + "}";
         assertEquals(expected, guiSettings.toString());
     }
+
+    @Test
+    public void getters_allConstructors_returnCorrectValues() {
+        // Test default constructor getters
+        GuiSettings defaultSettings = new GuiSettings();
+        assertEquals(740, defaultSettings.getWindowWidth());
+        assertEquals(600, defaultSettings.getWindowHeight());
+
+        // Test 4-param constructor getters
+        GuiSettings mainWindowSettings = new GuiSettings(800, 600, 100, 100);
+        assertEquals(800, mainWindowSettings.getWindowWidth());
+        assertEquals(600, mainWindowSettings.getWindowHeight());
+        assertEquals(600, mainWindowSettings.getHelpWindowWidth());
+        assertEquals(500, mainWindowSettings.getHelpWindowHeight());
+
+        // Test 8-param constructor getters
+        GuiSettings fullSettings = new GuiSettings(800, 600, 100, 100, 700, 550, 200, 150);
+        assertEquals(800, fullSettings.getWindowWidth());
+        assertEquals(600, fullSettings.getWindowHeight());
+        assertEquals(700, fullSettings.getHelpWindowWidth());
+        assertEquals(550, fullSettings.getHelpWindowHeight());
+    }
 }
