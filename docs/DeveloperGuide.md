@@ -645,16 +645,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
 | `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
 | `* * *`  | user                                       | add a new person             | store contact details for future reference                             |
+| `* * *`  | user                                       | edit contact information     | keep contact details up to date when they change                       |
 | `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
 | `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
 | `* * *`  | user                                       | view all my contacts         | see an overview of all stored contacts                                 |
 | `* * *`  | user                                       | filter contacts by tags      | focus on specific groups like clients or vendors                       |
+| `* * *`  | user                                       | clear all contacts           | start fresh with a clean address book when needed                      |
 | `* * *`  | user                                       | exit the application         | close the app when I'm done using it                                   |
 | `* * *`  | user                                       | have my data automatically saved | not lose my contact information when the app closes                    |
 | `* * *`  | user                                       | use consistent commands      | interact with the app reliably and predictably                        |
+| `* *`    | user                                       | add notes to contacts        | remember important details or context about each person                |
+| `* *`    | user                                       | edit notes for contacts      | update or remove notes as circumstances change                         |
+| `* *`    | user                                       | search with fuzzy matching   | find contacts even if I misspell their names                           |
+| `* *`    | user                                       | search with strict matching  | find only exact name matches when I know the full name                 |
+| `* *`    | user                                       | navigate command history     | quickly reuse previous commands without retyping them                  |
+| `* *`    | user                                       | sort my contacts by name     | view contacts in alphabetical order for easier browsing                |
+| `* *`    | user                                       | sort by date added           | see my newest or oldest contacts first                                 |
 | `* *`    | startup founder                            | add custom tags to contacts  | categorize them by type for better organization                        |
+| `* *`    | international business owner               | store timezone information   | know what time it is for my contacts in different regions              |
 | `* *`    | tech business owner                        | mark contacts as favorites   | quickly access my most important clients or vendors                   |
-| `*`      | normal user                                | sort my contacts             | locate a person easily without scrolling through the full list        |
 | `*`      | small business owner                       | backup my contact information | restore my data in case I lose the current information                |
 
 ### Use cases
@@ -795,7 +804,161 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+
+**Use case: UC06 - Edit a Contact**
+
+**MSS**
+
+1. User <u>lists contacts (UC02)</u> or <u>finds contacts (UC08)</u>.
+2. AddressBook displays the list of contacts.
+3. User requests to edit a specific contact with new field values.
+4. AddressBook parses the edit command.
+5. AddressBook validates the index and field values.
+6. AddressBook updates the contact with new values.
+7. AddressBook confirms successful update.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. No index provided.
+  * 3a1. AddressBook displays error message.
+  * Use case ends.
+
+* 5a. The given index is invalid.
+  * 5a1. AddressBook displays error message.
+  * Use case resumes at step 3.
+
+* 5b. No fields to edit provided.
+  * 5b1. AddressBook displays error message requiring at least one field.
+  * Use case resumes at step 3.
+
+* 5c. Field value is invalid.
+  * 5c1. AddressBook displays error message for the specific field.
+  * 5c2. User corrects the field value.
+  * Steps 5c1-5c2 repeat until all fields are valid.
+  * Use case resumes from step 6.
+
+
+**Use case: UC07 - Clear All Contacts**
+
+**MSS**
+
+1. User requests to clear all contacts.
+2. AddressBook parses the command.
+3. AddressBook removes all contacts.
+4. AddressBook confirms successful clearing.
+
+    Use case ends.
+
+
+**Use case: UC08 - Find Contacts by Name**
+
+**MSS**
+
+1. User requests to find contacts by name keywords.
+2. AddressBook parses the keywords and search mode.
+3. AddressBook validates the command format.
+4. AddressBook searches for contacts matching the keywords.
+5. AddressBook displays matching contacts.
+6. AddressBook displays a console message indicating the number of contacts found.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. No keywords provided.
+  * 2a1. AddressBook displays error message.
+  * Use case ends.
+
+* 2b. Invalid search mode specified.
+  * 2b1. AddressBook displays error message with valid modes.
+  * Use case resumes at step 1.
+
+* 4a. No contacts match the keywords.
+  * 4a1. AddressBook displays empty list.
+  * 4a2. AddressBook displays message indicating no contacts found.
+  * Use case ends.
+
+
+**Use case: UC09 - Sort Contacts**
+
+**MSS**
+
+1. User requests to sort contacts by specified criteria.
+2. AddressBook parses sort type and sort order.
+3. AddressBook validates the sort parameters.
+4. AddressBook sorts the contact list accordingly.
+5. AddressBook displays sorted contacts.
+6. AddressBook confirms successful sorting.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Missing sort type or sort order.
+  * 2a1. AddressBook displays error message with required parameters.
+  * Use case ends.
+
+* 3a. Invalid sort type specified.
+  * 3a1. AddressBook displays error message with valid sort types (dateadded, name).
+  * Use case resumes at step 1.
+
+* 3b. Invalid sort order specified.
+  * 3b1. AddressBook displays error message with valid sort orders (asc, dsc).
+  * Use case resumes at step 1.
+
+
+**Use case: UC10 - Add or Edit Note for Contact**
+
+**MSS**
+
+1. User <u>lists contacts (UC02)</u> or <u>finds contacts (UC08)</u>.
+2. AddressBook displays the list of contacts.
+3. User requests to add/edit note for a specific contact.
+4. AddressBook parses the note command.
+5. AddressBook validates the index and note content.
+6. AddressBook updates the contact's note.
+7. AddressBook confirms successful note update.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. No index provided.
+  * 3a1. AddressBook displays error message.
+  * Use case ends.
+
+* 5a. The given index is invalid.
+  * 5a1. AddressBook displays error message.
+  * Use case resumes at step 3.
+
+* 5b. Note prefix missing.
+  * 5b1. AddressBook displays error message.
+  * Use case resumes at step 3.
+
+* 5c. Empty note content (to delete note).
+  * 5c1. AddressBook removes the contact's note.
+  * 5c2. AddressBook confirms note deletion.
+  * Use case ends.
+
+
+**Use case: UC11 - View Help**
+
+**MSS**
+
+1. User requests to view help.
+2. AddressBook parses the help command.
+3. AddressBook opens help window.
+4. Help window displays all available commands with usage details.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Help window is already open but minimized.
+  * 3a1. User manually restores the minimized help window.
+  * Use case resumes at step 4.
 
 ### Non-Functional Requirements
 
@@ -842,38 +1005,242 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file.<br>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+   2. Re-launch the app by double-clicking the jar file.<br>
+      Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Viewing help
+
+1. Opening the help window
+
+   1. Test case: `help`<br>
+      Expected: Help window opens showing scrollable list of all commands with usage details.
+
+   2. Test case: Close help window and run `help` again<br>
+      Expected: Help window reopens at the same size and position as before.
+
+   3. Test case: Minimize help window and run `help`<br>
+      Expected: Help window remains minimized. User must manually restore it.
+
+### Adding a person
+
+1. Adding a new contact
+
+   1. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/123 Street`<br>
+      Expected: New contact added to the list. Success message displayed.
+
+   2. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/123 Street`<br>
+      Expected: Error message indicating duplicate contact.
+
+   3. Test case: `add n/Jane p/1234567 e/invalid a/456 Road`<br>
+      Expected: Error message indicating invalid email format.
+
+   4. Test case: `add n/Bob p/abc e/bob@example.com a/789 Ave`<br>
+      Expected: Error message indicating invalid phone number.
+
+   5. Test case: `add p/12345678 e/test@example.com a/Address`<br>
+      Expected: Error message indicating missing name field.
+
+### Listing all persons
+
+1. Listing all contacts
+
+   1. Test case: `list`<br>
+      Expected: All contacts displayed. Message shows total number of contacts.
+
+   2. Test case: `list extra parameters`<br>
+      Expected: All contacts displayed (extra parameters ignored).
+
+### Editing a person
+
+1. Editing a contact while all persons are shown
+
+   1. Prerequisites: List all persons using `list`. Multiple persons in the list.
+
+   2. Test case: `edit 1 p/91234567 e/newemail@example.com`<br>
+      Expected: First contact's phone and email updated. Success message displayed.
+
+   3. Test case: `edit 2 t/`<br>
+      Expected: Second contact's tags cleared. Success message displayed.
+
+   4. Test case: `edit 1 nt/Important client`<br>
+      Expected: First contact's note updated. Success message displayed.
+
+   5. Test case: `edit 0 p/12345678`<br>
+      Expected: Error message indicating invalid index.
+
+   6. Test case: `edit 1`<br>
+      Expected: Error message indicating at least one field must be provided.
+
+   7. Test case: `edit x p/12345678` (where x exceeds list size)<br>
+      Expected: Error message indicating invalid index.
 
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1. Deleting a person while all persons are shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all persons using `list`. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   2. Test case: `delete 1`<br>
+      Expected: First contact deleted. Details of deleted contact shown. Timestamp updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   3. Test case: `delete 0`<br>
+      Expected: Error message indicating invalid index. No person deleted.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   4. Test case: `delete` (no index)<br>
+      Expected: Error message indicating invalid command format.
 
-1. _{ more test cases …​ }_
+   5. Test case: `delete x` (where x exceeds list size)<br>
+      Expected: Error message indicating invalid index.
+
+### Finding persons by name
+
+1. Finding contacts by name
+
+   1. Prerequisites: Have contacts with various names in the address book.
+
+   2. Test case: `find alex`<br>
+      Expected: Contacts with "alex" (case-insensitive, partial match) displayed. Count shown.
+
+   3. Test case: `find alex david`<br>
+      Expected: Contacts matching "alex" OR "david" displayed.
+
+   4. Test case: `find Yeoh s/1`<br>
+      Expected: Only contacts with exact word "Yeoh" displayed (strict mode).
+
+   5. Test case: `find s/2 Alica`<br>
+      Expected: Up to 5 closest matches to "Alica" displayed (fuzzy mode, tolerates typos).
+
+   6. Test case: `find`<br>
+      Expected: Error message indicating keywords cannot be empty.
+
+   7. Test case: `find s/9 alex`<br>
+      Expected: Error message indicating invalid search mode.
+
+### Filtering persons by tags
+
+1. Filtering contacts by tags
+
+   1. Prerequisites: Have contacts with various tags in the address book.
+
+   2. Test case: `filter friends`<br>
+      Expected: Only contacts with "friends" tag displayed (case-sensitive). Count shown.
+
+   3. Test case: `filter friends VIP`<br>
+      Expected: Only contacts with BOTH "friends" AND "VIP" tags displayed.
+
+   4. Test case: `filter`<br>
+      Expected: Error message indicating invalid command format.
+
+   5. Test case: `filter @invalid`<br>
+      Expected: Error message indicating invalid tag format (alphanumeric only).
+
+   6. Test case: `filter t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11`<br>
+      Expected: Error message indicating maximum 10 tags allowed.
+
+### Sorting persons
+
+1. Sorting the contact list
+
+   1. Prerequisites: Have multiple contacts in the address book.
+
+   2. Test case: `sort st/name so/asc`<br>
+      Expected: Contacts sorted alphabetically by name (ascending). Success message shown.
+
+   3. Test case: `sort st/name so/dsc`<br>
+      Expected: Contacts sorted alphabetically by name (descending).
+
+   4. Test case: `sort st/dateadded so/asc`<br>
+      Expected: Contacts sorted by date added (oldest first).
+
+   5. Test case: `sort st/dateadded so/dsc`<br>
+      Expected: Contacts sorted by date added (newest first).
+
+   6. Test case: `sort st/name`<br>
+      Expected: Error message indicating missing sort order.
+
+   7. Test case: `sort so/asc`<br>
+      Expected: Error message indicating missing sort type.
+
+   8. Test case: `sort st/invalid so/asc`<br>
+      Expected: Error message indicating invalid sort type.
+
+### Adding or editing notes
+
+1. Managing notes for contacts
+
+   1. Prerequisites: List all persons using `list`. Multiple persons in the list.
+
+   2. Test case: `note 1 nt/Important client, needs follow-up`<br>
+      Expected: Note added to first contact. Success message with note content displayed.
+
+   3. Test case: `note 2 nt/`<br>
+      Expected: Note removed from second contact. Success message displayed.
+
+   4. Test case: `note 0 nt/Some note`<br>
+      Expected: Error message indicating invalid index.
+
+   5. Test case: `note 1`<br>
+      Expected: Error message indicating note prefix required.
+
+   6. Test case: `note x nt/Some note` (where x exceeds list size)<br>
+      Expected: Error message indicating invalid index.
+
+### Clearing all entries
+
+1. Clearing the address book
+
+   1. Test case: `clear`<br>
+      Expected: All contacts removed. Success message displayed. Empty list shown.
+
+   2. Test case: `clear extra parameters`<br>
+      Expected: All contacts removed (extra parameters ignored).
+
+### Command history navigation
+
+1. Using arrow keys to navigate command history
+
+   1. Prerequisites: Execute several commands (e.g., `list`, `add n/Test p/12345678 e/test@test.com a/Test St`, `find alex`).
+
+   2. Test case: Press UP arrow key in command box<br>
+      Expected: Previous command (`find alex`) appears in command box.
+
+   3. Test case: Press UP arrow key again<br>
+      Expected: Command before that (`add...`) appears.
+
+   4. Test case: Press DOWN arrow key<br>
+      Expected: More recent command (`find alex`) appears again.
+
+   5. Test case: Type partial command `del`, then press UP<br>
+      Expected: Previous command shown, partial `del` saved for later restoration.
+
+   6. Test case: Press DOWN repeatedly until no more history<br>
+      Expected: Returns to saved partial command `del`.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Dealing with missing data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Delete the `data/addressbook.json` file from the application folder.
+   2. Launch the application.<br>
+      Expected: Application starts with sample data loaded.
 
-1. _{ more test cases …​ }_
+2. Dealing with corrupted data files
+
+   1. Open `data/addressbook.json` in a text editor.
+   2. Modify the file to make it invalid JSON (e.g., remove a closing brace).
+   3. Launch the application.<br>
+      Expected: Application starts with empty data, corrupted file discarded.
+
+3. Automatic saving
+
+   1. Add, edit, or delete a contact.
+   2. Close the application without using `exit` command.
+   3. Relaunch the application.<br>
+      Expected: Changes are persisted, data is retained.
