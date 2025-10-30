@@ -4,8 +4,8 @@
 skinparam ArrowFontStyle plain
 
 actor User
-participant "CommandBox" as CB UI_COLOR
-participant "CommandHistory" as CH UI_COLOR
+participant ":CommandBox" as CB UI_COLOR
+participant ":CommandHistory" as CH UI_COLOR
 
 User -> CB : type "add Alice" + press Enter
 CB -> CH : add("add Alice")
