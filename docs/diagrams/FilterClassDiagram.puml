@@ -1,40 +1,25 @@
 @startuml
-skinparam classAttributeIconSize 0
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
 
-class Command {
-  +execute(model : Model) : CommandResult
-}
+package Logic <<Rectangle>> {
 
-class FilterCommand {
-  +COMMAND_WORD : String
-  +MESSAGE_USAGE : String
-  -predicate : TagContainsKeywordsPredicate
-  +FilterCommand(predicate : TagContainsKeywordsPredicate)
-  +execute(model : Model) : CommandResult
-}
-
-class FilterCommandParser {
-  +parse(args : String) : FilterCommand
-}
-
-class TagContainsKeywordsPredicate {
-  -keywords : List<String>
-  +test(person : Person) : boolean
-}
-
-class CommandResult {
-  +feedbackToUser : String
-}
-
-class Model {
-  +updateFilteredPersonList(predicate : Predicate<Person>) : void
-  +getFilteredPersonList() : List<Person>
-}
+class Command
+class FilterCommand
+class FilterCommandParser
+class TagContainsKeywordsPredicate
+class CommandResult
+class "<<interface>>\nModel" as Model
 
 Command <|-- FilterCommand
 FilterCommandParser --> FilterCommand
+FilterCommandParser --> TagContainsKeywordsPredicate
 FilterCommand --> TagContainsKeywordsPredicate
 FilterCommand --> CommandResult
 FilterCommand --> Model
 TagContainsKeywordsPredicate --> Person
+TagContainsKeywordsPredicate ..|> Predicate
+}
 @enduml
