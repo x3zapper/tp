@@ -1217,12 +1217,6 @@ testers are expected to do more *exploratory* testing.
    4. Test case: Press DOWN arrow key<br>
       Expected: More recent command (`find alex`) appears again.
 
-   5. Test case: Type partial command `del`, then press UP<br>
-      Expected: Previous command shown, partial `del` saved for later restoration.
-
-   6. Test case: Press DOWN repeatedly until no more history<br>
-      Expected: Returns to saved partial command `del`.
-
 ### Saving data
 
 1. Dealing with missing data files
