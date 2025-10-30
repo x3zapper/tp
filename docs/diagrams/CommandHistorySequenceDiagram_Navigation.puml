@@ -1,0 +1,23 @@
+@startuml
+!include style.puml
+
+skinparam ArrowFontStyle plain
+
+actor User
+participant ":CommandBox (UI)" as CB UI_COLOR
+participant ":CommandHistory" as CH UI_COLOR
+participant ":TextField" as TF UI_COLOR_T2
+
+User -> TF : types "del" (partial)
+TF -> CB : (text property bound)
+User -> CB : press UP
+CB -> CH : getPrevious(currentInput="del")
+CH -> CB : returns "add Alice"
+CB -> TF : setText("add Alice") + positionCaret(end)
+
+User -> CB : press DOWN
+CB -> CH : getNext(currentInput="add Alice")
+CH -> CB : returns "del"   <-- saved partial restored
+CB -> TF : setText("del") + positionCaret(end)
+
+@enduml
