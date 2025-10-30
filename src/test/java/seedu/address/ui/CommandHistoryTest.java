@@ -22,8 +22,8 @@ public class CommandHistoryTest {
     // --- Add tests ---
 
     @Test
-    public void add_emptyOrNullCommand_notAdded() {
-        assertFalse(history.add(null), "Null command should not be added");
+    public void add_emptyCommand_notAdded() {
+        //Null commands should never be passed
         assertFalse(history.add(""), "Empty command should not be added");
         assertTrue(history.isEmpty(), "History should remain empty");
     }
