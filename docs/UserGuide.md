@@ -4,7 +4,7 @@ title: "User Guide"
 pageNav: 3
 ---
 
-# CRB User Guide
+# Customer Relation Book User Guide
 
 Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRB can get your contact management tasks done faster than traditional GUI apps.
 
