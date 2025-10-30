@@ -1,0 +1,35 @@
+@startuml
+!include style.puml
+
+' CommandHistory <-> CommandBox relationship
+package "UI" {
+  class CommandBox {
+    - TextField commandTextField
+    - CommandHistory commandHistory
+    - CommandExecutor commandExecutor
+    + handleHistoryUp()
+    + handleHistoryDown()
+    + handleCommandEntered()
+  }
+
+  class CommandHistory {
+    - List<String> history
+    - int historyIndex
+    - String savedCommand
+    + add(String) : boolean
+    + getPrevious(String) : String
+    + getNext(String) : String
+    + reset() : void
+    + isEmpty() : boolean
+  }
+}
+
+CommandBox --> CommandHistory : uses
+CommandBox ..> TextField : owns
+
+note right of CommandHistory
+  - Maintains history list, browsing index and
+  - temporary saved partial input.
+end note
+
+@enduml
