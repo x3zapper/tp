@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Command {
+  +execute(model : Model) : CommandResult
+}
+
+class SortCommand {
+  +COMMAND_WORD : String
+  -comparator : Comparator<Person>
+  {static} +DATE_ADDED_SORT_TYPE_ARGUMENT : String
+  {static} +NAME_SORT_TYPE_ARGUMENT : String
+  {static} +ASCENDING_SORT_ORDER_ARGUMENT : String
+  {static} +DESCENDING_SORT_ORDER_ARGUMENT : String
+  +SortCommand(comparator : Comparator<Person>)
+  +execute(model : Model) : CommandResult
+}
+
+class CliSyntax {
+  {static} +PREFIX_SORT_TYPE : Prefix
+  {static} +PREFIX_SORT_ORDER : Prefix
+}
+
+class SortCommandParser {
+  +parse(args : String) : SortCommand
+}
+
+class CommandResult {
+  +feedbackToUser : String
+}
+
+class Model {
+  -sortedPersons : SortedList<Person>
+  +updateSortComparator(comparator : Comparator<Person>) : void
+  +getSortedPersonList() : List<Person>
+}
+
+Command <|-- SortCommand
+CliSyntax --> SortCommandParser
+SortCommandParser --> SortCommand
+SortCommand --> CommandResult
+SortCommand --> Model
+@enduml
