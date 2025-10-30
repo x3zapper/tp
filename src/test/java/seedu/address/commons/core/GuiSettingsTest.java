@@ -22,6 +22,12 @@ public class GuiSettingsTest {
     private static final double DIFFERENT_WINDOW_WIDTH = 900;
     private static final int DIFFERENT_HELP_WINDOW_X = 300;
 
+    // Default values from GuiSettings
+    private static final double DEFAULT_WINDOW_WIDTH = 740;
+    private static final double DEFAULT_WINDOW_HEIGHT = 600;
+    private static final double DEFAULT_HELP_WINDOW_WIDTH = 600;
+    private static final double DEFAULT_HELP_WINDOW_HEIGHT = 500;
+
     @Test
     public void constructor_default_initializesCorrectly() {
         GuiSettings guiSettings = new GuiSettings();
@@ -102,16 +108,16 @@ public class GuiSettingsTest {
     public void getters_allConstructors_returnCorrectValues() {
         // Test default constructor getters
         GuiSettings defaultSettings = new GuiSettings();
-        assertEquals(740, defaultSettings.getWindowWidth());
-        assertEquals(600, defaultSettings.getWindowHeight());
+        assertEquals(DEFAULT_WINDOW_WIDTH, defaultSettings.getWindowWidth());
+        assertEquals(DEFAULT_WINDOW_HEIGHT, defaultSettings.getWindowHeight());
 
         // Test 4-param constructor getters
         GuiSettings mainWindowSettings = new GuiSettings(TEST_WINDOW_WIDTH, TEST_WINDOW_HEIGHT,
                 TEST_WINDOW_X, TEST_WINDOW_Y);
         assertEquals(TEST_WINDOW_WIDTH, mainWindowSettings.getWindowWidth());
         assertEquals(TEST_WINDOW_HEIGHT, mainWindowSettings.getWindowHeight());
-        assertEquals(600, mainWindowSettings.getHelpWindowWidth());
-        assertEquals(500, mainWindowSettings.getHelpWindowHeight());
+        assertEquals(DEFAULT_HELP_WINDOW_WIDTH, mainWindowSettings.getHelpWindowWidth());
+        assertEquals(DEFAULT_HELP_WINDOW_HEIGHT, mainWindowSettings.getHelpWindowHeight());
 
         // Test 8-param constructor getters
         GuiSettings fullSettings = new GuiSettings(TEST_WINDOW_WIDTH, TEST_WINDOW_HEIGHT,
