@@ -1,38 +1,19 @@
 @startuml
-skinparam classAttributeIconSize 0
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+skinparam packageStyle rectangle
 
-class Command {
-  +execute(model : Model) : CommandResult
-}
+Package Logic as LogicPackage <<Rectangle>> {
 
-class SortCommand {
-  +COMMAND_WORD : String
-  -comparator : Comparator<Person>
-  {static} +DATE_ADDED_SORT_TYPE_ARGUMENT : String
-  {static} +NAME_SORT_TYPE_ARGUMENT : String
-  {static} +ASCENDING_SORT_ORDER_ARGUMENT : String
-  {static} +DESCENDING_SORT_ORDER_ARGUMENT : String
-  +SortCommand(comparator : Comparator<Person>)
-  +execute(model : Model) : CommandResult
-}
+  Class Command
+  Class SortCommand
+  Class CliSyntax
+  Class SortCommandParser
+  Class CommandResult
+  Class Model
 
-class CliSyntax {
-  {static} +PREFIX_SORT_TYPE : Prefix
-  {static} +PREFIX_SORT_ORDER : Prefix
-}
-
-class SortCommandParser {
-  +parse(args : String) : SortCommand
-}
-
-class CommandResult {
-  +feedbackToUser : String
-}
-
-class Model {
-  -sortedPersons : SortedList<Person>
-  +updateSortComparator(comparator : Comparator<Person>) : void
-  +getSortedPersonList() : List<Person>
 }
 
 Command <|-- SortCommand
@@ -40,4 +21,5 @@ CliSyntax --> SortCommandParser
 SortCommandParser --> SortCommand
 SortCommand --> CommandResult
 SortCommand --> Model
+
 @enduml

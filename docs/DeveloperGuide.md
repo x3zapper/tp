@@ -410,7 +410,41 @@ The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filt
 
 ### Sort feature
 The sort command allows the user to change the sort ordering of the conctact list displayed.
+Class diagram:
 <puml src="diagrams/SortClassDiagram.puml" alt="SortClassDiagram" />
+
+#### Implementation
+Similar to other commands, the Sort feature has a parser and a command, in:
+* `SortCommand`
+* `SortCommandParser`
+Which updates the `ModelManager`'s `sortedPersons` list which is the list that the UI calls upon to show using the `getSortedPersonList()` function of `ModelManager`. 
+To clarify, `sortedPersons` is a `SortedList` which the comparator can be updated with `updateSortComparator(Comparator<Person>)` function of `ModelManager`.
+
+It is to note that `SortCommand` only has four types of Comparators defined as static properties
+* `COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING`
+* `COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING`
+* `COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING`
+* `COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_DESCENDING`
+These four comparators are the only comparators that `SortCommandParser` can instantiate a `SortCommand` with.
+For example: `new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING)` and as such the only four comparators that `sortedPersons` can be updated with.
+
+#### Parsing 
+`SortCommandParser` has two and only two, mandatory flags that require an accompanying value
+* `st/` - short for "sort type" which values can only be 
+  * "dateadded" - for sorting by the `dateAdded` property of `Person` which is a `DateAdded` class. Note that the `DateAdded` class uses the `Instant` datatype as the backing value
+  * "name" - for sorting by the `name` property of `Person` which is a `Name` class. Note that the `Name` class uses the `String` datatype as the backing value
+* `so/` - short for "sort order" which values can only be
+  * "asc" - short for ascending order
+  * "dsc" - short for descending order
+
+Said flags can be in any order as `SortCommandParser` uses `ArgumentTokenizer` to find occurrences.
+
+**Comparator Details**
+It is of note that `COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_DESCENDING` and `COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING` are just `.reversed()` versions of their ascending versions.
+Although user's cannot directly edit a `Person`'s `dateAdded` through the `edit` command, a user can edit the `dateAdded` value through the JSON so that multiple contacts have the same `dateAdded` value.
+As this would cause some issues with sorting, `COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING` has a tie-breaker which uses the `Person`'s `name`.
+Since CRB currently does not allow for `Person`s of the same `name` (contact list gets reset), this is sufficient.
+
 
 ---
 
