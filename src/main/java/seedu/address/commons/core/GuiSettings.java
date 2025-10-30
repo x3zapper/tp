@@ -14,10 +14,15 @@ public class GuiSettings implements Serializable {
 
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
+    private static final double DEFAULT_HELP_HEIGHT = 500;
+    private static final double DEFAULT_HELP_WIDTH = 600;
 
     private final double windowWidth;
     private final double windowHeight;
     private final Point windowCoordinates;
+    private final double helpWindowWidth;
+    private final double helpWindowHeight;
+    private final Point helpWindowCoordinates;
 
     /**
      * Constructs a {@code GuiSettings} with the default height, width and position.
@@ -26,6 +31,9 @@ public class GuiSettings implements Serializable {
         windowWidth = DEFAULT_WIDTH;
         windowHeight = DEFAULT_HEIGHT;
         windowCoordinates = null; // null represent no coordinates
+        helpWindowWidth = DEFAULT_HELP_WIDTH;
+        helpWindowHeight = DEFAULT_HELP_HEIGHT;
+        helpWindowCoordinates = null;
     }
 
     /**
@@ -35,6 +43,23 @@ public class GuiSettings implements Serializable {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         windowCoordinates = new Point(xPosition, yPosition);
+        helpWindowWidth = DEFAULT_HELP_WIDTH;
+        helpWindowHeight = DEFAULT_HELP_HEIGHT;
+        helpWindowCoordinates = null;
+    }
+
+    /**
+     * Constructs a {@code GuiSettings} with the specified main window and help
+     * window settings.
+     */
+    public GuiSettings(double windowWidth, double windowHeight, int xPosition, int yPosition,
+            double helpWindowWidth, double helpWindowHeight, int helpXPosition, int helpYPosition) {
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
+        windowCoordinates = new Point(xPosition, yPosition);
+        this.helpWindowWidth = helpWindowWidth;
+        this.helpWindowHeight = helpWindowHeight;
+        helpWindowCoordinates = new Point(helpXPosition, helpYPosition);
     }
 
     public double getWindowWidth() {
@@ -47,6 +72,18 @@ public class GuiSettings implements Serializable {
 
     public Point getWindowCoordinates() {
         return windowCoordinates != null ? new Point(windowCoordinates) : null;
+    }
+
+    public double getHelpWindowWidth() {
+        return helpWindowWidth;
+    }
+
+    public double getHelpWindowHeight() {
+        return helpWindowHeight;
+    }
+
+    public Point getHelpWindowCoordinates() {
+        return helpWindowCoordinates != null ? new Point(helpWindowCoordinates) : null;
     }
 
     @Override
@@ -63,12 +100,16 @@ public class GuiSettings implements Serializable {
         GuiSettings otherGuiSettings = (GuiSettings) other;
         return windowWidth == otherGuiSettings.windowWidth
                 && windowHeight == otherGuiSettings.windowHeight
-                && Objects.equals(windowCoordinates, otherGuiSettings.windowCoordinates);
+                && Objects.equals(windowCoordinates, otherGuiSettings.windowCoordinates)
+                && helpWindowWidth == otherGuiSettings.helpWindowWidth
+                && helpWindowHeight == otherGuiSettings.helpWindowHeight
+                && Objects.equals(helpWindowCoordinates, otherGuiSettings.helpWindowCoordinates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(windowWidth, windowHeight, windowCoordinates);
+        return Objects.hash(windowWidth, windowHeight, windowCoordinates,
+                helpWindowWidth, helpWindowHeight, helpWindowCoordinates);
     }
 
     @Override
@@ -77,6 +118,9 @@ public class GuiSettings implements Serializable {
                 .add("windowWidth", windowWidth)
                 .add("windowHeight", windowHeight)
                 .add("windowCoordinates", windowCoordinates)
+                .add("helpWindowWidth", helpWindowWidth)
+                .add("helpWindowHeight", helpWindowHeight)
+                .add("helpWindowCoordinates", helpWindowCoordinates)
                 .toString();
     }
 }
