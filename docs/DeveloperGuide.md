@@ -414,8 +414,8 @@ Class diagram:
 Similar to other commands, the Sort feature has a parser and a command, in:
 * `SortCommand`
 * `SortCommandParser`
-Which updates the `ModelManager`'s `sortedPersons` list which is the list that the UI calls upon to show using the `updateSortComparator(Comparator<Person>)` function of `ModelManager`. 
-To clarify, `sortedPersons` is a `SortedList` which the comparator can be updated with `updateSortComparator(Comparator<Person>)`
+Which updates the `ModelManager`'s `sortedPersons` list which is the list that the UI calls upon to show using the `getSortedPersonList()` function of `ModelManager`. 
+To clarify, `sortedPersons` is a `SortedList` which the comparator can be updated with `updateSortComparator(Comparator<Person>)` function of `ModelManager`.
 
 It is to note that `SortCommand` only has four types of Comparators defined as static properties
 * `COMPARATOR_SORT_PERSONS_BY_NAME_ASCENDING`
