@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# CRB Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -35,7 +35,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +67,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +84,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -116,7 +116,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -139,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -202,7 +202,7 @@ Step 4. The user now decides that adding the person was a mistake, and decides t
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial `AddressBook` state, then there are no previous `AddressBook` states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -225,7 +225,7 @@ The `redo` command does the opposite — it calls `Model#redoAddressBook()`,
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone `AddressBook` states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
@@ -311,7 +311,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the CustomerRelationBook and the **Actor** is the `user`, unless specified otherwise)
 
 **Use Case: UC01 - Add a New Contact**
 
@@ -319,10 +319,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User chooses to add a new contact.
 2. User enters contact details (e.g., name, phone, email, address).
-3. AddressBook parses the contact details.
-4. AddressBook validates each field details.
-5. AddressBook checks for duplicates.
-6. AddressBook saves the new contact and confirms successful addition.
+3. CustomerRelationBook parses the contact details.
+4. CustomerRelationBook validates each field details.
+5. CustomerRelationBook checks for duplicates.
+6. CustomerRelationBook saves the new contact and confirms successful addition.
 
     Use case ends.
 
@@ -330,15 +330,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. User enters invalid data for any field.
 
-    * 3a1. AddressBook displays appropriate error message for the fields.
+    * 3a1. CustomerRelationBook displays appropriate error message for the fields.
     * 3a2. User re-enters the corrected data.
     * Steps 3a1–3a2 repeat until all data are valid.
     * Use case resumes from step 4.
 
 * 3b. User specified missing field or wrong field:
 
-    * 3b1. AddressBook displays error.
-    * 3b2. AddressBook displays required field.
+    * 3b1. CustomerRelationBook displays error.
+    * 3b2. CustomerRelationBook displays required field.
     * 3b3. User corrects the command.
     * Steps repeat until all single-valued fields are specified correctly.
     * Use case resumes from step 4.
@@ -346,7 +346,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. Duplicate contact detected.
 
-    * 4a1. AddressBook displays a console message indicating that the contact already exists.
+    * 4a1. CustomerRelationBook displays a console message indicating that the contact already exists.
     * Use case ends.
 
 **Use case: UC02 - List Contacts**
@@ -354,19 +354,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to list all contact.
-2. AddressBook parses the command.
-3. AddressBook validates the command format.
-4. AddressBook retrieves all saved contacts.
-5. AddressBook displays all contacts.
-6. AddressBook displays a console message indicating the number of contacts displayed.
+2. CustomerRelationBook parses the command.
+3. CustomerRelationBook validates the command format.
+4. CustomerRelationBook retrieves all saved contacts.
+5. CustomerRelationBook displays all contacts.
+6. CustomerRelationBook displays a console message indicating the number of contacts displayed.
 
     Use case ends.
 
 **Extensions**
 
-* 5a. No contacts stored in AddressBook
-  * 5a1. AddressBook will not display any contacts.
-  * 5a2. AddressBook displays a console message indicating AddressBook is empty.
+* 5a. No contacts stored in CustomerRelationBook
+  * 5a1. CustomerRelationBook will not display any contacts.
+  * 5a2. CustomerRelationBook displays a console message indicating CustomerRelationBook is empty.
   * Use case ends.
 
 **Use case: UC03 - Add Tags to Contact**
@@ -374,16 +374,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User includes tags when <u>adding a new contact (UC01).</u>
-2. AddressBook parses the tag values.
-3. AddressBook validates the tag values.
-4. AddressBook associates valid tags with the contact.
+2. CustomerRelationBook parses the tag values.
+3. CustomerRelationBook validates the tag values.
+4. CustomerRelationBook associates valid tags with the contact.
 
     Use case ends.
 
 **Extensions**
 
 * 3a. Tag value is invalid
-  * 3a1. AddressBook displays error message and requests for correction.
+  * 3a1. CustomerRelationBook displays error message and requests for correction.
   * 3a2. User corrects or remove invalid tags.
   * Steps 3a1-3a2 repeat until all tags are valid.
   * Use case resumes from step 4.
@@ -394,33 +394,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to filter contacts with specified tags.
-2. AddressBook parses the tag values.
-3. AddressBook validates the tag values.
-4. AddressBook retrieves all contacts with the specified tags.
-5. AddressBook <u>lists these filtered contacts (UC02).</u>
-6. AddressBook displays a console message indicating the number of filtered contacts displayed.
+2. CustomerRelationBook parses the tag values.
+3. CustomerRelationBook validates the tag values.
+4. CustomerRelationBook retrieves all contacts with the specified tags.
+5. CustomerRelationBook <u>lists these filtered contacts (UC02).</u>
+6. CustomerRelationBook displays a console message indicating the number of filtered contacts displayed.
 
     Use case ends.
 
 **Extensions**
 
 * 3a. No tag provided in the command.
-  * 3a1. AddressBook displays an error message.
+  * 3a1. CustomerRelationBook displays an error message.
   * Use case ends.
 * 3b. Tag value is invalid.
-  * 3b1. AddressBook will display an error message and request for correction.
+  * 3b1. CustomerRelationBook will display an error message and request for correction.
   * 3b2. User corrects the tag value.
   * Step 3b1-3b2 repeats until all tags are valid.
   * Use case resumes from step 4.
 * 3c. More than 10 tags specified.
-  * 3c1. AddressBook will display an error message and request for correction.
+  * 3c1. CustomerRelationBook will display an error message and request for correction.
   * 3c2. User corrects the command.
   * Steps 3c1-3c2 repeats until tags are less than 10.
   * Use case resumes from step 4.
 
 * 4a. No contact matches the specified tags.
-  * 4a1. AddressBook will not display any contacts
-  * 4a2. AddressBook will display a console message indicating no contacts found with the specified tags.
+  * 4a1. CustomerRelationBook will not display any contacts
+  * 4a2. CustomerRelationBook will display a console message indicating no contacts found with the specified tags.
   * Use case ends.
 
 
@@ -429,9 +429,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  CustomerRelationBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  CustomerRelationBook deletes the person
 
     Use case ends.
 
@@ -443,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CustomerRelationBook shows an error message.
 
       Use case resumes at step 2.
 
