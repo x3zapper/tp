@@ -67,7 +67,8 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page, along with a scrollable list of all available commands with their usage details, including command formats, parameters, and brief descriptions.
 
@@ -75,12 +76,18 @@ Shows a message explaining how to access the help page, along with a scrollable 
 
 Format: `help`
 
+### Listing all persons: `list`
+
+Shows a list of all persons in the address book.
+
+Format: `list`
+
 
 ### Adding a person: `add`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`
 
 <box type="tip" seamless>
 
@@ -89,30 +96,60 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal tz/-12.0`
+* `add n/CRB Team t/developers e/crb.team@invalid a/Github p/999 t/colleagues tz/8`
 
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-
-Format: `list`
-
-### Editing a person : `edit`
+### Editing a person: `edit`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
+* You can remove the person's timezone value by typing `tz/` without specifying any value after it.
+* You can remove the person's note data by typing `nt/` without specifying any text after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 5 t/abc t/Def` Sets the 5th person's tags to `abc` and `Def`.
+* `edit 10 tz/` Clears the 10th person's set timezone value.
+
+### Deleting a person: `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …
+
+Examples:
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+### Clearing all entries: `clear`
+
+Clears all entries from the address book.
+
+Format: `clear`
+
+### TBC Adding a complex note to person: `note`
+
+TBC by Yuzu
+
+* You can remove the person's note data by typing `nt/` without specifying any text after it.
+
+Format: `note INDEX nt/NOTE`
+
+Examples:
+* `note 8 nt/This is a new nt/note` Sets the 8th person's note data to `This is a new nt/note`
+
 
 ### Locating persons by name: `find`
 
@@ -157,31 +194,45 @@ Examples:
 **Progressive search strategy:** Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. If no results, use **Fuzzy mode** in case you misspelled the name.
 </box>
 
-### Deleting a person : `delete`
+Note: `find`/`filter` are mutually exclusive searching operations.
 
-Deletes the specified person from the address book.
+### TBC Filtering persons by tags: `filter`
 
-Format: `delete INDEX`
+TBC by Yuzu
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+Format: `filter TAG [MORE_TAGS]...`
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `filter friends`
+* `filter friends enemies`
 
-### Clearing all entries : `clear`
+Note: `find`/`filter` are mutually exclusive searching operations.
 
-Clears all entries from the address book.
 
-Format: `clear`
+### Sorting all persons: `sort`
 
-### Exiting the program : `exit`
+Sorts the current list of persons according to chosen sort type and sort order.<br>
+Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
+each contact lexicographically case-insensitive.<br>
+Sort orders: `asc` for ascending and `dsc` for descending
+
+Format: `sort st/SORT_TYPE so/SORT_ORDER`
+
+Examples:
+- `sort st/dateadded so/asc`
+- `sort st/dateadded so/dsc`
+- `sort st/name so/asc`
+- `sort st/name so/dsc`
+
+Note: The default sort order and type would be `sort st/dateadded so/asc`
+
+
+### Exiting the program: `exit`
 
 Exits the program.
 
 Format: `exit`
+
 
 ### Saving the data
 
@@ -198,26 +249,23 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
+### Command box history
+
+The AddressBook tracks your commands executed during the session and allows you to revisit them similar to how a Windows/Linux terminal works. You can traverse this comamnd history by highlighting the command input box and using either the up/down arrow keys to check older/newer commands in the history.
+
+Behaviour:
+* Tracks the latest `100` commands executed.
+* Only stores a new command if it is not a duplicate of the latest command stored.
+* Tracks "in-progress" command before traversing the command history and restores it to the command box when exiting the "command history".
+
+
 ### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
 
-### Sorting all persons: `sort`
+### Undo/redo commands `[coming in v2.0]`
 
-Sorts the current list of persons according to chosen sort type and sort order.<br>
-Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
-each contact lexicographically case-insensitive.<br>
-Sort orders: `asc` for ascending and `dsc` for descending<br>
-<br>
-Format: `sort st/SORT_TYPE so/SORT_ORDER`<br>
-<br>
-Examples: <br>
-- `sort st/dateadded so/asc`
-- `sort st/dateadded so/dsc`
-- `sort st/name so/asc`
-- `sort st/name so/dsc`
-
-Note: The default sort order and type would be `sort st/dateadded so/asc`
+_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -232,6 +280,7 @@ Note: The default sort order and type would be `sort st/dateadded so/asc`
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -239,11 +288,14 @@ Note: The default sort order and type would be `sort st/dateadded so/asc`
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Exit**   | `exit`
-**Find**   | `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`<br> e.g., `find alex david`, `find Yeoh s/1`, `find s/2 Bernoce`
-**List**   | `list`
 **Help**   | `help`
+**List**   | `list`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
+**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Clear**  | `clear`
+**Note**   | `note INDEX nt/NOTE`<br> e.g., `note 8 nt/Hello world`
+**Find**   | `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`<br> e.g., `find alex david`, `find Yeoh s/1`, `find s/2 Bernoce`
+**Filter** | `filter TAG [MORE_TAGS]...`<br> e.g., `filter friends`
+**Sort**   | `sort st/SORT_TYPE so/SORT_ORDER`<br> e.g., `sort st/dateadded so/asc`
+**Exit**   | `exit`

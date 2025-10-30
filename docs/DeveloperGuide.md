@@ -13,7 +13,10 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+* For the detailed documentation of the `AddressBook-Level3` project, see the [Address Book Product Website](https://se-education.org/addressbook-level3).
+* This project is a part of the se-education.org initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org/#contributing-to-se-edu) for more info.
+* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -27,7 +30,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ### Architecture
 
-    <puml src="diagrams/ArchitectureDiagram.puml" width="280" />
+<puml src="diagrams/ArchitectureDiagram.puml" width="280" />
 
 The ***Architecture Diagram*** given above explains the high-level design of the App.
 
@@ -185,6 +188,8 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+---
+
 ### Filter feature
 The filter command allows for the user to filter their contacts based on specified tags (up to 10).
 
@@ -213,8 +218,6 @@ When the user executes the command:
 
 #### Key Code Snippet
 ```java
-
-
 @Override
 public CommandResult execute(Model model) {
     requireNonNull(model);
@@ -403,9 +406,76 @@ The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filt
   * Pros: User can adjust based on needs.
   * Cons: Added complexity, may impact performance with large limits.
 
+---
+
 ### Sort feature
 The sort command allows the user to change the sort ordering of the conctact list displayed.
 <puml src="diagrams/SortClassDiagram.puml" alt="SortClassDiagram" />
+
+---
+
+### Command box history feature
+
+This section documents the command-history feature used by `CommandBox`.
+
+#### Feature Overview
+
+The command-history feature provides a terminal-like experience where previously executed commands can be navigated using the Up and Down arrow keys. It supports:
+* Browsing older commands with `UP` and newer commands with `DOWN`.
+* Preserving the currently typed (partial) input when the user begins browsing history and restoring it when the user navigates back to the most recent position (so the user can continue editing). 
+* Preventing duplicate consecutive history entries (the same command repeated in succession). 
+* Limiting the history size (e.g. 100 entries) to avoid unbounded memory growth.
+
+Example interaction flow:
+* Type `add Alice` and press `Enter` -> command is executed and stored in history. 
+* Type `del` (partial), press `UP` -> previous command shown, partial `del` saved. 
+* Press `DOWN` until out of history -> `del` restored for continued editing.
+
+#### Implementation
+
+The feature is split into two components:
+1. `CommandBox` (UI layer)
+  * Handles user keyboard input and UI updates (TextField contents & caret position). 
+  * Delegates history navigation to `CommandHistory`. 
+  * Uses a `CommandExecutor` functional interface (provided by `MainWindow`) to execute commands.
+2. `CommandHistory` (logic layer / helper class)
+  * Encapsulates history storage (a `List<String>`), the browsing index, and a saved partial command. 
+  * Exposes:
+    * `boolean add(String commandText)` - store a new command, trims history and avoids duplicates. 
+    * `String getPrevious(String currentInput)` - return older command; save current partial input when browsing starts. 
+    * `String getNext(String currentInput)` - return newer command or restore saved partial input when leaving history. 
+    * `void reset()` - clear browsing state. 
+    * `boolean isEmpty()` - check if history is empty.
+
+Flow when user presses Up/Down arrow keys:
+1. `CommandBox` intercepts `KeyEvent` for `UP`/`DOWN`. 
+2. `CommandBox` calls `commandHistory.getPrevious(commandTextField.getText())` or `commandHistory.getNext(commandTextField.getText())`. 
+3. `CommandHistory` returns the appropriate string. 
+4. `CommandBox` sets the `TextField` text and positions the caret at the end.
+
+Flow when user presses Enter:
+1. `CommandBox.handleCommandEntered() ` calls `commandHistory.add(commandText)`. 
+2. `commandHistory.add()` checks if:
+  1. New command is a duplicate of latest entry, if so do not add
+  2. History is full, if so remove the oldest entry
+3. `commandHistory.add()` internally calls `reset()` to ensure browsing state is cleared.
+
+#### List Access Safety
+* `getPrevious` and `getNext` perform empty-history checks first and return safely without indexing.
+* `historyIndex` is always maintained within the range `HISTORY_INACTIVE` (−1) or valid list indices 0 to `history.size()-1`.
+* Note: The code assumes single-threaded use on the JavaFX Application Thread; if accessed from other threads concurrently, external synchronization is required.
+
+#### Class Diagram
+<puml src="diagrams/CommandHistoryClassDiagram.puml" alt="CommandHistoryClassDiagram" />
+
+#### Sequence Diagram - Navigation (Up/Down)
+<puml src="diagrams/CommandHistorySequenceDiagram_Navigation.puml" alt="CommandHistoryNavigationSequenceDiagram" />
+
+#### Sequence Diagram - Execute (Enter)
+<puml src="diagrams/CommandHistorySequenceDiagram_Execute.puml" alt="CommandHistoryExecuteSequenceDiagram" />
+
+#### Possible Future Development Ideas
+* Persistence - Command history can be written to a save file when exiting the application and restored upon next launch
 
 ### \[Proposed\] Undo/redo feature
 

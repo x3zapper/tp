@@ -1,0 +1,14 @@
+@startuml
+!include style.puml
+
+actor User
+participant "CommandBox" as CB
+participant "CommandHistory" as CH
+
+User -> CB : type "add Alice" + press Enter
+CB -> CH : add("add Alice")
+CH -> CH : reset()
+CH --> CB : (returns true)
+CB -> CB : clear input (commandTextField.setText(""))
+
+@enduml
