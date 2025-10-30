@@ -668,7 +668,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `CustomerRelationBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use Case: UC01 - Add a New Contact**
 
@@ -810,31 +810,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User <u>lists contacts (UC02)</u> or <u>finds contacts (UC08)</u>.
-2. AddressBook displays the list of contacts.
+2. CustomerRelationBook displays the list of contacts.
 3. User requests to edit a specific contact with new field values.
-4. AddressBook parses the edit command.
-5. AddressBook validates the index and field values.
-6. AddressBook updates the contact with new values.
-7. AddressBook confirms successful update.
+4. CustomerRelationBook parses the edit command.
+5. CustomerRelationBook validates the index and field values.
+6. CustomerRelationBook updates the contact with new values.
+7. CustomerRelationBook confirms successful update.
 
     Use case ends.
 
 **Extensions**
 
 * 3a. No index provided.
-  * 3a1. AddressBook displays error message.
+  * 3a1. CustomerRelationBook displays error message.
   * Use case ends.
 
 * 5a. The given index is invalid.
-  * 5a1. AddressBook displays error message.
+  * 5a1. CustomerRelationBook displays error message.
   * Use case resumes at step 3.
 
 * 5b. No fields to edit provided.
-  * 5b1. AddressBook displays error message requiring at least one field.
+  * 5b1. CustomerRelationBook displays error message requiring at least one field.
   * Use case resumes at step 3.
 
 * 5c. Field value is invalid.
-  * 5c1. AddressBook displays error message for the specific field.
+  * 5c1. CustomerRelationBook displays error message for the specific field.
   * 5c2. User corrects the field value.
   * Steps 5c1-5c2 repeat until all fields are valid.
   * Use case resumes from step 6.
@@ -845,9 +845,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to clear all contacts.
-2. AddressBook parses the command.
-3. AddressBook removes all contacts.
-4. AddressBook confirms successful clearing.
+2. CustomerRelationBook parses the command.
+3. CustomerRelationBook removes all contacts.
+4. CustomerRelationBook confirms successful clearing.
 
     Use case ends.
 
@@ -857,27 +857,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to find contacts by name keywords.
-2. AddressBook parses the keywords and search mode.
-3. AddressBook validates the command format.
-4. AddressBook searches for contacts matching the keywords.
-5. AddressBook displays matching contacts.
-6. AddressBook displays a console message indicating the number of contacts found.
+2. CustomerRelationBook parses the keywords and search mode.
+3. CustomerRelationBook validates the command format.
+4. CustomerRelationBook searches for contacts matching the keywords.
+5. CustomerRelationBook displays matching contacts.
+6. CustomerRelationBook displays a console message indicating the number of contacts found.
 
     Use case ends.
 
 **Extensions**
 
 * 2a. No keywords provided.
-  * 2a1. AddressBook displays error message.
+  * 2a1. CustomerRelationBook displays error message.
   * Use case ends.
 
 * 2b. Invalid search mode specified.
-  * 2b1. AddressBook displays error message with valid modes.
+  * 2b1. CustomerRelationBook displays error message with valid modes.
   * Use case resumes at step 1.
 
 * 4a. No contacts match the keywords.
-  * 4a1. AddressBook displays empty list.
-  * 4a2. AddressBook displays message indicating no contacts found.
+  * 4a1. CustomerRelationBook displays empty list.
+  * 4a2. CustomerRelationBook displays message indicating no contacts found.
   * Use case ends.
 
 
@@ -886,26 +886,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to sort contacts by specified criteria.
-2. AddressBook parses sort type and sort order.
-3. AddressBook validates the sort parameters.
-4. AddressBook sorts the contact list accordingly.
-5. AddressBook displays sorted contacts.
-6. AddressBook confirms successful sorting.
+2. CustomerRelationBook parses sort type and sort order.
+3. CustomerRelationBook validates the sort parameters.
+4. CustomerRelationBook sorts the contact list accordingly.
+5. CustomerRelationBook displays sorted contacts.
+6. CustomerRelationBook confirms successful sorting.
 
     Use case ends.
 
 **Extensions**
 
 * 2a. Missing sort type or sort order.
-  * 2a1. AddressBook displays error message with required parameters.
+  * 2a1. CustomerRelationBook displays error message with required parameters.
   * Use case ends.
 
 * 3a. Invalid sort type specified.
-  * 3a1. AddressBook displays error message with valid sort types (dateadded, name).
+  * 3a1. CustomerRelationBook displays error message with valid sort types (dateadded, name).
   * Use case resumes at step 1.
 
 * 3b. Invalid sort order specified.
-  * 3b1. AddressBook displays error message with valid sort orders (asc, dsc).
+  * 3b1. CustomerRelationBook displays error message with valid sort orders (asc, dsc).
   * Use case resumes at step 1.
 
 
@@ -914,32 +914,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User <u>lists contacts (UC02)</u> or <u>finds contacts (UC08)</u>.
-2. AddressBook displays the list of contacts.
+2. CustomerRelationBook displays the list of contacts.
 3. User requests to add/edit note for a specific contact.
-4. AddressBook parses the note command.
-5. AddressBook validates the index and note content.
-6. AddressBook updates the contact's note.
-7. AddressBook confirms successful note update.
+4. CustomerRelationBook parses the note command.
+5. CustomerRelationBook validates the index and note content.
+6. CustomerRelationBook updates the contact's note.
+7. CustomerRelationBook confirms successful note update.
 
     Use case ends.
 
 **Extensions**
 
 * 3a. No index provided.
-  * 3a1. AddressBook displays error message.
+  * 3a1. CustomerRelationBook displays error message.
   * Use case ends.
 
 * 5a. The given index is invalid.
-  * 5a1. AddressBook displays error message.
+  * 5a1. CustomerRelationBook displays error message.
   * Use case resumes at step 3.
 
 * 5b. Note prefix missing.
-  * 5b1. AddressBook displays error message.
+  * 5b1. CustomerRelationBook displays error message.
   * Use case resumes at step 3.
 
 * 5c. Empty note content (to delete note).
-  * 5c1. AddressBook removes the contact's note.
-  * 5c2. AddressBook confirms note deletion.
+  * 5c1. CustomerRelationBook removes the contact's note.
+  * 5c2. CustomerRelationBook confirms note deletion.
   * Use case ends.
 
 
@@ -948,8 +948,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to view help.
-2. AddressBook parses the help command.
-3. AddressBook opens help window.
+2. CustomerRelationBook parses the help command.
+3. CustomerRelationBook opens help window.
 4. Help window displays all available commands with usage details.
 
     Use case ends.
