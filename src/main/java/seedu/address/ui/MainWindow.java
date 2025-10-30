@@ -162,7 +162,7 @@ public class MainWindow extends UiPart<Stage> {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY(),
                 helpWindow.getRoot().getWidth(), helpWindow.getRoot().getHeight(),
-                (int) helpWindow.getRoot().getX(), (int) helpWindow.getRoot().getY());
+                (int) helpWindow.getLastKnownX(), (int) helpWindow.getLastKnownY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
