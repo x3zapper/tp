@@ -1,10 +1,12 @@
 @startuml
 !include style.puml
 
+skinparam ArrowFontStyle plain
+
 actor User
-participant "CommandBox (UI)" as CB
-participant "CommandHistory" as CH
-participant "TextField" as TF
+participant ":CommandBox (UI)" as CB UI_COLOR
+participant ":CommandHistory" as CH UI_COLOR
+participant ":TextField" as TF UI_COLOR_T2
 
 User -> TF : types "del" (partial)
 TF -> CB : (text property bound)

@@ -1,6 +1,10 @@
 @startuml
 !include style.puml
 
+skinparam ArrowFontStyle plain
+skinparam classBackgroundColor UI_COLOR
+Class TextField UI_COLOR_T2
+
 ' CommandHistory <-> CommandBox relationship
 package "UI" {
   class CommandBox {
