@@ -1,7 +1,7 @@
 ---
-layout: default.md
-title: "User Guide"
-pageNav: 3
+  layout: default.md
+  title: "User Guide"
+  pageNav: 3
 ---
 
 # Customer Relation Book User Guide
@@ -16,28 +16,28 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+  **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F13-3/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your CustomerRelationBook.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CustomerRelationBook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+  A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+  ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   **Some** example commands you can try:
+  **Some** example commands you can try:
 
-    * `list` : Lists all contacts.
+  * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Customer Relation Book.
+  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Customer Relation Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+  * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+  * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+  * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -55,8 +55,8 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…` after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -66,7 +66,6 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
-
 
 
 ### Viewing help: `help`
