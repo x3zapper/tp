@@ -210,9 +210,11 @@ Examples:
 | Misspelled as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
 
 **Progressive search strategy:** Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. If no results, use **Fuzzy mode** in case you misspelled the name.
+
+**Note:** `find`/`filter` are mutually exclusive searching operations.
 </box>
 
-Note: `find`/`filter` are mutually exclusive searching operations.
+
 
 ### Filtering persons by tags: `filter`
 
@@ -231,8 +233,9 @@ Examples:
 * `filter friends` will only list contacts that have the tag `friends`
 * `filter friends enemies` will only list contacts that have **both** the tags `friends` and `enemies`
 
+<box type="tip" seamless>
 Note: `find`/`filter` are mutually exclusive searching operations.
-
+</box>
 
 ### Sorting all persons: `sort`
 
@@ -248,9 +251,10 @@ Examples:
 - `sort st/dateadded so/dsc`
 - `sort st/name so/asc`
 - `sort st/name so/dsc`
-
+  
+<box type="tip" seamless>
 Note: The default sort order and type would be `sort st/dateadded so/asc`
-
+</box>
 
 ### Exiting the program: `exit`
 
