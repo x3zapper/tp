@@ -764,11 +764,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 3a. No tag provided in the command.
   * 3a1. CustomerRelationBook displays an error message.
   * Use case ends.
+
 * 3b. Tag value is invalid.
   * 3b1. CustomerRelationBook will display an error message and request for correction.
   * 3b2. User corrects the tag value.
   * Step 3b1-3b2 repeats until all tags are valid.
   * Use case resumes from step 4.
+
 * 3c. More than 10 tags specified.
   * 3c1. CustomerRelationBook will display an error message and request for correction.
   * 3c2. User corrects the command.
@@ -795,14 +797,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The list is empty.
-
-  Use case ends.
+  * Use case ends.
 
 * 3a. The given index is invalid.
-
     * 3a1. CustomerRelationBook shows an error message.
-
-      Use case resumes at step 2.
+    * Use case resumes at step 2.
 
 
 **Use case: UC06 - Edit a Contact**
