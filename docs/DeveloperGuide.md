@@ -984,6 +984,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Tag**: A label used to categorize contacts (e.g., "client", "vendor", "VIP")
 * **Vendor**: A person or organization that supplies goods or services to the business
+* **CRM**: Customer Relationship Management - a system that helps businesses manage and analyze their interactions and data with current and potential customers.
+* **CRUD**: Create, Read, Update, and Delete - the four fundamental operations used to interact with persistent storage like databases.
 
 --------------------------------------------------------------------------------------------------------------------
 
