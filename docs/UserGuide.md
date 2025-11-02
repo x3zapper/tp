@@ -78,7 +78,7 @@ Format: `help`
 
 ### Listing all persons: `list`
 
-Shows a list of all persons in the customer address book.
+Shows a list of all persons in the customer relation book.
 
 Format: `list`
 
@@ -146,7 +146,7 @@ Format: `clear`
 
 ### Adding a complex note to person: `note`
 
-The `note` command allows the user to add, edit, or delete a note for a specific person in the address book.
+The `note` command allows the user to add, edit, or delete a note for a specific person in the customer relation book.
 Notes can be used to store additional information such as remarks, reminders, or comments about a person.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
@@ -219,7 +219,7 @@ Examples:
 ### Filtering persons by tags: `filter`
 
 The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
-This helps users quickly narrow down their address book to relevant entries.
+This helps users quickly narrow down their customer relation book to relevant entries.
 
 Format: `filter TAG [MORE_TAGS]...`
 
