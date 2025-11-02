@@ -2,9 +2,14 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 
 /** Manages command history functionality in {@code CommandBox} */
 public class CommandHistory {
+    private static final Logger logger = LogsCenter.getLogger(CommandHistory.class);
+
     private static final int HISTORY_MAX = 100;
     private static final int HISTORY_INACTIVE = -1;
 
@@ -17,6 +22,8 @@ public class CommandHistory {
         this.history = new ArrayList<String>();
         this.historyIndex = HISTORY_INACTIVE;
         this.savedCommand = "";
+
+        logger.fine("Initialized CommandHistory");
     }
 
     /**
@@ -25,9 +32,12 @@ public class CommandHistory {
      * Returns true if added successfully
      */
     public boolean add(String commandText) {
+        assert commandText != null;
+
         boolean isAdded = false;
 
         if (commandText == null || commandText.isEmpty()) {
+            logger.fine("Ignoring empty command input");
             return isAdded;
         }
 
@@ -36,12 +46,18 @@ public class CommandHistory {
             isAdded = true;
 
             //Note: optimization can be made to calculate greatest index of history list here
+
+            logger.fine("Added command: " + commandText);
+        } else {
+            logger.fine("Skipped duplicate command: " + commandText);
         }
 
         //Trim history if exceed max size
         if (history.size() > HISTORY_MAX) {
             //Remove oldest one
-            history.remove(0);
+            String removed = history.remove(0);
+
+            logger.fine("History size exceeded, removing oldest command: " + removed);
         }
 
         reset();
@@ -50,8 +66,12 @@ public class CommandHistory {
 
     /** Retrieves the previous/older command in history if available */
     public String getPrevious(String currentInput) {
+        assert currentInput != null;
         //Sanity check
-        if (history.isEmpty()) {
+        if (currentInput == null) {
+            return "";
+        } else if (history.isEmpty()) {
+            logger.fine("History empty. Returning current input.");
             return currentInput;
         }
 
@@ -64,30 +84,41 @@ public class CommandHistory {
             savedCommand = currentInput;
         } else {
             //No more history to traverse
+            logger.fine("Already at oldest command in history.");
             return history.get(0);
         }
 
-        return history.get(historyIndex);
+        String result = history.get(historyIndex);
+        logger.fine("Navigated up, index: " + historyIndex + ", command: " + result);
+        return result;
     }
 
     /** Retrieves the next/newer command in history, or restores in-progress input if at the end */
     public String getNext(String currentInput) {
+        assert currentInput != null;
         //Sanity check
-        if (history.isEmpty()) {
+        if (currentInput == null) {
+            return "";
+        } else if (history.isEmpty()) {
+            logger.fine("History empty. Returning current input.");
             return currentInput;
         }
 
         if (historyIndex >= 0 && historyIndex < history.size() - 1) {
             //Check if more history to traverse
             historyIndex += 1;
-            return history.get(historyIndex);
+            String result = history.get(historyIndex);
+            logger.fine("Navigated down, index: " + historyIndex + ", command: " + result);
+            return result;
         } else if (historyIndex == history.size() - 1) {
             //Check if at the end of command history
             historyIndex = HISTORY_INACTIVE;
+            logger.fine("Reached end of history, returning saved in-progress command: " + savedCommand);
             return savedCommand;
         }
 
         //No more history to traverse
+        logger.fine("No newer command to navigate to.");
         return currentInput;
     }
 
@@ -95,6 +126,7 @@ public class CommandHistory {
     public void reset() {
         historyIndex = HISTORY_INACTIVE;
         savedCommand = "";
+        logger.fine("History index and saved in-progress command reset");
     }
 
     /** Checks if command history is empty */

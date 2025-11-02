@@ -8,8 +8,10 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NOTE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMEZONE_BOB;
 
 import org.junit.jupiter.api.Test;
 
@@ -55,6 +57,14 @@ public class EditPersonDescriptorTest {
         // different tags -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different timezone -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTimezone(VALID_TIMEZONE_BOB).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different note -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withNote(VALID_NOTE_BOB).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
     }
 
     @Test
@@ -67,6 +77,7 @@ public class EditPersonDescriptorTest {
                 + ", address=" + editPersonDescriptor.getAddress().orElse(null)
                 + ", tags=" + editPersonDescriptor.getTags().orElse(null)
                 + ", timezone=" + editPersonDescriptor.getTimezone().orElse(null)
+                + ", note=" + editPersonDescriptor.getNote().orElse(null)
                 + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }

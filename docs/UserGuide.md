@@ -4,9 +4,9 @@
   pageNav: 3
 ---
 
-# AB-3 User Guide
+# Customer Relation Book User Guide
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRB can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -16,28 +16,28 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+  **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F13-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your CustomerRelationBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CustomerRelationBook.jar` command to run the application.<br>
+  A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+  ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+  **Some** example commands you can try:
 
-   * `list` : Lists all contacts.
+  * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Customer Relation Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+  * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+  * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+  * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -55,8 +55,8 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…` after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -67,113 +67,228 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+### Viewing help: `help`
+
+Shows a message explaining how to access the help page, along with a scrollable list of all available commands with their usage details, including command formats, parameters, and brief descriptions.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
+### Listing all persons: `list`
+
+Shows a list of all persons in the customer address book.
+
+Format: `list`
+
 
 ### Adding a person: `add`
 
-Adds a person to the address book.
+Adds a person to the customer relation book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`
 
 <box type="tip" seamless>
+
+**Note:** Users are not allowed to add `Note` field through the `add` feature. The `Note` field is omitted
+to simplify the creation process as most users typically only need basic details when adding a contact. `Notes`
+are considered supplementary information that is optional and can be added later on through the `note` command
+when the user desires.
 
 **Tip:** A person can have any number of tags (including 0)
 </box>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal tz/-12.0`
+* `add n/CRB Team t/developers e/crb.team@invalid a/Github p/999 t/colleagues tz/8`
 
-### Listing all persons : `list`
+### Editing a person: `edit`
 
-Shows a list of all persons in the address book.
+Edits an existing person in the customer relation book.
 
-Format: `list`
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`
 
-### Editing a person : `edit`
-
-Edits an existing person in the address book.
-
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* You can remove all the person’s tags by typing `t/` without specifying any tags after it.
+* You can remove the person's timezone value by typing `tz/` without specifying any value after it.
+* You can remove the person's note data by typing `nt/` without specifying any text after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 5 t/abc t/Def` Sets the 5th person's tags to `abc` and `Def`.
+* `edit 10 tz/` Clears the 10th person's set timezone value.
 
-### Locating persons by name: `find`
+### Deleting a person: `delete`
 
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
+Deletes the specified person from the customer relation book.
 
 Format: `delete INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3, …
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in the customer relation book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
+### Clearing all entries: `clear`
 
-Clears all entries from the address book.
+Clears all entries from the customer relation book.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+### Adding a complex note to person: `note`
+
+The `note` command allows the user to add, edit, or delete a note for a specific person in the address book.
+Notes can be used to store additional information such as remarks, reminders, or comments about a person.
+* You can remove the person's note data by typing `nt/` without specifying any text after it.
+
+Format:
+
+**Add/Edit:**`note INDEX nt/NOTE` If the contact already has a current note, it will be replaced with the new `note`
+
+**Delete:** `note INDEX nt/`
+
+
+* `Note` can contain special characters
+* All characters following `nt/` are treated as the note content
+* `Note` is empty by default when a contact is freshly added
+* Contacts with no `Note` will display `No current note` by default
+* `INDEX` must be a valid number corresponding to the currently displayed list
+
+
+Examples:
+* `note 8 nt/This is a new nt/note` Sets the 8th person's note data to `This is a new nt/note`
+* `note 8 nt/` Removes the 8th person's note data
+
+
+### Locating persons by name: `find`
+
+Finds persons whose names contain any of the given keywords.
+
+Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search mode can be specified using `s/MODE` where MODE can be:
+    * `0` - **Relaxed mode** (default): Partial word matching. e.g. `Han` will match `Hans`, `Johann`
+    * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
+    * `2` - **Fuzzy mode**: Returns up to 5 closest matches based on edit distance, tolerant of typos. Results are unordered. e.g. `Alica` will match `Alice`
+* The mode flag `s/MODE` can be placed at the beginning or end of the command.
+* If multiple mode flags are specified (not at the beginning), the **last** mode flag will be used, this means that all prior `s/X` patterns will be treated as keywords..
+* If the mode flag is at the beginning and other mode flags appear later, the **first** mode flag will be used and subsequent `s/X` patterns will be treated as keywords.
+
+Examples:
+* `find alex david` returns `Alex Yeoh`, `David Li` (relaxed mode - default, partial match)<br>
+  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find Yeoh s/1` returns `Alex Yeoh` (strict mode - only full word matches)<br>
+  ![result for 'find Yeoh s/1'](images/findYeohStrictResult.png)
+* `find Bernoce s/2` returns up to 5 closest matches (unordered) including `Bernice Yu` (fuzzy mode - tolerates typo "Bernoce" → "Bernice")<br>
+  ![result for 'find Bernoce s/2'](images/findBernoceFuzzyResult.png)
+
+<box type="tip" seamless>
+
+**When to use each mode:**
+
+| Scenario | Best Mode | Example |
+|----------|-----------|---------|
+| "Someone with 'Yeo' in name" | Relaxed (default) | `find Yeo` |
+| "Find EXACTLY 'Yeoh'" | Strict (`s/1`) | `find Yeoh s/1` |
+| "Was it 'Yeo' or 'Yeoh'?" | Fuzzy (`s/2`) | `find Yeo s/2` |
+| Exploring all 'Alex' variations | Relaxed (default) | `find Alex` |
+| Only "Alex" as full word | Strict (`s/1`) | `find Alex s/1` |
+| Misspelled as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
+
+**Progressive search strategy:** Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. If no results, use **Fuzzy mode** in case you misspelled the name.
+</box>
+
+Note: `find`/`filter` are mutually exclusive searching operations.
+
+### Filtering persons by tags: `filter`
+
+The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
+This helps users quickly narrow down their address book to relevant entries.
+
+Format: `filter TAG [MORE_TAGS]...`
+
+* The filter is **case-sensitive**. e.g Filtering with `friends` will not list a contact with tag `Friends`
+* The order of the tags does not matter
+* User can only filter with a maximum of **10** tags
+* When searching with multiple tags, the filter will only list contacts that contain ALL specified tags
+* Tags specified must follow the Tag feature naming convention of only containing **alpha-numeric** values.
+
+Examples:
+* `filter friends` will only list contacts that have the tag `friends`
+* `filter friends enemies` will only list contacts that have **both** the tags `friends` and `enemies`
+
+Note: `find`/`filter` are mutually exclusive searching operations.
+
+
+### Sorting all persons: `sort`
+
+Sorts the current list of persons according to chosen sort type and sort order.<br>
+Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
+each contact lexicographically case-insensitive.<br>
+Sort orders: `asc` for ascending and `dsc` for descending
+
+Format: `sort st/SORT_TYPE so/SORT_ORDER`
+
+Examples:
+- `sort st/dateadded so/asc`
+- `sort st/dateadded so/dsc`
+- `sort st/name so/asc`
+- `sort st/name so/dsc`
+
+Note: The default sort order and type would be `sort st/dateadded so/asc`
+
+
+### Exiting the program: `exit`
 
 Exits the program.
 
 Format: `exit`
 
+
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+CustomerRelationBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+CustomerRelationBook data are saved automatically as a JSON file `[JAR file location]/data/AddressBook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, CustomerRelationBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the CustomerRelationBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
+### Command box history
+
+The AddressBook tracks your commands executed during the session and allows you to revisit them similar to how a Windows/Linux terminal works. You can traverse this comamnd history by highlighting the command input box and using either the up/down arrow keys to check older/newer commands in the history.
+
+Behaviour:
+* Tracks the latest `100` commands executed.
+* Only stores a new command if it is not a duplicate of the latest command stored.
+* Tracks "in-progress" command before traversing the command history and restores it to the command box when exiting the "command history".
+
+
 ### Archiving data files `[coming in v2.0]`
+
+_Details coming soon ..._
+
+### Undo/redo commands `[coming in v2.0]`
 
 _Details coming soon ..._
 
@@ -182,7 +297,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CustomerRelationBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -190,6 +305,7 @@ _Details coming soon ..._
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -197,10 +313,14 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
 **Help**   | `help`
+**List**   | `list`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
+**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Clear**  | `clear`
+**Note**   | `note INDEX nt/NOTE`<br> e.g., `note 8 nt/Hello world`
+**Find**   | `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`<br> e.g., `find alex david`, `find Yeoh s/1`, `find s/2 Bernoce`
+**Filter** | `filter TAG [MORE_TAGS]...`<br> e.g., `filter friends`
+**Sort**   | `sort st/SORT_TYPE so/SORT_ORDER`<br> e.g., `sort st/dateadded so/asc`
+**Exit**   | `exit`
