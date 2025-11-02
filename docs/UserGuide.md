@@ -96,7 +96,7 @@ to simplify the creation process as most users typically only need basic details
 are considered supplementary information that is optional and can be added later on through the `note` command
 when the user desires.
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** A person can have any number of tags (including 0). **However, tags cannot accept spaces**
 </box>
 
 Examples:
