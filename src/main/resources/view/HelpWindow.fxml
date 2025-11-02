@@ -125,7 +125,7 @@
                     <children>
                       <Label styleClass="command-title" text="filter" wrapText="true" />
                       <Label styleClass="command-description" text="List contacts that have all specified tags." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: filter TAG [MORE_TAGS]..." wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: filter [TAG] [MORE_TAGS]..." wrapText="true" />
                       <Label styleClass="command-description" text="Note: Find/Filter are mutually exclusive searching operations" wrapText="true" />
                     </children>
                     <padding>

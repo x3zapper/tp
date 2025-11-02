@@ -25,7 +25,7 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
     @Override
     public boolean test(Person person) {
         if (keywords.isEmpty()) {
-            return false; // explicitly return false for empty predicate
+            return person.getTags().isEmpty(); // Filters contact list with contacts that have no tags
         }
 
         Set<String> personTagNames = person.getTags().stream()
