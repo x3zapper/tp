@@ -4,9 +4,9 @@
   pageNav: 3
 ---
 
-# Customer Relation Book User Guide
+# CustomerRelationBook User Guide
 
-Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRB can get your contact management tasks done faster than traditional GUI apps.
+CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRB can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -31,7 +31,7 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 
   * `list` : Lists all contacts.
 
-  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Customer Relation Book.
+  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the contact list.
 
   * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -78,14 +78,14 @@ Format: `help`
 
 ### Listing all persons: `list`
 
-Shows a list of all persons in the customer relation book.
+Shows a list of all persons in the contact list.
 
 Format: `list`
 
 
 ### Adding a person: `add`
 
-Adds a person to the customer relation book.
+Adds a person to the contact list.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`
 
@@ -106,7 +106,7 @@ Examples:
 
 ### Editing a person: `edit`
 
-Edits an existing person in the customer relation book.
+Edits an existing person in the contact list.
 
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`
 
@@ -126,7 +126,7 @@ Examples:
 
 ### Deleting a person: `delete`
 
-Deletes the specified person from the customer relation book.
+Deletes the specified person from the contact list.
 
 Format: `delete INDEX`
 
@@ -135,18 +135,18 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the customer relation book.
+* `list` followed by `delete 2` deletes the 2nd person in the contact list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Clearing all entries: `clear`
 
-Clears all entries from the customer relation book.
+Clears all entries from the contact list.
 
 Format: `clear`
 
 ### Adding a complex note to person: `note`
 
-The `note` command allows the user to add, edit, or delete a note for a specific person in the customer relation book.
+The `note` command allows the user to add, edit, or delete a note for a specific person in the contact list.
 Notes can be used to store additional information such as remarks, reminders, or comments about a person.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
@@ -219,7 +219,7 @@ Examples:
 ### Filtering persons by tags: `filter`
 
 The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
-This helps users quickly narrow down their customer relation book to relevant entries.
+This helps users quickly narrow down their contact list to relevant entries.
 
 Format: `filter TAG [MORE_TAGS]...`
 
@@ -240,11 +240,11 @@ Note: `find`/`filter` are mutually exclusive searching operations.
 ### Sorting all persons: `sort`
 
 Sorts the current list of persons according to chosen sort type and sort order.<br>
+Format: `sort st/SORT_TYPE so/SORT_ORDER`
+
 Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
 each contact lexicographically case-insensitive.<br>
 Sort orders: `asc` for ascending and `dsc` for descending
-
-Format: `sort st/SORT_TYPE so/SORT_ORDER`
 
 Examples:
 - `sort st/dateadded so/asc`
