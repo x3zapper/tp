@@ -235,8 +235,9 @@ Note: `find`/`filter` are mutually exclusive searching operations.
 
 
 ### Sorting all persons: `sort`
+Sorting in this program is persistent.
 
-Sorts the current list of persons according to chosen sort type and sort order.<br>
+The `sort` command changes the sorting the current list of persons according to chosen sort type and sort order.<br>
 Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
 each contact lexicographically case-insensitive.<br>
 Sort orders: `asc` for ascending and `dsc` for descending
@@ -249,7 +250,7 @@ Examples:
 - `sort st/name so/asc`
 - `sort st/name so/dsc`
 
-Note: The default sort order and type would be `sort st/dateadded so/asc`
+Note: The equivalent command that will give the default sort order and type would be `sort st/dateadded so/asc`
 
 
 ### Exiting the program: `exit`
