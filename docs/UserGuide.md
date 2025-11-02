@@ -96,7 +96,9 @@ to simplify the creation process as most users typically only need basic details
 are considered supplementary information that is optional and can be added later on through the `note` command
 when the user desires.
 
-**Tip:** A person can have any number of tags (including 0). **However, tags cannot accept spaces**
+`tags`: A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
+
+`name`: A duplicate `person` is defined as any `person`s with the same name
 </box>
 
 Examples:
@@ -123,6 +125,14 @@ Examples:
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 5 t/abc t/Def` Sets the 5th person's tags to `abc` and `Def`.
 * `edit 10 tz/` Clears the 10th person's set timezone value.
+
+<box type="tip" seamless>
+Note: It is a design choice that users are not able to edit the date a contact got added for purposes of `sort` command's `dateadded` sort type using the `edit` command.
+This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
+consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
+
+Also, any constraints of `person` (each contact) mentioned in the `add` section above, such as how duplicate contacts are defined, will be applicable here.
+</box>
 
 ### Deleting a person: `delete`
 
