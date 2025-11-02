@@ -235,7 +235,7 @@ Note: `find`/`filter` are mutually exclusive searching operations.
 
 
 ### Sorting all persons: `sort`
-Sorting in this program is persistent.
+Sorting order is persistent throughout an application session.
 
 The `sort` command changes the sorting the current list of persons according to chosen sort type and sort order.<br>
 Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
