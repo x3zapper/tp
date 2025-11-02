@@ -99,6 +99,10 @@ when the user desires.
 `tags`: A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
 
 `name`: A duplicate `person` is defined as any `person`s with the same name
+
+`timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.
+floating point number:In computing, floating-point arithmetic (FP) is arithmetic on subsets of real numbers formed by a significand (a signed sequence of a fixed number of digits in some base) multiplied by an integer power of that base.
+UTC: UTC stands for Coordinated Universal Time, a single standard time reference
 </box>
 
 Examples:
@@ -131,7 +135,7 @@ Note: It is a design choice that users are not able to edit the date a contact g
 This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
 consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
 
-Also, any constraints of `person` (each contact) mentioned in the `add` section above, such as how duplicate contacts are defined, will be applicable here.
+Also, any constraints or information of `person` (each contact) and `person properties` mentioned in the `add` section above, such as how duplicate contacts are defined, will be applicable here.
 </box>
 
 ### Deleting a person: `delete`
