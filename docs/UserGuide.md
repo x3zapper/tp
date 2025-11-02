@@ -173,8 +173,9 @@ Examples:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`
+Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]...` or `find KEYWORD [MORE_KEYWORDS]... [s/MODE]`
 
+* There can be multiple keywords
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
