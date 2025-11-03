@@ -113,9 +113,8 @@
                       <Label styleClass="command-title" text="find" wrapText="true" />
                       <Label styleClass="command-description" text="Finds persons whose names contain the given keywords." wrapText="true" />
                       <Label styleClass="command-description" text="Refer to the user guide for an in-depth explanation on available parameters." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: find [s/MODE] KEYWORD [MORE_KEYWORDS]" wrapText="true" />
-                      <Label styleClass="command-description" text="Alternative: find KEYWORD [MORE_KEYWORDS] [s/MODE]" wrapText="true" />
-                      <Label styleClass="command-description" text="Note: Find/Filter are mutually exclusive searching operations" wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: find [s/MODE] KEYWORD [MORE_KEYWORDS]..." wrapText="true" />
+                      <Label styleClass="command-description" text="Alternative: find KEYWORD [MORE_KEYWORDS]... [s/MODE]" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
@@ -126,7 +125,6 @@
                       <Label styleClass="command-title" text="filter" wrapText="true" />
                       <Label styleClass="command-description" text="List contacts that have all specified tags." wrapText="true" />
                       <Label styleClass="command-description" text="Usage: filter [TAG]..." wrapText="true" />
-                      <Label styleClass="command-description" text="Note: Find/Filter are mutually exclusive searching operations" wrapText="true" />
                     </children>
                     <padding>
                       <Insets bottom="10.0" left="12.0" right="12.0" top="10.0" />
