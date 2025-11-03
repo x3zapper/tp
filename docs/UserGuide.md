@@ -28,15 +28,10 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
   **Some** example commands you can try:
-
   * `list` : Lists all contacts.
-
   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Customer Relation Book.
-
   * `delete 3` : Deletes the 3rd contact shown in the current list.
-
   * `clear` : Deletes all contacts.
-
   * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
@@ -48,26 +43,20 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 <box type="info" seamless>
 
 **Notes about the command format:**<br>
-
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
 * Items with `…` after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
 * Trailing spaces in parameters will always be stripped.<br>
   e.g. `note 1 nt/  hi  `, only leading spaces are accepted and the `note` will be `  hi`.
-
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
 </box>
 
 
@@ -100,6 +89,7 @@ are considered supplementary information that is optional and can be added later
 when the user desires.
 
 **Tip:** A person can have any number of tags (including 0)
+
 </box>
 
 Examples:
@@ -125,11 +115,8 @@ Each field must follow these constraints:
 
     2. The domain name follows the `'@'` symbol and is made up of **domain labels** separated by periods.\
        Each domain label:
-
         - must **start and end with alphanumeric characters**
-
         - may contain **hyphens** between alphanumeric characters
-
         - the **final domain label** (e.g. `.com`) must be **at least 2 characters long**
 
 - **Address**:\
@@ -141,7 +128,6 @@ Each field must follow these constraints:
 - **Timezone**:\
   The timezone value represents the **offset from UTC** in **hours** (floating-point number).\
   It **cannot be greater than or equal to 24.0**, and **cannot be less than or equal to -24.0**.
-
 
 ### Editing a person: `edit`
 
@@ -171,12 +157,14 @@ The parameter constraints for the `edit` feature are the same as the one in `add
   `NOTE` can include any characters and **may contain leading spaces**. 
 `NOTE` cannot include any of the other command prefixes.
 
+<box type="tip" seamless>
+
 **Note:** Editing `note`
 * Using `nt/` ahead of other defined command prefixes such as `nt/hi n/John` will cause chaining of commands
 instead of treating the entire input as a `note`
 * Avoid such usage, and if really necessary to, this can be performed using original `note` command
 
-
+</box>
 
 ### Deleting a person: `delete`
 
@@ -219,6 +207,8 @@ Format:
 * `Note` is empty by default when a contact is freshly added
 * Contacts with no `Note` will display `No current note` by default
 
+<box type="tip" seamless>
+
 **Note:** While the User is also able to add/edit/remove a contact's note through the `edit` command, 
 `note` command is also implemented to do the same, with some differences.
 This is a design decision to prioritize convenience and command
@@ -227,7 +217,7 @@ Furthermore, `NOTE` in the note command will regard the entire input as part of 
 E.g. `note 2 nt/Hello n/John` is possible through the `note` command, whereas
 `edit 2 nt/Hello n/John` would lead to a chain of commands and cause contact's name to be changed too.
 
-
+</box>
 
 Examples:
 * `note 8 nt/This is a new nt/note` Sets the 8th person's note data to `This is a new nt/note`
@@ -238,7 +228,7 @@ Examples:
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`
+Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]...` or `find KEYWORD [MORE_KEYWORDS]... [s/MODE]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -282,11 +272,12 @@ Examples:
 - Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. 
 - Use **Fuzzy mode** only when searching for a **single name** that you may have misspelled (e.g., `find s/2 Aleks` to find "Alex").
 - For multi-word names like "Jason Lim", use **Relaxed mode** (default) instead of Fuzzy mode for better results.
-</box>
 
+</box>
 <box type="info" seamless>
 
 **Note:** Using `find` or `filter` will replace any previous search results. You cannot combine `find` and `filter` in a single search. To return to viewing all contacts, use the `list` command.
+
 </box>
 
 ### Filtering persons by tags: `filter`
@@ -311,6 +302,7 @@ Examples:
 <box type="info" seamless>
 
 **Note:** Using `find` or `filter` will replace any previous search results. You cannot combine `find` and `filter` in a single search. To return to viewing all contacts, use the `list` command.
+
 </box>
 
 
@@ -352,11 +344,12 @@ CustomerRelationBook data are saved automatically as a JSON file `[JAR file loca
 **Caution:**
 If your changes to the data file makes its format invalid, CustomerRelationBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the CustomerRelationBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
 </box>
 
 ### Command box history
 
-The AddressBook tracks your commands executed during the session and allows you to revisit them similar to how a Windows/Linux terminal works. You can traverse this comamnd history by highlighting the command input box and using either the up/down arrow keys to check older/newer commands in the history.
+The CustomerRelationBook tracks your commands executed during the session and allows you to revisit them similar to how a Windows/Linux terminal works. You can traverse this command history by highlighting the command input box and using either the up/down arrow keys to check older/newer commands in the history.
 
 Behaviour:
 * Tracks the latest `100` commands executed.
@@ -379,12 +372,17 @@ _Details coming soon ..._
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CustomerRelationBook home folder.
 
+**Q**: My application is not appearing even though it shows that it has launched successfully. Is my computer broken?  
+**A**: **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+
+**Q**: I can't seem to be able to store my timezone value correctly. It keeps rounding off to a different number. Is my application broken?  
+**A**: You seem to be trying to store a value where the **fractional part is >12 digits** (e.g., take a value like `12.55`, `12` is the integer part and `0.55` is the fractional part). Due to how Java works, this fractional part may be rounded up causing a value like `23.999999999999999` to be treated as `24.0`. However, this is not an as UTC time offsets will never require this level of precision.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
+1. The application's main window has a bug where text that is too long may appear to get cut off appear as `...`. As a temporary measure, we have implemented a scrollbar for a contact's note information as this is the most likely field that will exceed the application's display capabilities. This issue will be fixed in a future version.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -399,7 +397,7 @@ Action     | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear**  | `clear`
 **Note**   | `note INDEX nt/NOTE`<br> e.g., `note 8 nt/Hello world`
-**Find**   | `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS] [s/MODE]`<br> e.g., `find alex david`, `find Yeoh s/1`, `find s/2 Bernoce`
-**Filter** | `filter TAG [MORE_TAGS]...`<br> e.g., `filter friends`
+**Find**   | `find [s/MODE] KEYWORD [MORE_KEYWORDS]...` or `find KEYWORD [MORE_KEYWORDS]... [s/MODE]`<br> e.g., `find alex david`, `find Yeoh s/1`, `find s/2 Bernoce`
+**Filter** | `filter [TAG]...`<br> e.g., `filter friends`
 **Sort**   | `sort st/SORT_TYPE so/SORT_ORDER`<br> e.g., `sort st/dateadded so/asc`
 **Exit**   | `exit`
