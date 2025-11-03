@@ -112,6 +112,14 @@ Example command entry structure:
 </VBox>
 ```
 
+**Help Window Behavior:**
+
+The help window automatically handles minimization state:
+- When the help window is minimized and the user triggers the help command (via `F1`, help menu, or `help` command), the window will automatically restore from its minimized state and regain focus.
+- This is implemented in the `HelpWindow#show()` and `HelpWindow#focus()` methods, which check if the window is iconified and restore it before showing or focusing.
+- The help message label at the bottom uses text wrapping to prevent URL truncation at minimum window width.
+- The "Copy URL" button has a fixed width to prevent truncation.
+
 ### Logic component
 
 **API** : [`Logic.java`](https://github.com/AY2526S1-CS2103-F13-3/tp/tree/master/src/main/java/seedu/address/logic/Logic.java)

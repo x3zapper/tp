@@ -304,8 +304,7 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-3. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
+2. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
 
 --------------------------------------------------------------------------------------------------------------------
 
