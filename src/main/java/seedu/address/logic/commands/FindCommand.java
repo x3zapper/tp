@@ -68,10 +68,12 @@ public class FindCommand extends Command {
         model.updateFilteredPersonList(predicate);
         int resultCount = model.getSortedPersonList().size();
 
+        String mode = getModeDescription();
         logger.info("Normal search completed. Found " + resultCount + " person(s)");
 
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount)
+                        + " (Search mode: " + mode + ")");
     }
 
     /**
@@ -93,10 +95,27 @@ public class FindCommand extends Command {
         model.updateFilteredPersonList(rankedPersons::contains);
 
         int resultCount = model.getSortedPersonList().size();
+        String mode = getModeDescription();
         logger.info("Fuzzy search completed. Returning top " + resultCount + " match(es)");
 
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, resultCount)
+                        + " (Search mode: " + mode + ")");
+    }
+
+    /**
+     * Gets a human-readable description of the search mode being used.
+     *
+     * @return the search mode description (relaxed, strict, or fuzzy)
+     */
+    private String getModeDescription() {
+        if (predicate.isFuzzy()) {
+            return "fuzzy";
+        } else if (predicate.isStrict()) {
+            return "strict";
+        } else {
+            return "relaxed";
+        }
     }
 
     /**
