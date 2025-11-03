@@ -291,10 +291,10 @@ The find feature is implemented through three main components:
 
 #### Parsing search modes
 
-The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` can be placed either at the beginning or end of the command:
+The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` can be placed **either** at the beginning (before keywords) **or** at the end (after keywords) of the command, but not both:
 
-* `find s/1 alex` - Mode flag at beginning
-* `find alex s/1` - Mode flag at end
+* `find s/1 alex` - Mode flag at beginning (before keywords)
+* `find alex s/1` - Mode flag at end (after keywords)
 
 **Mode values:**
 * `s/0` - Relaxed mode (default): Partial substring matching
@@ -303,25 +303,26 @@ The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` ca
 
 **Parsing logic:**
 
-1. If arguments start with `s/`, `extractSearchModeFromPrefix()` is called:
+1. **Mode flag at beginning:** If arguments start with `s/`, `extractSearchModeFromPrefix()` is called:
    - Splits arguments by first whitespace
    - Extracts first mode value (e.g., "1" from "s/1")
    - Remaining text becomes keywords
-   - Any subsequent `s/X` patterns are treated as keywords
+   - Any subsequent `s/MODE` patterns in the remaining text are treated as keywords (not as mode flags)
 
-2. Otherwise, `extractSearchModeFromSuffix()` is called:
+2. **Mode flag at end:** Otherwise, `extractSearchModeFromSuffix()` is called:
    - Uses `ArgumentTokenizer` to find all `s/` occurrences
    - If multiple mode flags exist, **last value wins** via `getValue(PREFIX_SEARCH_MODE)`
-   - Preamble becomes keywords
+   - Preamble (text before mode flags) becomes keywords
+   - All `s/MODE` patterns except the last one are treated as keywords
 
 **Example parsing scenarios:**
 
 | Command | Mode Used | Keywords | Notes |
 |---------|-----------|----------|-------|
-| `find alex s/1` | Strict (`s/1`) | `["alex"]` | Last mode wins |
-| `find s/2 alex` | Fuzzy (`s/2`) | `["alex"]` | First mode at beginning |
-| `find alex s/0 s/1 s/2` | Fuzzy (`s/2`) | `["alex"]` | Last mode wins (not at beginning) |
-| `find s/1 alex s/2` | Strict (`s/1`) | `["alex", "s/2"]` | First mode wins, `s/2` becomes keyword |
+| `find alex s/1` | Strict (`s/1`) | `["alex"]` | Mode flag at end: last mode wins |
+| `find s/2 alex` | Fuzzy (`s/2`) | `["alex"]` | Mode flag at beginning: uses first mode |
+| `find alex s/0 s/1 s/2` | Fuzzy (`s/2`) | `["alex"]` | Mode flags at end: last mode wins, others become keywords |
+| `find s/1 alex s/2` | Strict (`s/1`) | `["alex", "s/2"]` | Mode flag at beginning: only first recognized, `s/2` becomes keyword |
 
 #### Search mode behaviors
 
@@ -338,6 +339,8 @@ Uses `StringUtil#containsWordIgnoreCase()` to perform full word matching by spli
 **Fuzzy Mode (s/2):**
 
 The `FindCommand#executeFuzzySearch()` method ranks all persons by their minimum Levenshtein distance to the keywords using `FindCommand#rankPersonsByDistance()`, which sorts persons by distance in ascending order and limits results to the top 5 matches. The sorted list may not be preserved in the displayed order in the UI.
+
+**Important Note on Multi-Keyword Fuzzy Search:** The fuzzy search compares each word in a person's name individually against each keyword and returns the minimum distance found across all comparisons. This means when using multiple keywords (e.g., `find s/2 Jason Lim`), the search performs an OR operation on individual word matches rather than matching the full phrase. For example, a contact named "Jason" will have distance 0 to the keyword "Jason", and a contact named "Jason Lim A A" will also have distance 0 (matching "Jason" or "Lim" individually). This can lead to unexpected results where shorter names rank equally with longer names that contain the same words. Fuzzy search is most effective with single keywords for typo tolerance.
 
 #### Levenshtein Distance Algorithm
 
@@ -405,6 +408,11 @@ The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filt
 * **Alternative 2:** Configurable result limit.
   * Pros: User can adjust based on needs.
   * Cons: Added complexity, may impact performance with large limits.
+
+* **Alternative 3 (future improvement):** Smart threshold-based matching instead of fixed limit.
+  * Implementation: Use an intelligent algorithm to dynamically determine the similarity threshold and show all matches that meet it, rather than limiting to exactly 5 results. The threshold adapts based on the quality and distribution of matches found.
+  * Pros: More intuitive results - shows all close matches without arbitrary cutoffs. Better handles cases with many similar names or very few close matches. Adapts to different search scenarios automatically.
+  * Cons: Result count varies, which may be unpredictable for users. More complex algorithm required.
 
 ---
 
