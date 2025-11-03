@@ -350,3 +350,27 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+.note-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+}
+
+.note-scroll-pane>.viewport {
+    -fx-background-color: transparent;
+}
+
+.note-scroll-pane>.scroll-bar:horizontal {
+    -fx-pref-height: 8;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.note-scroll-pane>.scroll-bar:horizontal .thumb {
+    -fx-background-color: derive(#1d1d1d, 60%);
+    -fx-background-radius: 4;
+}
+
+.note-scroll-pane>.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: derive(#1d1d1d, 80%);
+}
