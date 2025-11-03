@@ -22,7 +22,7 @@ public class FilterCommand extends Command {
             + "Parameters: [TAG]...\n"
             + "Example: " + COMMAND_WORD + " client VIP";
 
-    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag '%s'. "
+    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag. "
             + "Tags may only contain alphanumeric characters.";
 
     public static final String MESSAGE_EXCESSIVE_TAGS = "Error: You can only filter by "
