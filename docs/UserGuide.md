@@ -4,9 +4,9 @@
   pageNav: 3
 ---
 
-# Customer Relation Book User Guide
+# CustomerRelationBook User Guide
 
-Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRB can get your contact management tasks done faster than traditional GUI apps.
+CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRB can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -29,7 +29,7 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
   **Some** example commands you can try:
   * `list` : Lists all contacts.
-  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Customer Relation Book.
+  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the contact list.
   * `delete 3` : Deletes the 3rd contact shown in the current list.
   * `clear` : Deletes all contacts.
   * `exit` : Exits the app.
@@ -59,6 +59,17 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 
 </box>
 
+### Notes on some of contact's properties:
+
+`tag`s: A `tag` is a label used to categorize a contact.
+A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
+
+`name`: A duplicate `person` is defined as any `person`s with the same name. It is to note that we do not accept duplicate persons in the contact list.
+As such, operations violating this through `add` or `edit` commands will be rejected.
+
+`timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.
+floating point number:In computing, floating-point arithmetic (FP) is arithmetic on subsets of real numbers formed by a significand (a signed sequence of a fixed number of digits in some base) multiplied by an integer power of that base.
+UTC: UTC stands for Coordinated Universal Time, a single standard time reference
 
 ### Viewing help: `help`
 
@@ -70,14 +81,14 @@ Format: `help`
 
 ### Listing all persons: `list`
 
-Shows a list of all persons in the customer address book.
+Shows a list of all persons in the contact list.
 
 Format: `list`
 
 
 ### Adding a person: `add`
 
-Adds a person to the customer relation book.
+Adds a person to the contact list.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE_OFFSET]`
 
@@ -87,8 +98,6 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE
 to simplify the creation process as most users typically only need basic details when adding a contact. `Notes`
 are considered supplementary information that is optional and can be added later on through the `note` command
 when the user desires.
-
-**Tip:** A person can have any number of tags (including 0)
 
 </box>
 
@@ -132,7 +141,7 @@ Each field must follow these constraints:
 
 ### Editing a person: `edit`
 
-Edits an existing person in the customer relation book.
+Edits an existing person in the contact list.
 
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`
 
@@ -145,6 +154,12 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [
 * You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 * You can remove the person's timezone value by typing `tz/` without specifying any value after it.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
+
+<box type="tip" seamless>
+Note: It is a design choice that users are not able to edit the date a contact got added for purposes of `sort` command's `dateadded` sort type using the `edit` command.
+This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
+consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
+</box>
 
 Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -169,7 +184,7 @@ instead of treating the entire input as a `note`
 
 ### Deleting a person: `delete`
 
-Deletes the specified person from the customer relation book.
+Deletes the specified person from the contact list.
 
 Format: `delete INDEX`
 
@@ -178,18 +193,18 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the customer relation book.
+* `list` followed by `delete 2` deletes the 2nd person in the contact list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Clearing all entries: `clear`
 
-Clears all entries from the customer relation book.
+Clears all entries from the contact list.
 
 Format: `clear`
 
 ### Adding a complex note to person: `note`
 
-The `note` command allows the user to add, edit, or delete a note for a specific person in the address book.
+The `note` command allows the user to add, edit, or delete a note for a specific person in the contact list.
 Notes can be used to store additional information such as remarks, reminders, or comments about a person.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
@@ -231,6 +246,7 @@ Finds persons whose names contain any of the given keywords.
 
 Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]...` or `find KEYWORD [MORE_KEYWORDS]... [s/MODE]`
 
+* There can be multiple keywords
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
@@ -284,7 +300,7 @@ Examples:
 ### Filtering persons by tags: `filter`
 
 The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
-This helps users quickly narrow down their address book to relevant entries.
+This helps users quickly narrow down their contact list to relevant entries.
 
 Format: `filter [TAG]...`
 
@@ -310,21 +326,22 @@ Examples:
 ### Sorting all persons: `sort`
 Sorting order is persistent throughout an application session.
 
-The `sort` command changes the sorting the current list of persons according to chosen sort type and sort order.<br>
+Sorts the current list of persons according to chosen sort type and sort order.<br>
+Format: `sort st/SORT_TYPE so/SORT_ORDER`
+
 Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
 each contact lexicographically case-insensitive.<br>
 Sort orders: `asc` for ascending and `dsc` for descending
-
-Format: `sort st/SORT_TYPE so/SORT_ORDER`
 
 Examples:
 - `sort st/dateadded so/asc`
 - `sort st/dateadded so/dsc`
 - `sort st/name so/asc`
 - `sort st/name so/dsc`
-
-Note: The equivalent command that will give the default sort order and type would be `sort st/dateadded so/asc`
-
+  
+<box type="tip" seamless>
+Note: The default sort order and type would be `sort st/dateadded so/asc`
+</box>
 
 ### Exiting the program: `exit`
 
