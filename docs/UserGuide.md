@@ -142,9 +142,6 @@ Each field must follow these constraints:
   The timezone value represents the **offset from UTC** in **hours** (floating-point number).\
   It **cannot be greater than or equal to 24.0**, and **cannot be less than or equal to -24.0**.
 
-- **Note**:\
-  Notes have **no restrictions** — they can include any characters and **may contain leading spaces**.
-
 
 ### Editing a person: `edit`
 
@@ -169,14 +166,15 @@ Examples:
 * `edit 10 tz/` Clears the 10th person's set timezone value.
 
 #### Parameter Constraints
-The parameter constraints for the `edit` feature are the same as the one in `add`.
+The parameter constraints for the `edit` feature are the same as the one in `add`. Except for:
+- **Note**:\
+  `NOTE` can include any characters and **may contain leading spaces**. 
+`NOTE` cannot include any of the other command prefixes.
 
 **Note:** Editing `note`
-* When editing `note` with other parameters of the contact's details
-e.g. `name`,`phone`, please put the `nt/` parameter last
-* E.g. `edit 1 n/James p/93425656 nt/New note`
 * Using `nt/` ahead of other defined command prefixes such as `nt/hi n/John` will cause chaining of commands
 instead of treating the entire input as a `note`
+* Avoid such usage, and if really necessary to, this can be performed using original `note` command
 
 
 
