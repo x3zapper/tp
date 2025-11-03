@@ -1223,19 +1223,24 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing data files
 
    1. Delete the `data/addressbook.json` file from the application folder.
+   
    2. Launch the application.<br>
       Expected: Application starts with sample data loaded.
 
 2. Dealing with corrupted data files
 
    1. Open `data/addressbook.json` in a text editor.
+
    2. Modify the file to make it invalid JSON (e.g., remove a closing brace).
+
    3. Launch the application.<br>
       Expected: Application starts with empty data, corrupted file discarded.
 
 3. Automatic saving
 
    1. Add, edit, or delete a contact.
+
    2. Close the application without using `exit` command.
+   
    3. Relaunch the application.<br>
       Expected: Changes are persisted, data is retained.

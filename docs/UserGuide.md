@@ -67,6 +67,17 @@ CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized f
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+### Notes on some of contact's properties:
+
+`tag`s: A `tag` is a label used to categorize a contact.
+A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
+
+`name`: A duplicate `person` is defined as any `person`s with the same name. It is to note that we do not accept duplicate persons in the contact list.
+As such, operations violating this through `add` or `edit` commands will be rejected.
+
+`timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.
+floating point number:In computing, floating-point arithmetic (FP) is arithmetic on subsets of real numbers formed by a significand (a signed sequence of a fixed number of digits in some base) multiplied by an integer power of that base.
+UTC: UTC stands for Coordinated Universal Time, a single standard time reference
 
 ### Viewing help: `help`
 
@@ -95,14 +106,6 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE
 to simplify the creation process as most users typically only need basic details when adding a contact. `Notes`
 are considered supplementary information that is optional and can be added later on through the `note` command
 when the user desires.
-
-`tags`: A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
-
-`name`: A duplicate `person` is defined as any `person`s with the same name
-
-`timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.
-floating point number:In computing, floating-point arithmetic (FP) is arithmetic on subsets of real numbers formed by a significand (a signed sequence of a fixed number of digits in some base) multiplied by an integer power of that base.
-UTC: UTC stands for Coordinated Universal Time, a single standard time reference
 </box>
 
 Examples:
@@ -124,19 +127,17 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [
 * You can remove the person's timezone value by typing `tz/` without specifying any value after it.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
+<box type="tip" seamless>
+Note: It is a design choice that users are not able to edit the date a contact got added for purposes of `sort` command's `dateadded` sort type using the `edit` command.
+This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
+consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
+</box>
+
 Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 5 t/abc t/Def` Sets the 5th person's tags to `abc` and `Def`.
 * `edit 10 tz/` Clears the 10th person's set timezone value.
-
-<box type="tip" seamless>
-Note: It is a design choice that users are not able to edit the date a contact got added for purposes of `sort` command's `dateadded` sort type using the `edit` command.
-This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
-consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
-
-Also, any constraints or information of `person` (each contact) and `person properties` mentioned in the `add` section above, such as how duplicate contacts are defined, will be applicable here.
-</box>
 
 ### Deleting a person: `delete`
 
