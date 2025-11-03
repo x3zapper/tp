@@ -127,7 +127,8 @@ Each field must follow these constraints:
 
 - **Timezone**:\
   The timezone value represents the **offset from UTC** in **hours** (floating-point number).\
-  It **cannot be greater than or equal to 24.0**, and **cannot be less than or equal to -24.0**.
+  It **cannot be greater than or equal to 24.0**, and **cannot be less than or equal to -24.0**.\
+  If your timezone values are not getting stored as expected, please refer to the [FAQ](#faq)
 
 ### Editing a person: `edit`
 
