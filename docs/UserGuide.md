@@ -61,15 +61,25 @@ CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized f
 
 ### Notes on some of contact's properties:
 
-`name`: Represents a `person` (contact) name. The application does not allow adding of duplicate persons in the contact list.\
+`name` (case-sensitive): Represents a `person` (contact) name. The application does not allow adding of duplicate persons in the contact list.\
 A duplicate is defined as any `person` with the same name. As such, operations violating this will be rejected.
 
-`tag`: A `tag` is a label used to categorize a contact.\
+`phone`: A `person`'s phone number.
+
+`email`: A `person`'s email address.
+
+`address`: A `person`'s home/work/other address.
+
+`tag` (case-sensitive): A `tag` is a label used to categorize a contact.\
 A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
 
 `timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.\
 Floating Point Number: A real number.\
 UTC: UTC stands for Coordinated Universal Time, a single standard time reference.
+
+`note`: Note about the `person`.
+
+`dateadded` (hidden property): This is a hidden system property that is not meant to be accessed or modified by a user. It represents when a `person` was added to the contact list.
 
 ### Viewing help: `help`
 
@@ -119,14 +129,13 @@ Each field must follow these constraints:
 - **Email**:\
   Emails should be of the format `local-part@domain` and adhere to the following rules:
 
-    1. The local-part may contain **alphanumeric characters** and special characters (excluding parentheses).
-       It **must not start or end** with a special character.
-
-    2. The domain name follows the `'@'` symbol and is made up of **domain labels** separated by periods.\
-       Each domain label:
-        - must **start and end with alphanumeric characters**
-        - may contain **hyphens** between alphanumeric characters
-        - the **final domain label** (e.g. `.com`) must be **at least 2 characters long**
+  1. The local-part may contain **alphanumeric characters** and special characters (excluding parentheses).
+  It **must not start or end** with a special character.
+  2. The domain name follows the `'@'` symbol and is made up of **domain labels** separated by periods.\
+    Each domain label:
+      - must **start and end with alphanumeric characters**
+      - may contain **hyphens** between alphanumeric characters
+      - the **final domain label** (e.g. `.com`) must be **at least 2 characters long**
 
 - **Address**:\
   Addresses can take **any value**, but **must not be blank**.
@@ -151,15 +160,16 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+
 * You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 * You can remove the person's timezone value by typing `tz/` without specifying any value after it.
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
 <box type="tip" seamless>
 
-Note: It is a design choice that users are not able to edit the date a contact got added for purposes of `sort` command's `dateadded` sort type using the `edit` command.
-This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
-consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
+**Note:** The date a contact was added is automatically generated during `add` and cannot be defined using the `add` command nor edited through the `edit` command.
+This is intentional, as there is typically no need to modify when a contact was created. However, advanced users may manually edit this field in the JSON data file
+(see the [Editing the data file](#editing-the-data-file) section for important warnings and constraints).
 
 </box>
 
@@ -172,8 +182,8 @@ Examples:
 #### Parameter Constraints
 The parameter constraints for the `edit` feature are the same as the one in `add`. Except for:
 - **Note**:\
-  `NOTE` can include any characters and **may contain leading spaces**. 
-`NOTE` cannot include any of the other command prefixes.
+  `NOTE` can include any characters and **may contain leading spaces**.
+  `NOTE` cannot include any of the other command prefixes.
 
 <box type="tip" seamless>
 
@@ -255,14 +265,14 @@ Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]...` or `find KEYWORD [MORE_KEYWOR
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * The search mode can be specified using `s/MODE` where MODE can be:
-    * `0` - **Relaxed mode** (default): Partial word matching. e.g. `Han` will match `Hans`, `Johann`
-    * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
-    * `2` - **Fuzzy mode**: Returns up to 5 closest name matches, tolerant of typos and misspellings. Results are unordered. e.g. `Alica` will match `Alice`
-        * **Note:** Fuzzy search compares each word in a name individually against your keywords and finds the closest match. It works best with **single keywords** (e.g., `find s/2 Alica`). When using multiple keywords (e.g., `find s/2 Jason Lim`), the search may not match full phrases as expected - it will find names where individual words match either "Jason" OR "Lim". For precise phrase matching, use **Relaxed mode** (default) or **Strict mode** instead.
+  * `0` - **Relaxed mode** (default): Partial word matching. e.g. `Han` will match `Hans`, `Johann`
+  * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
+  * `2` - **Fuzzy mode**: Returns up to 5 closest name matches, tolerant of typos and misspellings. Results are unordered. e.g. `Alica` will match `Alice`
+    * **Note:** Fuzzy search compares each word in a name individually against your keywords and finds the closest match. It works best with **single keywords** (e.g., `find s/2 Alica`). When using multiple keywords (e.g., `find s/2 Jason Lim`), the search may not match full phrases as expected - it will find names where individual words match either "Jason" OR "Lim". For precise phrase matching, use **Relaxed mode** (default) or **Strict mode** instead.
 * The mode flag `s/MODE` can be placed **either** at the beginning (before keywords) **or** at the end (after keywords) of the command, but not both.
 * **Multiple mode flags behavior:**
-    * If the **first token** of the command is `s/MODE` (e.g., `find s/1 alex`), only that first mode flag is recognized. Any subsequent `s/MODE` patterns will be treated as search keywords.
-    * If the mode flag appears **after the keywords** (e.g., `find alex s/1`), and multiple mode flags are present, the **last** mode flag will be used. All prior `s/MODE` patterns will be treated as search keywords.
+  * If the **first token** of the command is `s/MODE` (e.g., `find s/1 alex`), only that first mode flag is recognized. Any subsequent `s/MODE` patterns will be treated as search keywords.
+  * If the mode flag appears **after the keywords** (e.g., `find alex s/1`), and multiple mode flags are present, the **last** mode flag will be used. All prior `s/MODE` patterns will be treated as search keywords.
 
 Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li` (relaxed mode - default, partial match)<br>
@@ -331,8 +341,8 @@ Sorting order is persistent throughout an application session.
 Sorts the current list of persons according to chosen sort type and sort order.<br>
 Format: `sort st/SORT_TYPE so/SORT_ORDER`
 
-Sort types: `dateadded` which sorts to when the contact got added to CRB and `name` which sorts to the full name of
-each contact lexicographically case-insensitive.<br>
+Sort types: `dateadded` which sorts by when the contact was added to CRB and `name` which sorts by the full name of
+each contact lexicographically (case-insensitive).<br>
 Sort orders: `asc` for ascending and `dsc` for descending
 
 Examples:
@@ -399,13 +409,14 @@ _Details coming soon ..._
 **A**: **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 
 **Q**: I can't seem to be able to store my timezone value correctly. It keeps rounding off to a different number. Is my application broken?  
-**A**: You seem to be trying to store a value where the **fractional part is >12 digits** (e.g., take a value like `12.55`, `12` is the integer part and `0.55` is the fractional part). Due to how Java works, this fractional part may be rounded up causing a value like `23.999999999999999` to be treated as `24.0`. However, this is not an as UTC time offsets will never require this level of precision.
+**A**: You seem to be trying to store a value where the **fractional part is >12 digits** (e.g., take a value like `12.55`, `12` is the integer part and `0.55` is the fractional part). Due to how Java works, this fractional part may be rounded up causing a value like `23.999999999999999` to be treated as `24.0`. However, this is not an issue as UTC time offsets will never require this level of precision.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
 1. The application's main window has a bug where text that is too long may appear to get cut off appear as `...`. As a temporary measure, we have implemented a scrollbar for a contact's note information as this is the most likely field that will exceed the application's display capabilities. This issue will be fixed in a future version.
+2. If a contact's note is too long, it **may** cause performance issues.
 
 --------------------------------------------------------------------------------------------------------------------
 

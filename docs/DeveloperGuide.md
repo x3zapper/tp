@@ -904,6 +904,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Vendor**: A person or organization that supplies goods or services to the business
 * **CRM**: Customer Relationship Management - a system that helps businesses manage and analyze their interactions and data with current and potential customers.
 * **CRUD**: Create, Read, Update, and Delete - the four fundamental operations used to interact with persistent storage like databases.
+* **UTF-8**: A character encoding system used to represent text on computers, able to encode every character in the Unicode standard using a variable number of bytes
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1167,7 +1168,19 @@ testers are expected to do more *exploratory* testing.
 
 ## **Appendix: Planned enhancements**
 
+### Scrollbar support for individual contact cards
+
+_To be implemented in the future_
+
+### Better support for special characters (e.g. /+, or non UTF-8 characters) in name and phone number
+
+_To be implemented in the future_
+
 ### Better bi-directional scrolling for typists
+
+_To be implemented in the future_
+
+### Data archiving
 
 _To be implemented in the future_
 
@@ -1263,7 +1276,3 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
-
-### Data archiving
-
-_To be implemented in the future_
