@@ -219,7 +219,10 @@ Examples:
 - For multi-word names like "Jason Lim", use **Relaxed mode** (default) instead of Fuzzy mode for better results.
 </box>
 
-Note: `find`/`filter` are mutually exclusive searching operations.
+<box type="info" seamless>
+
+**Note:** Using `find` or `filter` will replace any previous search results. You cannot combine `find` and `filter` in a single search. To return to viewing all contacts, use the `list` command.
+</box>
 
 ### Filtering persons by tags: `filter`
 
@@ -238,7 +241,10 @@ Examples:
 * `filter friends` will only list contacts that have the tag `friends`
 * `filter friends enemies` will only list contacts that have **both** the tags `friends` and `enemies`
 
-Note: `find`/`filter` are mutually exclusive searching operations.
+<box type="info" seamless>
+
+**Note:** Using `find` or `filter` will replace any previous search results. You cannot combine `find` and `filter` in a single search. To return to viewing all contacts, use the `list` command.
+</box>
 
 
 ### Sorting all persons: `sort`
