@@ -113,7 +113,9 @@ Edits an existing person in the customer relation book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …
+* Edits the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -159,13 +161,14 @@ Format:
 
 **Delete:** `note INDEX nt/`
 
-
+* Adds a `note` for the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …
 * `Note` can contain special characters
 * All characters following `nt/` are treated as the note content
 * Leading spaces will be accepted as part of the note content
 * `Note` is empty by default when a contact is freshly added
 * Contacts with no `Note` will display `No current note` by default
-* `INDEX` must be a valid number corresponding to the currently displayed list
 
 **Note:** While the User is also able to add/edit/remove a contact's note through the `edit` command, 
 `note` command is also implemented to do the same, with some differences. `NOTE` in the note command supports
