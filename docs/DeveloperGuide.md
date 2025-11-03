@@ -291,10 +291,10 @@ The find feature is implemented through three main components:
 
 #### Parsing search modes
 
-The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` can be placed either at the beginning or end of the command:
+The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` can be placed **either** at the beginning (before keywords) **or** at the end (after keywords) of the command, but not both:
 
-* `find s/1 alex` - Mode flag at beginning
-* `find alex s/1` - Mode flag at end
+* `find s/1 alex` - Mode flag at beginning (before keywords)
+* `find alex s/1` - Mode flag at end (after keywords)
 
 **Mode values:**
 * `s/0` - Relaxed mode (default): Partial substring matching
@@ -303,25 +303,26 @@ The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` ca
 
 **Parsing logic:**
 
-1. If arguments start with `s/`, `extractSearchModeFromPrefix()` is called:
+1. **Mode flag at beginning:** If arguments start with `s/`, `extractSearchModeFromPrefix()` is called:
    - Splits arguments by first whitespace
    - Extracts first mode value (e.g., "1" from "s/1")
    - Remaining text becomes keywords
-   - Any subsequent `s/MODE` patterns are treated as keywords
+   - Any subsequent `s/MODE` patterns in the remaining text are treated as keywords (not as mode flags)
 
-2. Otherwise, `extractSearchModeFromSuffix()` is called:
+2. **Mode flag at end:** Otherwise, `extractSearchModeFromSuffix()` is called:
    - Uses `ArgumentTokenizer` to find all `s/` occurrences
    - If multiple mode flags exist, **last value wins** via `getValue(PREFIX_SEARCH_MODE)`
-   - Preamble becomes keywords
+   - Preamble (text before mode flags) becomes keywords
+   - All `s/MODE` patterns except the last one are treated as keywords
 
 **Example parsing scenarios:**
 
 | Command | Mode Used | Keywords | Notes |
 |---------|-----------|----------|-------|
-| `find alex s/1` | Strict (`s/1`) | `["alex"]` | Last mode wins |
-| `find s/2 alex` | Fuzzy (`s/2`) | `["alex"]` | First mode at beginning |
-| `find alex s/0 s/1 s/2` | Fuzzy (`s/2`) | `["alex"]` | Last mode wins (not at beginning) |
-| `find s/1 alex s/2` | Strict (`s/1`) | `["alex", "s/2"]` | First mode wins, `s/2` becomes keyword |
+| `find alex s/1` | Strict (`s/1`) | `["alex"]` | Mode flag at end: last mode wins |
+| `find s/2 alex` | Fuzzy (`s/2`) | `["alex"]` | Mode flag at beginning: uses first mode |
+| `find alex s/0 s/1 s/2` | Fuzzy (`s/2`) | `["alex"]` | Mode flags at end: last mode wins, others become keywords |
+| `find s/1 alex s/2` | Strict (`s/1`) | `["alex", "s/2"]` | Mode flag at beginning: only first recognized, `s/2` becomes keyword |
 
 #### Search mode behaviors
 
