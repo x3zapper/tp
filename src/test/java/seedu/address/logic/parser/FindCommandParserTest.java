@@ -17,7 +17,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -52,10 +53,10 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_invalidMode_throwsParseException() {
-        assertParseFailure(parser, "Alice s/3", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                FindCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "Alice s/abc", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "Alice s/3", FindCommand.MESSAGE_INVALID_SEARCH_MODE);
+        assertParseFailure(parser, "Alice s/abc", FindCommand.MESSAGE_INVALID_SEARCH_MODE);
+        assertParseFailure(parser, "s/3 Alice", FindCommand.MESSAGE_INVALID_SEARCH_MODE);
+        assertParseFailure(parser, "s/abc Alice", FindCommand.MESSAGE_INVALID_SEARCH_MODE);
     }
 
     @Test

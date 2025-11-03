@@ -71,7 +71,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0) + " (Search mode: relaxed)";
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -81,7 +81,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3) + " (Search mode: relaxed)";
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -91,7 +91,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_mixedCaseKeyword_singlePersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1) + " (Search mode: relaxed)";
         NameContainsKeywordsPredicate predicate = preparePredicate("fIoNa");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -101,7 +101,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_partialKeyword_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2) + " (Search mode: relaxed)";
         NameContainsKeywordsPredicate predicate = preparePredicate("Mei");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -111,7 +111,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_strictMode_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0) + " (Search mode: strict)";
         NameContainsKeywordsPredicate predicate = preparePredicate("Mei", true, false);
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -129,7 +129,8 @@ public class FindCommandTest {
         // Fuzzy mode should return top 5 closest matches
         // The number should be min(5, total persons in address book)
         int expectedCount = Math.min(5, model.getAddressBook().getPersonList().size());
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount)
+                + " (Search mode: fuzzy)";
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
         // Should have at most 5 persons in the filtered list
         assertTrue(model.getSortedPersonList().size() <= 5);
@@ -143,7 +144,8 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         command.execute(model);
         int expectedCount = Math.min(5, model.getAddressBook().getPersonList().size());
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount)
+                + " (Search mode: fuzzy)";
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
         // Should return top 5 (or all available) even if far from the keyword
         assertEquals(expectedCount, model.getSortedPersonList().size());
