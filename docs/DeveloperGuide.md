@@ -409,6 +409,11 @@ The `NameContainsKeywordsPredicate` defines `FUZZY_MATCH_THRESHOLD = 2` for filt
   * Pros: User can adjust based on needs.
   * Cons: Added complexity, may impact performance with large limits.
 
+* **Alternative 3 (future improvement):** Smart threshold-based matching instead of fixed limit.
+  * Implementation: Use an intelligent algorithm to dynamically determine the similarity threshold and show all matches that meet it, rather than limiting to exactly 5 results. The threshold adapts based on the quality and distribution of matches found.
+  * Pros: More intuitive results - shows all close matches without arbitrary cutoffs. Better handles cases with many similar names or very few close matches. Adapts to different search scenarios automatically.
+  * Cons: Result count varies, which may be unpredictable for users. More complex algorithm required.
+
 ---
 
 ### Sort feature
