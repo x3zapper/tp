@@ -120,9 +120,10 @@
       "src": "UserGuide.md",
       "title": "User Guide",
       "headings": {
-        "customer-relation-book-user-guide": "Customer Relation Book User Guide",
+        "customerrelationbook-user-guide": "CustomerRelationBook User Guide",
         "quick-start": "Quick start",
         "features": "Features",
+        "notes-on-some-of-contact-s-properties": "Notes on some of contact's properties:",
         "viewing-help-help": "Viewing help: help",
         "listing-all-persons-list": "Listing all persons: list",
         "adding-a-person-add": "Adding a person: add",
