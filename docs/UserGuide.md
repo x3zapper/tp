@@ -159,9 +159,14 @@ Format:
 
 * `Note` can contain special characters
 * All characters following `nt/` are treated as the note content
+* Leading spaces will be accepted as part of the note content, but trailing spaces will be stripped
 * `Note` is empty by default when a contact is freshly added
 * Contacts with no `Note` will display `No current note` by default
 * `INDEX` must be a valid number corresponding to the currently displayed list
+
+**Note:** While the User is also able to add/edit/remove a contact's note through the `edit` command, 
+`note` command is also implemented to do the same. This is a design decision to prioritize convenience and command
+clarity over minimalism, increasing flexibility for user experience.
 
 
 Examples:
