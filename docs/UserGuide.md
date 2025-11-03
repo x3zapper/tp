@@ -219,7 +219,7 @@ Note: `find`/`filter` are mutually exclusive searching operations.
 The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
 This helps users quickly narrow down their address book to relevant entries.
 
-Format: `filter [TAG] [MORE_TAGS]...`
+Format: `filter [TAG]...`
 
 * The filter is **case-sensitive**. e.g Filtering with `friends` will not list a contact with tag `Friends`
 * The order of the tags does not matter
