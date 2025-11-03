@@ -307,7 +307,7 @@ The `FindCommandParser` supports flexible syntax where the mode flag `s/MODE` ca
    - Splits arguments by first whitespace
    - Extracts first mode value (e.g., "1" from "s/1")
    - Remaining text becomes keywords
-   - Any subsequent `s/X` patterns are treated as keywords
+   - Any subsequent `s/MODE` patterns are treated as keywords
 
 2. Otherwise, `extractSearchModeFromSuffix()` is called:
    - Uses `ArgumentTokenizer` to find all `s/` occurrences

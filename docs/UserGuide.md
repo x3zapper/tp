@@ -185,8 +185,8 @@ Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS]
     * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
     * `2` - **Fuzzy mode**: Returns up to 5 closest matches based on edit distance, tolerant of typos. Results are unordered. e.g. `Alica` will match `Alice`
 * The mode flag `s/MODE` can be placed at the beginning or end of the command.
-* If multiple mode flags are specified (not at the beginning), the **last** mode flag will be used, this means that all prior `s/X` patterns will be treated as keywords..
-* If the mode flag is at the beginning and other mode flags appear later, the **first** mode flag will be used and subsequent `s/X` patterns will be treated as keywords.
+* If multiple mode flags are specified (not at the beginning), the **last** mode flag will be used, this means that all prior `s/MODE` patterns will be treated as keywords..
+* If the mode flag is at the beginning and other mode flags appear later, the **first** mode flag will be used and subsequent `s/MODE` patterns will be treated as keywords.
 
 Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li` (relaxed mode - default, partial match)<br>
