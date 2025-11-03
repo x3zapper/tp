@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root resizable="true" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" minWidth="450" minHeight="400">
+<fx:root resizable="true" title="Help" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" minWidth="460" minHeight="400">
   <icons>
     <Image url="@/images/help_icon.png" />
   </icons>
@@ -125,7 +125,7 @@
                     <children>
                       <Label styleClass="command-title" text="filter" wrapText="true" />
                       <Label styleClass="command-description" text="List contacts that have all specified tags." wrapText="true" />
-                      <Label styleClass="command-description" text="Usage: filter TAG [MORE_TAGS]..." wrapText="true" />
+                      <Label styleClass="command-description" text="Usage: filter [TAG]..." wrapText="true" />
                       <Label styleClass="command-description" text="Note: Find/Filter are mutually exclusive searching operations" wrapText="true" />
                     </children>
                     <padding>
@@ -162,12 +162,12 @@
           </ScrollPane>
           <HBox VBox.vgrow="NEVER" alignment="CENTER" fx:id="helpMessageContainer">
             <children>
-              <Label fx:id="helpMessage" text="Label">
+              <Label fx:id="helpMessage" text="Label" wrapText="true" HBox.hgrow="ALWAYS" maxWidth="Infinity">
                 <HBox.margin>
                   <Insets right="5.0" />
                 </HBox.margin>
               </Label>
-              <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL">
+              <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copyUrl" text="Copy URL" minWidth="85" prefWidth="85">
                 <HBox.margin>
                   <Insets left="5.0" />
                 </HBox.margin>

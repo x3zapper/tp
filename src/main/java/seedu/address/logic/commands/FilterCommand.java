@@ -19,10 +19,10 @@ public class FilterCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain "
             + "all of the specified tags (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: TAG [MORE_TAGS]...\n"
+            + "Parameters: [TAG]...\n"
             + "Example: " + COMMAND_WORD + " client VIP";
 
-    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag '%s'. "
+    public static final String MESSAGE_INVALID_TAG = "Error: Invalid tag. "
             + "Tags may only contain alphanumeric characters.";
 
     public static final String MESSAGE_EXCESSIVE_TAGS = "Error: You can only filter by "

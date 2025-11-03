@@ -91,6 +91,11 @@ public class HelpWindow extends UiPart<Stage> {
     public void show() {
         logger.fine("Showing help page about the application.");
 
+        // Restore window if it's minimized
+        if (getRoot().isIconified()) {
+            getRoot().setIconified(false);
+        }
+
         getRoot().show();
 
         // Apply stored position after showing using Platform.runLater to ensure it
@@ -149,6 +154,10 @@ public class HelpWindow extends UiPart<Stage> {
      * Focuses on the help window.
      */
     public void focus() {
+        // Restore window if it's minimized
+        if (getRoot().isIconified()) {
+            getRoot().setIconified(false);
+        }
         getRoot().requestFocus();
     }
 
