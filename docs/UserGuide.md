@@ -62,7 +62,7 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 * Trailing spaces in parameters will always be stripped.<br>
-  e.g. "note 1 nt/&nbsp;&nbsp;hi&nbsp;&nbsp;", only leading spaces are accepted and the `note` will be "&nbsp;&nbsp;hi".
+  e.g. `note 1 nt/  hi  `, only leading spaces are accepted and the `note` will be `  hi`.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
