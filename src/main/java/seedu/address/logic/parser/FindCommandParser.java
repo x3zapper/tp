@@ -190,8 +190,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         case MODE_FUZZY:
             return createFuzzyMode(remainingArgs);
         default:
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(FindCommand.MESSAGE_INVALID_SEARCH_MODE);
         }
     }
 

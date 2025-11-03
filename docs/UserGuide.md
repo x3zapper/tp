@@ -248,10 +248,12 @@ Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS]
 * The search mode can be specified using `s/MODE` where MODE can be:
     * `0` - **Relaxed mode** (default): Partial word matching. e.g. `Han` will match `Hans`, `Johann`
     * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
-    * `2` - **Fuzzy mode**: Returns up to 5 closest matches based on edit distance, tolerant of typos. Results are unordered. e.g. `Alica` will match `Alice`
-* The mode flag `s/MODE` can be placed at the beginning or end of the command.
-* If multiple mode flags are specified (not at the beginning), the **last** mode flag will be used, this means that all prior `s/X` patterns will be treated as keywords..
-* If the mode flag is at the beginning and other mode flags appear later, the **first** mode flag will be used and subsequent `s/X` patterns will be treated as keywords.
+    * `2` - **Fuzzy mode**: Returns up to 5 closest name matches, tolerant of typos and misspellings. Results are unordered. e.g. `Alica` will match `Alice`
+        * **Note:** Fuzzy search compares each word in a name individually against your keywords and finds the closest match. It works best with **single keywords** (e.g., `find s/2 Alica`). When using multiple keywords (e.g., `find s/2 Jason Lim`), the search may not match full phrases as expected - it will find names where individual words match either "Jason" OR "Lim". For precise phrase matching, use **Relaxed mode** (default) or **Strict mode** instead.
+* The mode flag `s/MODE` can be placed **either** at the beginning (before keywords) **or** at the end (after keywords) of the command, but not both.
+* **Multiple mode flags behavior:**
+    * If the **first token** of the command is `s/MODE` (e.g., `find s/1 alex`), only that first mode flag is recognized. Any subsequent `s/MODE` patterns will be treated as search keywords.
+    * If the mode flag appears **after the keywords** (e.g., `find alex s/1`), and multiple mode flags are present, the **last** mode flag will be used. All prior `s/MODE` patterns will be treated as search keywords.
 
 Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li` (relaxed mode - default, partial match)<br>
@@ -272,12 +274,20 @@ Examples:
 | "Was it 'Yeo' or 'Yeoh'?" | Fuzzy (`s/2`) | `find Yeo s/2` |
 | Exploring all 'Alex' variations | Relaxed (default) | `find Alex` |
 | Only "Alex" as full word | Strict (`s/1`) | `find Alex s/1` |
-| Misspelled as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
+| Misspelled single name as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
+| Find "Jason Lim" (multi-word phrase) | Relaxed (default) | `find Jason Lim` |
+| Misspelled as "Jasen Lim" | Fuzzy (`s/2`) with single keyword | `find Jasen s/2` (then visually scan for "Lim") |
 
-**Progressive search strategy:** Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. If no results, use **Fuzzy mode** in case you misspelled the name.
+**Progressive search strategy:** 
+- Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. 
+- Use **Fuzzy mode** only when searching for a **single name** that you may have misspelled (e.g., `find s/2 Aleks` to find "Alex").
+- For multi-word names like "Jason Lim", use **Relaxed mode** (default) instead of Fuzzy mode for better results.
 </box>
 
-Note: `find`/`filter` are mutually exclusive searching operations.
+<box type="info" seamless>
+
+**Note:** Using `find` or `filter` will replace any previous search results. You cannot combine `find` and `filter` in a single search. To return to viewing all contacts, use the `list` command.
+</box>
 
 ### Filtering persons by tags: `filter`
 
@@ -298,7 +308,10 @@ Examples:
 * `filter friends enemies` will only list contacts that have **both** the tags `friends` and `enemies`
 * `filter ` will only list contacts that have no tags
 
-Note: `find`/`filter` are mutually exclusive searching operations.
+<box type="info" seamless>
+
+**Note:** Using `find` or `filter` will replace any previous search results. You cannot combine `find` and `filter` in a single search. To return to viewing all contacts, use the `list` command.
+</box>
 
 
 ### Sorting all persons: `sort`
@@ -371,8 +384,7 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-3. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
+2. **If you try to specify a timezone value in Add/Edit that has a mantissa >14 digits**, due to Java's floating point operations, it may be rounded up. For example, `23.999999999999999` will be parsed by Java as `24.0`. However, this should not be an issue as UTC time offsets will never require this level of precision.
 
 --------------------------------------------------------------------------------------------------------------------
 

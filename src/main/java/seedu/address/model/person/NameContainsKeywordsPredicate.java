@@ -135,6 +135,10 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         return isFuzzy;
     }
 
+    public boolean isStrict() {
+        return isStrict;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
