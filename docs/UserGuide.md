@@ -18,15 +18,15 @@ CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized f
 1. Ensure you have Java `17` or above installed in your Computer.<br>
   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F13-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F13-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your CustomerRelationBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your CustomerRelationBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CustomerRelationBook.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CustomerRelationBook.jar` command to run the application.<br>
   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
   ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
   **Some** example commands you can try:
   * `list` : Lists all contacts.
   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the contact list.
@@ -34,7 +34,7 @@ CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized f
   * `clear` : Deletes all contacts.
   * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized f
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…` after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order.<br>
@@ -61,15 +61,15 @@ CustomerRelationBook (CRB) is a **desktop app for managing contacts, optimized f
 
 ### Notes on some of contact's properties:
 
-`tag`s: A `tag` is a label used to categorize a contact.
+`name`: Represents a `person` (contact) name. The application does not allow adding of duplicate persons in the contact list.\
+A duplicate is defined as any `person` with the same name. As such, operations violating this will be rejected.
+
+`tag`: A `tag` is a label used to categorize a contact.\
 A `person` (contact) can have any number of tags (including 0). However, tags only accept alphanumeric characters, **this means spaces are NOT accepted**.
 
-`name`: A duplicate `person` is defined as any `person`s with the same name. It is to note that we do not accept duplicate persons in the contact list.
-As such, operations violating this through `add` or `edit` commands will be rejected.
-
-`timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.
-floating point number:In computing, floating-point arithmetic (FP) is arithmetic on subsets of real numbers formed by a significand (a signed sequence of a fixed number of digits in some base) multiplied by an integer power of that base.
-UTC: UTC stands for Coordinated Universal Time, a single standard time reference
+`timezone`: Timezone is a floating point number that represents the time offset from UTC in hours.\
+Floating Point Number: A real number.\
+UTC: UTC stands for Coordinated Universal Time, a single standard time reference.
 
 ### Viewing help: `help`
 
@@ -94,8 +94,8 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]… [tz/UTC_TIMEZONE
 
 <box type="tip" seamless>
 
-**Note:** Users are not allowed to add `Note` field through the `add` feature. The `Note` field is omitted
-to simplify the creation process as most users typically only need basic details when adding a contact. `Notes`
+**Note:** Users are not allowed to add a note through the `add` feature. The note field is omitted
+to simplify the creation process as most users typically only need basic details when adding a contact. Notes
 are considered supplementary information that is optional and can be added later on through the `note` command
 when the user desires.
 
@@ -156,9 +156,11 @@ Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [
 * You can remove the person's note data by typing `nt/` without specifying any text after it.
 
 <box type="tip" seamless>
+
 Note: It is a design choice that users are not able to edit the date a contact got added for purposes of `sort` command's `dateadded` sort type using the `edit` command.
 This is because there is not a good reason that a user would need to edit such a property. However, if the user chooses, they can edit it in the json save file although 
 consequences, disclaimers and constraints apply as stated in the `Editing the data file` section below.
+
 </box>
 
 Examples:
@@ -217,11 +219,11 @@ Format:
 * Adds a `note` for the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …
-* `Note` can contain special characters
+* `NOTE` can contain special characters
 * All characters following `nt/` are treated as the note content
 * Leading spaces will be accepted as part of the note content
-* `Note` is empty by default when a contact is freshly added
-* Contacts with no `Note` will display `No current note` by default
+* The note is empty by default when a contact is freshly added
+* Contacts with no note will display `No current note` by default
 
 <box type="tip" seamless>
 
@@ -340,7 +342,9 @@ Examples:
 - `sort st/name so/dsc`
   
 <box type="tip" seamless>
-Note: The default sort order and type would be `sort st/dateadded so/asc`
+
+Note: The equivalent `sort` command for the default sort order and type would be `sort st/dateadded so/asc`
+
 </box>
 
 ### Exiting the program: `exit`

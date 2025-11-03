@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# Customer Relation Book Developer Guide
+# CustomerRelationBook Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -202,9 +202,9 @@ This section describes some noteworthy details on how certain features are imple
 The filter command allows for the user to filter their contacts based on specified tags (up to 10).
 
 #### Feature Overview
-The `filter` command filters and lists all persons in the contact list whose tags contain any of the specified keywords.
+The `filter` command filters and lists all persons in the contact list whose tags contain all of the specified keywords.
 Tag matching is **case-sensitive**.
-For example, entering `filter t/friend` will display only the contacts with the tag “friend”.
+For example, entering `filter friend` will display only the contacts with the tag “friend”.
 
 #### Implementation
 The `FilterCommand` feature is implemented using the **Command design pattern**, similar to other commands in the Logic component.
@@ -346,7 +346,7 @@ Uses `StringUtil#containsWordIgnoreCase()` to perform full word matching by spli
 
 **Fuzzy Mode (s/2):**
 
-The `FindCommand#executeFuzzySearch()` method ranks all persons by their minimum Levenshtein distance to the keywords using `FindCommand#rankPersonsByDistance()`, which sorts persons by distance in ascending order and limits results to the top 5 matches. The sorted list may not be preserved in the displayed order in the UI.
+The `FindCommand#executeFuzzySearch()` method ranks all persons by their minimum Levenshtein distance to the keywords using `FindCommand#rankPersonsByDistance()`, which sorts persons by distance in ascending order and limits results to the top 5 matches. Results are unordered in the UI.
 
 **Important Note on Multi-Keyword Fuzzy Search:** The fuzzy search compares each word in a person's name individually against each keyword and returns the minimum distance found across all comparisons. This means when using multiple keywords (e.g., `find s/2 Jason Lim`), the search performs an OR operation on individual word matches rather than matching the full phrase. For example, a contact named "Jason" will have distance 0 to the keyword "Jason", and a contact named "Jason Lim A A" will also have distance 0 (matching "Jason" or "Lim" individually). This can lead to unexpected results where shorter names rank equally with longer names that contain the same words. Fuzzy search is most effective with single keywords for typo tolerance.
 
@@ -455,7 +455,7 @@ For example: `new SortCommand(SortCommand.COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_
 
 Said flags can be in any order as `SortCommandParser` uses `ArgumentTokenizer` to find occurrences.
 
-**Comparator Details**
+**Comparator Details:**
 It is of note that `COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_DESCENDING` and `COMPARATOR_SORT_PERSONS_BY_NAME_DESCENDING` are just `.reversed()` versions of their ascending versions.
 Although user's cannot directly edit a `Person`'s `dateAdded` through the `edit` command, a user can edit the `dateAdded` value through the JSON so that multiple contacts have the same `dateAdded` value.
 As this would cause some issues with sorting, `COMPARATOR_SORT_PERSONS_BY_DATE_ADDED_ASCENDING` has a tie-breaker which uses the `Person`'s `name`.
@@ -474,7 +474,7 @@ The command-history feature provides a terminal-like experience where previously
 * Browsing older commands with `UP` and newer commands with `DOWN`.
 * Preserving the currently typed (partial) input when the user begins browsing history and restoring it when the user navigates back to the most recent position (so the user can continue editing). 
 * Preventing duplicate consecutive history entries (the same command repeated in succession). 
-* Limiting the history size (e.g. 100 entries) to avoid unbounded memory growth.
+* Limiting the history size (to 100 entries) to avoid unbounded memory growth.
 
 Example interaction flow:
 * Type `add Alice` and press `Enter` -> command is executed and stored in history. 
@@ -527,104 +527,6 @@ Flow when user presses Enter:
 #### Possible Future Development Ideas
 * Persistence - Command history can be written to a save file when exiting the application and restored upon next launch
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` - Saves the current `AddressBook` state in its history.
-* `VersionedAddressBook#undo()` - Restores the previous `AddressBook` state from its history.
-* `VersionedAddressBook#redo()` - Restores a previously undone `AddressBook` state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial `AddressBook` state, and the `currentStatePointer` pointing to that single `AddressBook` state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the `AddressBook`. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the `AddressBook` after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted `AddressBook` state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified `AddressBook` state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the `AddressBook` state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous `AddressBook` state, and restores the `AddressBook` to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial CustomerRelationBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite - it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the `AddressBook` to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest `AddressBook` state, then there are no undone CustomerRelationBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the `AddressBook`, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all `AddressBook` states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire `AddressBook`.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_To be implemented in the future_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -657,30 +559,30 @@ _To be implemented in the future_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …                                    | I want to …                 | So that I can…                                                         |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             | store contact details for future reference                             |
-| `* * *`  | user                                       | edit contact information     | keep contact details up to date when they change                       |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* * *`  | user                                       | view all my contacts         | see an overview of all stored contacts                                 |
-| `* * *`  | user                                       | filter contacts by tags      | focus on specific groups like clients or vendors                       |
-| `* * *`  | user                                       | clear all contacts           | start fresh with a clean contact list when needed                      |
-| `* * *`  | user                                       | exit the application         | close the app when I'm done using it                                   |
-| `* * *`  | user                                       | have my data automatically saved | not lose my contact information when the app closes                    |
-| `* * *`  | user                                       | use consistent commands      | interact with the app reliably and predictably                         |
-| `* *`    | user                                       | add notes to contacts        | remember important details or context about each person                |
-| `* *`    | user                                       | edit notes for contacts      | update or remove notes as circumstances change                         |
-| `* *`    | user                                       | search with fuzzy matching   | find contacts even if I misspell their names                           |
-| `* *`    | user                                       | search with strict matching  | find only exact name matches when I know the full name                 |
-| `* *`    | user                                       | navigate command history     | quickly reuse previous commands without retyping them                  |
-| `* *`    | user                                       | sort my contacts by name     | view contacts in alphabetical order for easier browsing                |
-| `* *`    | user                                       | sort by date added           | see my newest or oldest contacts first                                 |
-| `* *`    | startup founder                            | add custom tags to contacts  | categorize them by type for better organization                        |
-| `* *`    | international business owner               | store timezone information   | know what time it is for my contacts in different regions              |
-| `* *`    | tech business owner                        | mark contacts as favorites   | quickly access my most important clients or vendors                    |
-| `*`      | small business owner                       | backup my contact information | restore my data in case I lose the current information                 |
+| Priority | As a …                       | I want to …                 | So that I can…                                                         |
+|----------|------------------------------|------------------------------|------------------------------------------------------------------------|
+| `* * *`  | new user                     | see usage instructions       | refer to instructions when I forget how to use the App                 |
+| `* * *`  | user                         | add a new person             | store contact details for future reference                             |
+| `* * *`  | user                         | edit contact information     | keep contact details up to date when they change                       |
+| `* * *`  | user                         | delete a person              | remove entries that I no longer need                                   |
+| `* * *`  | user                         | find a person by name        | locate details of persons without having to go through the entire list |
+| `* * *`  | user                         | view all my contacts         | see an overview of all stored contacts                                 |
+| `* * *`  | user                         | filter contacts by tags      | focus on specific groups like clients or vendors                       |
+| `* * *`  | user                         | clear all contacts           | start fresh with a clean contact list when needed                      |
+| `* * *`  | user                         | exit the application         | close the app when I'm done using it                                   |
+| `* * *`  | user                         | have my data automatically saved | not lose my contact information when the app closes                |
+| `* * *`  | user                         | use consistent commands      | interact with the app reliably and predictably                         |
+| `* *`    | user                         | add notes to contacts        | remember important details or context about each person                |
+| `* *`    | user                         | edit notes for contacts      | update or remove notes as circumstances change                         |
+| `* *`    | user                         | search with fuzzy matching   | find contacts even if I misspell their names                           |
+| `* *`    | user                         | search with strict matching  | find only exact name matches when I know the full name                 |
+| `* *`    | user                         | navigate command history     | quickly reuse previous commands without retyping them                  |
+| `* *`    | user                         | sort my contacts by name     | view contacts in alphabetical order for easier browsing                |
+| `* *`    | user                         | sort by date added           | see my newest or oldest contacts first                                 |
+| `* *`    | user                         | add custom tags to contacts  | categorize them by type for better organization                        |
+| `* *`    | international business owner | store timezone information   | know what time it is for my contacts in different regions              |
+| `* *`    | user                         | mark contacts as favorites   | quickly access my most important clients or vendors                    |
+| `*`      | user                         | backup my contact information | restore my data in case I lose the current information                |
 
 ### Use cases
 
@@ -972,7 +874,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 3a. Help window is already open but minimized.
-  * 3a1. User manually restores the minimized help window.
+  * 3a1. The window will be automatically restored from its minimized state.
   * Use case resumes at step 4.
 
 ### Non-Functional Requirements
@@ -1260,3 +1162,108 @@ testers are expected to do more *exploratory* testing.
    
    3. Relaunch the application.<br>
       Expected: Changes are persisted, data is retained.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned enhancements**
+
+### Better bi-directional scrolling for typists
+
+_To be implemented in the future_
+
+### Undo/redo feature
+
+#### Proposed Implementation
+
+The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+
+* `VersionedAddressBook#commit()` - Saves the current `AddressBook` state in its history.
+* `VersionedAddressBook#undo()` - Restores the previous `AddressBook` state from its history.
+* `VersionedAddressBook#redo()` - Restores a previously undone `AddressBook` state from its history.
+
+These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+
+Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial `AddressBook` state, and the `currentStatePointer` pointing to that single `AddressBook` state.
+
+<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
+
+Step 2. The user executes `delete 5` command to delete the 5th person in the `AddressBook`. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the `AddressBook` after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted `AddressBook` state.
+
+<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
+
+Step 3. The user executes `add n/David …` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified `AddressBook` state to be saved into the `addressBookStateList`.
+
+<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
+
+<box type="info" seamless>
+
+**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the `AddressBook` state will not be saved into the `addressBookStateList`.
+
+</box>
+
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous `AddressBook` state, and restores the `AddressBook` to that state.
+
+<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
+
+
+<box type="info" seamless>
+
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial CustomerRelationBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+than attempting to perform the undo.
+
+</box>
+
+The following sequence diagram shows how an undo operation goes through the `Logic` component:
+
+<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+</box>
+
+Similarly, how an undo operation goes through the `Model` component is shown below:
+
+<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
+
+The `redo` command does the opposite - it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the `AddressBook` to that state.
+
+<box type="info" seamless>
+
+**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest `AddressBook` state, then there are no undone CustomerRelationBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+
+</box>
+
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the `AddressBook`, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+
+<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
+
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all `AddressBook` states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …` command. This is the behavior that most modern desktop applications follow.
+
+<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
+
+#### Design considerations:
+
+**Aspect: How undo & redo executes:**
+
+* **Alternative 1 (current choice):** Saves the entire `AddressBook`.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
+
+* **Alternative 2:** Individual command knows how to undo/redo by
+  itself.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
+
+_{more aspects and alternatives to be added}_
+
+### Data archiving
+
+_To be implemented in the future_
