@@ -61,6 +61,9 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
+* Trailing spaces in parameters will always be stripped.<br>
+  e.g. `note 1 nt/  hi  `, only leading spaces are accepted and the `note` will be `  hi`.
+
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
@@ -110,7 +113,9 @@ Edits an existing person in the customer relation book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]… [tz/UTC_TIMEZONE_OFFSET] [nt/NOTE]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …
+* Edits the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -156,12 +161,19 @@ Format:
 
 **Delete:** `note INDEX nt/`
 
-
+* Adds a `note` for the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …
 * `Note` can contain special characters
 * All characters following `nt/` are treated as the note content
+* Leading spaces will be accepted as part of the note content
 * `Note` is empty by default when a contact is freshly added
 * Contacts with no `Note` will display `No current note` by default
-* `INDEX` must be a valid number corresponding to the currently displayed list
+
+**Note:** While the User is also able to add/edit/remove a contact's note through the `edit` command, 
+`note` command is also implemented to do the same, with some differences. `NOTE` in the note command supports
+special characters contrary to edit command. This is a design decision to prioritize convenience and command
+clarity over minimalism, increasing flexibility for user experience.
 
 
 Examples:
@@ -229,17 +241,19 @@ Examples:
 The `filter` command allows the user to display a list of persons whose tags match **all of the specified keywords**.
 This helps users quickly narrow down their address book to relevant entries.
 
-Format: `filter TAG [MORE_TAGS]...`
+Format: `filter [TAG]...`
 
 * The filter is **case-sensitive**. e.g Filtering with `friends` will not list a contact with tag `Friends`
 * The order of the tags does not matter
 * User can only filter with a maximum of **10** tags
 * When searching with multiple tags, the filter will only list contacts that contain ALL specified tags
-* Tags specified must follow the Tag feature naming convention of only containing **alpha-numeric** values.
+* Tags specified must follow the Tag feature naming convention of only containing **alpha-numeric** values
+* Possible to filter with no tags to return contact list with contacts that have no tags
 
 Examples:
 * `filter friends` will only list contacts that have the tag `friends`
 * `filter friends enemies` will only list contacts that have **both** the tags `friends` and `enemies`
+* `filter ` will only list contacts that have no tags
 
 <box type="info" seamless>
 

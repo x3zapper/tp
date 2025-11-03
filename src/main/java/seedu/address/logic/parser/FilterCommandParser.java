@@ -25,8 +25,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     public FilterCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            return new FilterCommand(new TagContainsKeywordsPredicate(List.of()));
         }
 
         List<String> tags = Arrays.stream(trimmedArgs.split("\\s+"))
