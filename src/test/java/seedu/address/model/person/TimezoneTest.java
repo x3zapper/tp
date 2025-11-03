@@ -24,18 +24,18 @@ public class TimezoneTest {
         double diff = tzOffset - referenceOffset;
 
         if (diff == 0) {
-            return "Same as local time";
+            return "Same as system time";
         }
 
         int totalMinutes = (int) Math.round(diff * 60);
         int hours = totalMinutes / 60;
         int minutes = Math.abs(totalMinutes % 60);
-        String aheadBehind = diff > 0 ? "ahead" : "behind";
+        String aheadBehind = diff > 0 ? "ahead of" : "behind";
 
         if (minutes == 0) {
-            return String.format("%d hours %s of local time", Math.abs(hours), aheadBehind);
+            return String.format("%d hour(s) %s system time", Math.abs(hours), aheadBehind);
         } else {
-            return String.format("%d hours %d minutes %s of local time", Math.abs(hours), minutes, aheadBehind);
+            return String.format("%d hour(s) %d minute(s) %s system time", Math.abs(hours), minutes, aheadBehind);
         }
     }
 
