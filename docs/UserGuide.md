@@ -61,6 +61,9 @@ Customer Relation Book (CRB) is a **desktop app for managing contacts, optimized
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
+* Trailing spaces in parameters will always be stripped.<br>
+  e.g. "note 1 nt/&nbsp;&nbsp;hi&nbsp;&nbsp;", only leading spaces are accepted and the `note` will be "&nbsp;&nbsp;hi".
+
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
@@ -159,13 +162,14 @@ Format:
 
 * `Note` can contain special characters
 * All characters following `nt/` are treated as the note content
-* Leading spaces will be accepted as part of the note content, but trailing spaces will be stripped
+* Leading spaces will be accepted as part of the note content
 * `Note` is empty by default when a contact is freshly added
 * Contacts with no `Note` will display `No current note` by default
 * `INDEX` must be a valid number corresponding to the currently displayed list
 
 **Note:** While the User is also able to add/edit/remove a contact's note through the `edit` command, 
-`note` command is also implemented to do the same. This is a design decision to prioritize convenience and command
+`note` command is also implemented to do the same, with some differences. `NOTE` in the note command supports
+special characters contrary to edit command. This is a design decision to prioritize convenience and command
 clarity over minimalism, increasing flexibility for user experience.
 
 
