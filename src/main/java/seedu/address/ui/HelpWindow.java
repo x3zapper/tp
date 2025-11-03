@@ -73,23 +73,30 @@ public class HelpWindow extends UiPart<Stage> {
      * Shows the help window.
      *
      * @throws IllegalStateException
-     *     <ul>
-     *         <li>
-     *             if this method is called on a thread other than the JavaFX Application Thread.
-     *         </li>
-     *         <li>
-     *             if this method is called during animation or layout processing.
-     *         </li>
-     *         <li>
-     *             if this method is called on the primary stage.
-     *         </li>
-     *         <li>
-     *             if {@code dialogStage} is already showing.
-     *         </li>
-     *     </ul>
+     *                               <ul>
+     *                               <li>
+     *                               if this method is called on a thread other than
+     *                               the JavaFX Application Thread.
+     *                               </li>
+     *                               <li>
+     *                               if this method is called during animation or
+     *                               layout processing.
+     *                               </li>
+     *                               <li>
+     *                               if this method is called on the primary stage.
+     *                               </li>
+     *                               <li>
+     *                               if {@code dialogStage} is already showing.
+     *                               </li>
+     *                               </ul>
      */
     public void show() {
         logger.fine("Showing help page about the application.");
+
+        // Restore window if it's minimized
+        if (getRoot().isIconified()) {
+            getRoot().setIconified(false);
+        }
 
         getRoot().show();
 
@@ -149,6 +156,10 @@ public class HelpWindow extends UiPart<Stage> {
      * Focuses on the help window.
      */
     public void focus() {
+        // Restore window if it's minimized
+        if (getRoot().isIconified()) {
+            getRoot().setIconified(false);
+        }
         getRoot().requestFocus();
     }
 
