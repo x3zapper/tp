@@ -107,6 +107,45 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal tz/-12.0`
 * `add n/CRB Team t/developers e/crb.team@invalid a/Github p/999 t/colleagues tz/8`
 
+#### Parameter Constraints
+
+Each field must follow these constraints:
+
+- **Name**:\
+  Names should only contain **alphanumeric characters and spaces**, and **must not be blank**.
+
+- **Phone**:\
+  Phone numbers should only contain **numbers**, and must be **at least 3 digits long**.
+
+- **Email**:\
+  Emails should be of the format `local-part@domain` and adhere to the following rules:
+
+    1. The local-part may contain **alphanumeric characters** and special characters (excluding parentheses).
+       It **must not start or end** with a special character.
+
+    2. The domain name follows the `'@'` symbol and is made up of **domain labels** separated by periods.\
+       Each domain label:
+
+        - must **start and end with alphanumeric characters**
+
+        - may contain **hyphens** between alphanumeric characters
+
+        - the **final domain label** (e.g. `.com`) must be **at least 2 characters long**
+
+- **Address**:\
+  Addresses can take **any value**, but **must not be blank**.
+
+- **Tag**:\
+  Tag names should be **alphanumeric**, and **must not contain spaces**.
+
+- **Timezone**:\
+  The timezone value represents the **offset from UTC** in **hours** (floating-point number).\
+  It **cannot be greater than or equal to 24.0**, and **cannot be less than or equal to -24.0**.
+
+- **Note**:\
+  Notes have **no restrictions** — they can include any characters and **may contain leading spaces**.
+
+
 ### Editing a person: `edit`
 
 Edits an existing person in the customer relation book.
@@ -128,6 +167,18 @@ Examples:
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 5 t/abc t/Def` Sets the 5th person's tags to `abc` and `Def`.
 * `edit 10 tz/` Clears the 10th person's set timezone value.
+
+#### Parameter Constraints
+The parameter constraints for the `edit` feature are the same as the one in `add`.
+
+**Note:** Editing `note`
+* When editing `note` with other parameters of the contact's details
+e.g. `name`,`phone`, please put the `nt/` parameter last
+* E.g. `edit 1 n/James p/93425656 nt/New note`
+* Using `nt/` ahead of other defined command prefixes such as `nt/hi n/John` will cause chaining of commands
+instead of treating the entire input as a `note`
+
+
 
 ### Deleting a person: `delete`
 
@@ -171,9 +222,13 @@ Format:
 * Contacts with no `Note` will display `No current note` by default
 
 **Note:** While the User is also able to add/edit/remove a contact's note through the `edit` command, 
-`note` command is also implemented to do the same, with some differences. `NOTE` in the note command supports
-special characters contrary to edit command. This is a design decision to prioritize convenience and command
+`note` command is also implemented to do the same, with some differences.
+This is a design decision to prioritize convenience and command
 clarity over minimalism, increasing flexibility for user experience.
+Furthermore, `NOTE` in the note command will regard the entire input as part of the note.
+E.g. `note 2 nt/Hello n/John` is possible through the `note` command, whereas
+`edit 2 nt/Hello n/John` would lead to a chain of commands and cause contact's name to be changed too.
+
 
 
 Examples:
