@@ -184,6 +184,7 @@ Format: `find [s/MODE] KEYWORD [MORE_KEYWORDS]` or `find KEYWORD [MORE_KEYWORDS]
     * `0` - **Relaxed mode** (default): Partial word matching. e.g. `Han` will match `Hans`, `Johann`
     * `1` - **Strict mode**: Only full words will be matched. e.g. `Han` will not match `Hans`
     * `2` - **Fuzzy mode**: Returns up to 5 closest name matches, tolerant of typos and misspellings. Results are unordered. e.g. `Alica` will match `Alice`
+        * **Note:** Fuzzy search compares each word in a name individually against your keywords and finds the closest match. It works best with **single keywords** (e.g., `find s/2 Alica`). When using multiple keywords (e.g., `find s/2 Jason Lim`), the search may not match full phrases as expected - it will find names where individual words match either "Jason" OR "Lim". For precise phrase matching, use **Relaxed mode** (default) or **Strict mode** instead.
 * The mode flag `s/MODE` can be placed **either** at the beginning (before keywords) **or** at the end (after keywords) of the command, but not both.
 * **Multiple mode flags behavior:**
     * If the **first token** of the command is `s/MODE` (e.g., `find s/1 alex`), only that first mode flag is recognized. Any subsequent `s/MODE` patterns will be treated as search keywords.
@@ -208,9 +209,14 @@ Examples:
 | "Was it 'Yeo' or 'Yeoh'?" | Fuzzy (`s/2`) | `find Yeo s/2` |
 | Exploring all 'Alex' variations | Relaxed (default) | `find Alex` |
 | Only "Alex" as full word | Strict (`s/1`) | `find Alex s/1` |
-| Misspelled as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
+| Misspelled single name as "Aleks" | Fuzzy (`s/2`) | `find Aleks s/2` |
+| Find "Jason Lim" (multi-word phrase) | Relaxed (default) | `find Jason Lim` |
+| Misspelled as "Jasen Lim" | Fuzzy (`s/2`) with single keyword | `find Jasen s/2` (then visually scan for "Lim") |
 
-**Progressive search strategy:** Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. If no results, use **Fuzzy mode** in case you misspelled the name.
+**Progressive search strategy:** 
+- Start with **Relaxed mode** (default) to see what comes up. If too many results, use **Strict mode** to narrow down. 
+- Use **Fuzzy mode** only when searching for a **single name** that you may have misspelled (e.g., `find s/2 Aleks` to find "Alex").
+- For multi-word names like "Jason Lim", use **Relaxed mode** (default) instead of Fuzzy mode for better results.
 </box>
 
 Note: `find`/`filter` are mutually exclusive searching operations.

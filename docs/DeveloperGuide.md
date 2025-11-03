@@ -340,6 +340,8 @@ Uses `StringUtil#containsWordIgnoreCase()` to perform full word matching by spli
 
 The `FindCommand#executeFuzzySearch()` method ranks all persons by their minimum Levenshtein distance to the keywords using `FindCommand#rankPersonsByDistance()`, which sorts persons by distance in ascending order and limits results to the top 5 matches. The sorted list may not be preserved in the displayed order in the UI.
 
+**Important Note on Multi-Keyword Fuzzy Search:** The fuzzy search compares each word in a person's name individually against each keyword and returns the minimum distance found across all comparisons. This means when using multiple keywords (e.g., `find s/2 Jason Lim`), the search performs an OR operation on individual word matches rather than matching the full phrase. For example, a contact named "Jason" will have distance 0 to the keyword "Jason", and a contact named "Jason Lim A A" will also have distance 0 (matching "Jason" or "Lim" individually). This can lead to unexpected results where shorter names rank equally with longer names that contain the same words. Fuzzy search is most effective with single keywords for typo tolerance.
+
 #### Levenshtein Distance Algorithm
 
 The fuzzy search mode uses the Levenshtein distance algorithm to measure similarity between strings. The Levenshtein distance is the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one string into another.
