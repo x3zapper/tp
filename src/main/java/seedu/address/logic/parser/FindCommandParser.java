@@ -183,15 +183,14 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     private SearchMode parseMode(String mode, String remainingArgs) throws ParseException {
         switch (mode) {
-        case MODE_RELAXED:
-            return createRelaxedMode(remainingArgs);
-        case MODE_STRICT:
-            return createStrictMode(remainingArgs);
-        case MODE_FUZZY:
-            return createFuzzyMode(remainingArgs);
-        default:
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            case MODE_RELAXED:
+                return createRelaxedMode(remainingArgs);
+            case MODE_STRICT:
+                return createStrictMode(remainingArgs);
+            case MODE_FUZZY:
+                return createFuzzyMode(remainingArgs);
+            default:
+                throw new ParseException(FindCommand.MESSAGE_INVALID_SEARCH_MODE);
         }
     }
 

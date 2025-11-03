@@ -25,6 +25,9 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final int FUZZY_RESULT_LIMIT = 5;
 
+    public static final String MESSAGE_INVALID_SEARCH_MODE = "Invalid search mode! "
+            + "Valid modes are: 0 (relaxed), 1 (strict), or 2 (fuzzy).";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: [" + PREFIX_SEARCH_MODE + "MODE] KEYWORD [MORE_KEYWORDS]...\n"
